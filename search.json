@@ -7,18 +7,11 @@
     "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
   },
   {
-    "objectID": "guides/admin.html",
-    "href": "guides/admin.html",
-    "title": "Administration the service",
+    "objectID": "guides/ai-agents.html",
+    "href": "guides/ai-agents.html",
+    "title": "Installing AI Coding Agents",
     "section": "",
-    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
-  },
-  {
-    "objectID": "guides/admin.html#messaging-users",
-    "href": "guides/admin.html#messaging-users",
-    "title": "Administration the service",
-    "section": "Messaging Users",
-    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. Simon Willison has identified dozens of examples of “prompt injection” attacks, which can trick AI tools into running nefarious code. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).\n\n\n\n\n\n\nNote\n\n\n\nTo use an AI coding agent, you will most likely need an API key from an LLM provider. We are not able to provide API keys.\n\n\nMost AI coding agents are distributed as NodeJS packages, so we need to install nodejs and a package manager (we’ll use pnpm).\n# use pixi to install nodejs and pnpm\n$ pixi global install nodejs pnpm\nThe package manager, pnpm, has a setup script that we need to run so that the tools we install are available in the $PATH.\n# setup pnpm\n$ pnpm setup\n\n# update our current $PATH variable\n$ source /home/coder/.bashrc\nYou should now be able to install and run your coding agent. For example, to install the Gemini CLI:\n# install gemini\n$ pnpm install -g @google/gemini-cli\n\n# create a new workspace to run the agent in\n$ mkdir workspace\n$ cd workspace\n\n# set any credentials as environment variables\nexport GOOGLE_CLOUD_PROJECT=...\nexport GEMINI_API_KEY=...\n\n# run gemini\n$ gemini"
   },
   {
     "objectID": "index.html",
@@ -49,10 +42,66 @@
     "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
   },
   {
-    "objectID": "guides/ai-agents.html",
-    "href": "guides/ai-agents.html",
-    "title": "Installing AI Coding Agents",
+    "objectID": "guides/admin.html",
+    "href": "guides/admin.html",
+    "title": "Administration the service",
     "section": "",
-    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. Simon Willison has identified dozens of examples of “prompt injection” attacks, which can trick AI tools into running nefarious code. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).\n\n\n\n\n\n\nNote\n\n\n\nTo use an AI coding agent, you will most likely need an API key from an LLM provider. We are not able to provide API keys.\n\n\nMost AI coding agents are distributed as NodeJS packages, so we need to install nodejs and a package manager (we’ll use pnpm).\n# use pixi to install nodejs and pnpm\n$ pixi global install nodejs pnpm\nThe package manager, pnpm, has a setup script that we need to run so that the tools we install are available in the $PATH.\n# setup pnpm\n$ pnpm setup\n\n# update our current $PATH variable\n$ source /home/coder/.bashrc\nYou should now be able to install and run your coding agent. For example, to install the Gemini CLI:\n# install gemini\n$ pnpm install -g @google/gemini-cli\n\n# create a new workspace to run the agent in\n$ mkdir workspace\n$ cd workspace\n\n# set any credentials as environment variables\nexport GOOGLE_CLOUD_PROJECT=...\nexport GEMINI_API_KEY=...\n\n# run gemini\n$ gemini"
+    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+  },
+  {
+    "objectID": "guides/admin.html#messaging-users",
+    "href": "guides/admin.html#messaging-users",
+    "title": "Administration the service",
+    "section": "Messaging Users",
+    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+  },
+  {
+    "objectID": "guides/rstudio.html",
+    "href": "guides/rstudio.html",
+    "title": "Getting Started with RStudio",
+    "section": "",
+    "text": "RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser."
+  },
+  {
+    "objectID": "guides/rstudio.html#enabling-rstudio-in-your-workspace",
+    "href": "guides/rstudio.html#enabling-rstudio-in-your-workspace",
+    "title": "Getting Started with RStudio",
+    "section": "Enabling RStudio in Your Workspace",
+    "text": "Enabling RStudio in Your Workspace\nWhen creating a new workspace, you need to enable the RStudio service to make it available.\n\n\n\n\n\n\nImportant\n\n\n\nRStudio must be enabled when the workspace is created. You cannot add it to an existing workspace without recreating the workspace.\n\n\n\nCreating a Workspace with RStudio\n\nNavigate to the “New Workspace” Page\nComplete the required fields\nMake sure “Include RStudio” is set to “Yes”\nComplete the workspace creation process\n\nOnce your workspace is provisioned, RStudio will be accessible through a dedicated URL or port that appears in your workspace dashboard.\n\n\n\nWeb UI for a new Coder Workspace with RStudio Installed"
+  },
+  {
+    "objectID": "guides/rstudio.html#accessing-rstudio",
+    "href": "guides/rstudio.html#accessing-rstudio",
+    "title": "Getting Started with RStudio",
+    "section": "Accessing RStudio",
+    "text": "Accessing RStudio\nAfter your workspace starts, you can access RStudio by:\n\nOpening your workspace dashboard\nClicking on the RStudio service link\nThe RStudio interface will open in a new browser window.\n\nThe RStudio session runs inside your workspace, so all files, packages, and settings are isolated to your workspace environment."
+  },
+  {
+    "objectID": "guides/rstudio.html#setting-up-your-first-rstudio-project",
+    "href": "guides/rstudio.html#setting-up-your-first-rstudio-project",
+    "title": "Getting Started with RStudio",
+    "section": "Setting Up Your First RStudio Project",
+    "text": "Setting Up Your First RStudio Project\nRStudio Projects make it easy to organize your work and manage working directories. Here’s how to create your first project:\n\nCreate a New Project\n\nIn RStudio, click File → New Project\nChoose one of the following options:\n\nNew Directory: Start a fresh project\nExisting Directory: Convert an existing folder to a project\nVersion Control: Clone a Git repository\n\n\n\n\nProject Structure\nFor a new directory project:\n\nSelect the project type (e.g., “New Project”, “R Package”, “Quarto Project”)\nEnter a directory name for your project\nChoose where to create the project (default is your home directory)\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
+  },
+  {
+    "objectID": "guides/rstudio.html#installing-r-packages",
+    "href": "guides/rstudio.html#installing-r-packages",
+    "title": "Getting Started with RStudio",
+    "section": "Installing R Packages",
+    "text": "Installing R Packages\nYou can install packages in your workspace just like a local RStudio installation:\n# Install from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(\"ggplot2\")\n\n# Install from GitHub\ninstall.packages(\"devtools\")\ndevtools::install_github(\"username/repository\")\n\n\n\n\n\n\nTip\n\n\n\nPackages installed in your workspace persist across sessions but are isolated from other workspaces. This ensures reproducibility and avoids package conflicts."
+  },
+  {
+    "objectID": "guides/rstudio.html#configuring-rstudio",
+    "href": "guides/rstudio.html#configuring-rstudio",
+    "title": "Getting Started with RStudio",
+    "section": "Configuring RStudio",
+    "text": "Configuring RStudio\n\nSetting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\"\n\n\nCustomizing Appearance\nYou can customize RStudio’s appearance:\n\nTools → Global Options → Appearance\nChoose your preferred theme, font, and font size\nSettings are saved in your workspace"
+  },
+  {
+    "objectID": "guides/rstudio.html#learn-more-about-rstudio",
+    "href": "guides/rstudio.html#learn-more-about-rstudio",
+    "title": "Getting Started with RStudio",
+    "section": "Learn More About RStudio",
+    "text": "Learn More About RStudio\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
   }
 ]
