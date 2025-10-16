@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: build
 
 website:
   title: "DREAM Lab Coder Workspaces"
@@ -18,3 +18,6 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+
+execute:
+  freeze: auto

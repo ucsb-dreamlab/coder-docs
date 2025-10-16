@@ -1,3 +1,4 @@
 /.quarto/
+/build/
 **/*.quarto_ipynb
 /.claude/
