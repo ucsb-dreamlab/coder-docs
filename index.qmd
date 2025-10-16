@@ -18,7 +18,7 @@ computing resources provided by the [College of Letters and Science IT](https://
 4. On the "Create Workspace" page:
     *  Give the workspace a name.
     *  Check "I understand the usage policies".
-    *  Select additional software to enable (see below).
+    *  Select additional software to enable (see [Optional Software](#optional-software)).
     *  Click "Create Workspace".
     *  It may take a few minutes for the workspace to boot.
 
