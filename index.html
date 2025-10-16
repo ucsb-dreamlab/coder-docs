@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Workspaces Overview – DREAM Lab Coder Workspaces</title>
+<title>Coder Workspaces: Overview – DREAM Lab Coder Workspaces</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -123,9 +123,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hardware" id="toc-hardware" class="nav-link active" data-scroll-target="#hardware">Hardware</a></li>
-  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software">Software</a></li>
-  <li><a href="#creating-a-workspace" id="toc-creating-a-workspace" class="nav-link" data-scroll-target="#creating-a-workspace">Creating a Workspace</a></li>
+  <li><a href="#creating-a-workspace" id="toc-creating-a-workspace" class="nav-link active" data-scroll-target="#creating-a-workspace">Creating a Workspace</a></li>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting Help</a></li>
+  <li><a href="#hardware-and-software" id="toc-hardware-and-software" class="nav-link" data-scroll-target="#hardware-and-software">Hardware and Software</a></li>
   <li><a href="#workspace-lifecycle" id="toc-workspace-lifecycle" class="nav-link" data-scroll-target="#workspace-lifecycle">Workspace Lifecycle</a></li>
   <li><a href="#policies" id="toc-policies" class="nav-link" data-scroll-target="#policies">Policies</a></li>
   </ul>
@@ -136,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Workspaces Overview</h1>
+<h1 class="title">Coder Workspaces: Overview</h1>
 </div>
 
 
@@ -153,10 +153,43 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Coder Workspaces are on-demand virtual machines provided by UCSB Dreamlab with commonly used data science tools. They are accessible to anyone with an active UCSB Net ID.</p>
-<p><a href="https://coder.dreamlab.ucsb.edu" class="uri">https://coder.dreamlab.ucsb.edu</a></p>
-<section id="hardware" class="level2">
-<h2 class="anchored" data-anchor-id="hardware">Hardware</h2>
+<p>Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.</p>
+<p>The service is managed by the <a href="https://www.library.ucsb.edu/dreamlab">Library DREAM Lab</a> and uses computing resources provided by the <a href="https://www.lsit.ucsb.edu">College of Letters and Science IT</a></p>
+<section id="creating-a-workspace" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-workspace">Creating a Workspace</h3>
+<ol type="1">
+<li>Visit <a href="https://coder.dreamlab.ucsb.edu" class="uri">https://coder.dreamlab.ucsb.edu</a>.</li>
+<li>Click “UCSB Login” and log in using UCSB SSO (via Google).</li>
+<li>Click the button to create a Dreamlab Workspace.</li>
+<li>On the “Create Workspace” page:
+<ul>
+<li>Give the workspace a name.</li>
+<li>Check “I understand the usage policies”.</li>
+<li>Select additional software to enable (see below).</li>
+<li>Click “Create Workspace”.</li>
+<li>It may take a few minutes for the workspace to boot.</li>
+</ul></li>
+</ol>
+<p>You should see an interface for using the workspace (yours may be configured with slightly different software).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/workspace.png" class="img-fluid figure-img"></p>
+<figcaption>Web UI for a new Coder Workspace</figcaption>
+</figure>
+</div>
+<p>See our guides (in the top menu) for additional instructions.</p>
+</section>
+<section id="getting-help" class="level3">
+<h3 class="anchored" data-anchor-id="getting-help">Getting Help</h3>
+<p>For questions or support:</p>
+<ul>
+<li>Email: <a href="mailto:dreamlab@library.ucsb.edu" class="email">dreamlab@library.ucsb.edu</a></li>
+<li>Join the <a href="https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ">UCSB Carpentry Slack</a></li>
+</ul>
+</section>
+<section id="hardware-and-software" class="level2">
+<h2 class="anchored" data-anchor-id="hardware-and-software">Hardware and Software</h2>
+<p>Each worskpace is a virtual machine (running Ubuntu linux) with the following hardware:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -174,47 +207,106 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">16 GiB</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Disk</td>
-<td style="text-align: left;">15 GB for OS, 64 GB for user data</td>
+<td style="text-align: left;">User Data Disk</td>
+<td style="text-align: left;">64 GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OS Disk</td>
+<td style="text-align: left;">15 GB</td>
+</tr>
+</tbody>
+</table>
+<section id="default-software" class="level4">
+<h4 class="anchored" data-anchor-id="default-software">Default Software</h4>
+<p>All workspaces include the following software:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><a href="https://ubuntu.com/">Ubuntu Linux</a></td>
+<td style="text-align: left;">24.04 LTS</td>
+<td style="text-align: left;">Operating System</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="https://docs.docker.com/get-started/">Docker</a></td>
+<td style="text-align: left;">28.4.0</td>
+<td style="text-align: left;">Container Runtime</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="https://pixi.sh/latest/">Pixi</a></td>
+<td style="text-align: left;">v0.55.0</td>
+<td style="text-align: left;">Python package manager</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="https://www.r-project.org/">R</a></td>
+<td style="text-align: left;">v4.5.1</td>
+<td style="text-align: left;">R programming language</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Git</td>
+<td style="text-align: left;">v2.43.0</td>
+<td style="text-align: left;">Version control software</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>gh</code></td>
+<td style="text-align: left;">v2.80.0</td>
+<td style="text-align: left;">Github CLI</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>jq</code></td>
+<td style="text-align: left;">v1.7</td>
+<td style="text-align: left;">Command line JSON processor</td>
+</tr>
+</tbody>
+</table>
+<p>Additional software may be installed using <a href="https://documentation.ubuntu.com/server/how-to/software/package-management/"><code>apt</code></a> or <a href="https://pixi.sh"><code>pixi</code></a>.</p>
+</section>
+<section id="optional-software" class="level4">
+<h4 class="anchored" data-anchor-id="optional-software">Optional Software</h4>
+<p>Services can be enabled when the workspace is created:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 15%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Service</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RStudio Server</td>
+<td style="text-align: left;">v2025.09.1</td>
+<td style="text-align: left;">Run RStudio in the browser</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jupyter Lab Server</td>
+<td style="text-align: left;">v4.4.9</td>
+<td style="text-align: left;">Run Jupyter Notebooks in the browser</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VS Code Web</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">Run VS Code in the browser</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VS Code Service</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">Connect to the workspace using VS Code</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="software" class="level2">
-<h2 class="anchored" data-anchor-id="software">Software</h2>
-<p>All workspaces include the following software:</p>
-<ul>
-<li><a href="https://ubuntu.com/">Ubuntu Linux</a> (24.04 LTS) - Operating System</li>
-<li><a href="https://pixi.sh/latest/"><code>pixi</code></a> v0.55.0 - Python package manager</li>
-<li><a href="https://www.r-project.org/"><code>R</code></a> v4.5.1</li>
-<li><code>git</code>v2.43.0 - version control software</li>
-<li><code>gh</code> v2.80.0 - Github CLI</li>
-<li><code>jq</code>v1.7 - command line JSON processor</li>
-</ul>
-<p>Service can be enabled when the workspace is created:</p>
-<ul>
-<li>RStudio Server v2025.09.1 - to run RStudio in the browser</li>
-<li>Jupyter Lab Server v4.4.9 - to run Jupyter Notebooks in the browser</li>
-<li>VS Code Web - to run VS Code in the browser</li>
-<li>VS Code Service - connect to the workspace using VS Code</li>
-</ul>
-<p>Additional software may be installed using <a href="https://documentation.ubuntu.com/server/how-to/software/package-management/"><code>apt</code></a> or <a href="https://pixi.sh"><code>pixi</code></a>.</p>
-</section>
-<section id="creating-a-workspace" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-workspace">Creating a Workspace</h2>
-<ol type="1">
-<li>Visit <a href="https://coder.dreamlab.ucsb.edu" class="uri">https://coder.dreamlab.ucsb.edu</a>.</li>
-<li>Click “UCSB Login” and log in using UCSB SSO (via Google).</li>
-<li>Click the button to create a Dreamlab Workspace.</li>
-<li>On the “Create Workspace” page:
-<ul>
-<li>Give the workspace a name.</li>
-<li>Check “I understand the usage policies”.</li>
-<li>Select additional software to enable.</li>
-<li>Click “Create Workspace”.</li>
-<li>It may take a few minutes for the workspace to boot.</li>
-</ul></li>
-</ol>
 </section>
 <section id="workspace-lifecycle" class="level2">
 <h2 class="anchored" data-anchor-id="workspace-lifecycle">Workspace Lifecycle</h2>

@@ -23,42 +23,28 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Workspaces Overview",
+    "title": "Coder Workspaces: Overview",
     "section": "",
-    "text": "Coder Workspaces are on-demand virtual machines provided by UCSB Dreamlab with commonly used data science tools. They are accessible to anyone with an active UCSB Net ID.\nhttps://coder.dreamlab.ucsb.edu"
+    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.\nThe service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT"
   },
   {
-    "objectID": "index.html#hardware",
-    "href": "index.html#hardware",
-    "title": "Workspaces Overview",
-    "section": "Hardware",
-    "text": "Hardware\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nDisk\n15 GB for OS, 64 GB for user data"
-  },
-  {
-    "objectID": "index.html#software",
-    "href": "index.html#software",
-    "title": "Workspaces Overview",
-    "section": "Software",
-    "text": "Software\nAll workspaces include the following software:\n\nUbuntu Linux (24.04 LTS) - Operating System\npixi v0.55.0 - Python package manager\nR v4.5.1\ngitv2.43.0 - version control software\ngh v2.80.0 - Github CLI\njqv1.7 - command line JSON processor\n\nService can be enabled when the workspace is created:\n\nRStudio Server v2025.09.1 - to run RStudio in the browser\nJupyter Lab Server v4.4.9 - to run Jupyter Notebooks in the browser\nVS Code Web - to run VS Code in the browser\nVS Code Service - connect to the workspace using VS Code\n\nAdditional software may be installed using apt or pixi."
-  },
-  {
-    "objectID": "index.html#creating-a-workspace",
-    "href": "index.html#creating-a-workspace",
-    "title": "Workspaces Overview",
-    "section": "Creating a Workspace",
-    "text": "Creating a Workspace\n\nVisit https://coder.dreamlab.ucsb.edu.\nClick “UCSB Login” and log in using UCSB SSO (via Google).\nClick the button to create a Dreamlab Workspace.\nOn the “Create Workspace” page:\n\nGive the workspace a name.\nCheck “I understand the usage policies”.\nSelect additional software to enable.\nClick “Create Workspace”.\nIt may take a few minutes for the workspace to boot."
+    "objectID": "index.html#hardware-and-software",
+    "href": "index.html#hardware-and-software",
+    "title": "Coder Workspaces: Overview",
+    "section": "Hardware and Software",
+    "text": "Hardware and Software\nEach worskpace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04 LTS\nOperating System\n\n\nDocker\n28.4.0\nContainer Runtime\n\n\nPixi\nv0.55.0\nPython package manager\n\n\nR\nv4.5.1\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.80.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\n\n\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2025.09.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Service\n-\nConnect to the workspace using VS Code"
   },
   {
     "objectID": "index.html#workspace-lifecycle",
     "href": "index.html#workspace-lifecycle",
-    "title": "Workspaces Overview",
+    "title": "Coder Workspaces: Overview",
     "section": "Workspace Lifecycle",
     "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
   },
   {
     "objectID": "index.html#policies",
     "href": "index.html#policies",
-    "title": "Workspaces Overview",
+    "title": "Coder Workspaces: Overview",
     "section": "Policies",
     "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
   },
