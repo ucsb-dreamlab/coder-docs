@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "guides/datasets.html",
+    "href": "guides/datasets.html",
+    "title": "Shared Datasets",
+    "section": "",
+    "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
+  },
+  {
+    "objectID": "guides/ai-agents.html",
+    "href": "guides/ai-agents.html",
+    "title": "Installing AI Coding Agents",
+    "section": "",
+    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. Simon Willison has identified dozens of examples of “prompt injection” attacks, which can trick AI tools into running nefarious code. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).\n\n\n\n\n\n\nNote\n\n\n\nTo use an AI coding agent, you will most likely need an API key from an LLM provider. We are not able to provide API keys.\n\n\nMost AI coding agents are distributed as NodeJS packages, so we need to install nodejs and a package manager (we’ll use pnpm).\n# use pixi to install nodejs and pnpm\n$ pixi global install nodejs pnpm\nThe package manager, pnpm, has a setup script that we need to run so that the tools we install are available in the $PATH.\n# setup pnpm\n$ pnpm setup\n\n# update our current $PATH variable\n$ source /home/coder/.bashrc\nYou should now be able to install and run your coding agent. For example, to install the Gemini CLI:\n# install gemini\n$ pnpm install -g @google/gemini-cli\n\n# create a new workspace to run the agent in\n$ mkdir workspace\n$ cd workspace\n\n# set any credentials as environment variables\nexport GOOGLE_CLOUD_PROJECT=...\nexport GEMINI_API_KEY=...\n\n# run gemini\n$ gemini"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Workspaces Overview",
+    "section": "",
+    "text": "Coder Workspaces are on-demand virtual machines provided by UCSB Dreamlab with commonly used data science tools. They are accessible to anyone with an active UCSB Net ID.\nhttps://coder.dreamlab.ucsb.edu"
+  },
+  {
+    "objectID": "index.html#hardware",
+    "href": "index.html#hardware",
+    "title": "Workspaces Overview",
+    "section": "Hardware",
+    "text": "Hardware\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nDisk\n15 GB for OS, 64 GB for user data"
+  },
+  {
+    "objectID": "index.html#software",
+    "href": "index.html#software",
+    "title": "Workspaces Overview",
+    "section": "Software",
+    "text": "Software\nAll workspaces include the following software:\n\nUbuntu Linux (24.04 LTS) - Operating System\npixi v0.55.0 - Python package manager\nR v4.5.1\ngitv2.43.0 - version control software\ngh v2.80.0 - Github CLI\njqv1.7 - command line JSON processor\n\nService can be enabled when the workspace is created:\n\nRStudio Server v2025.09.1 - to run RStudio in the browser\nJupyter Lab Server v4.4.9 - to run Jupyter Notebooks in the browser\nVS Code Web - to run VS Code in the browser\nVS Code Service - connect to the workspace using VS Code\n\nAdditional software may be installed using apt or pixi."
+  },
+  {
+    "objectID": "index.html#creating-a-workspace",
+    "href": "index.html#creating-a-workspace",
+    "title": "Workspaces Overview",
+    "section": "Creating a Workspace",
+    "text": "Creating a Workspace\n\nVisit https://coder.dreamlab.ucsb.edu.\nClick “UCSB Login” and log in using UCSB SSO (via Google).\nClick the button to create a Dreamlab Workspace.\nOn the “Create Workspace” page:\n\nGive the workspace a name.\nCheck “I understand the usage policies”.\nSelect additional software to enable.\nClick “Create Workspace”.\nIt may take a few minutes for the workspace to boot."
+  },
+  {
+    "objectID": "index.html#workspace-lifecycle",
+    "href": "index.html#workspace-lifecycle",
+    "title": "Workspaces Overview",
+    "section": "Workspace Lifecycle",
+    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
+  },
+  {
+    "objectID": "index.html#policies",
+    "href": "index.html#policies",
+    "title": "Workspaces Overview",
+    "section": "Policies",
+    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+  },
+  {
+    "objectID": "guides/admin.html",
+    "href": "guides/admin.html",
+    "title": "Administration the service",
+    "section": "",
+    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+  },
+  {
+    "objectID": "guides/admin.html#messaging-users",
+    "href": "guides/admin.html#messaging-users",
+    "title": "Administration the service",
+    "section": "Messaging Users",
+    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+  }
+]
