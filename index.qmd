@@ -1,39 +1,16 @@
 ---
-title: "Workspaces Overview"
+title: "Coder Workspaces: Overview"
 ---
 
-Coder Workspaces are on-demand virtual machines provided by UCSB Dreamlab with commonly used data science tools. They are accessible to anyone with an active UCSB Net ID. 
+Coder Workspaces are on-demand virtual machines with commonly used data
+science tools pre-installed. Anyone with a UCSB Net ID can create a
+workspace to use for the duration of the academic quarter. Workspaces are
+deleted at the end of each quarter.
 
-<https://coder.dreamlab.ucsb.edu>
+The service is managed by the [Library DREAM Lab](https://www.library.ucsb.edu/dreamlab) and uses
+computing resources provided by the [College of Letters and Science IT](https://www.lsit.ucsb.edu)
 
-## Hardware
-| Resources | Description                       |
-| :-------- | :-------------------------------- |
-| CPU       | 4 vCPUs                           |
-| Memory    | 16 GiB                            |
-| Disk      | 15 GB for OS, 64 GB for user data |
-
-## Software
-
-All workspaces include the following software:
-
-- [Ubuntu Linux](https://ubuntu.com/) (24.04 LTS) - Operating System
-- [`pixi`](https://pixi.sh/latest/) v0.55.0 - Python package manager
-- [`R`](https://www.r-project.org/) v4.5.1
-- `git`v2.43.0 - version control software
-- `gh` v2.80.0 - Github CLI
-- `jq`v1.7 - command line JSON processor
-
-Service can be enabled when the workspace is created:
-
-- RStudio Server v2025.09.1 - to run RStudio in the browser
-- Jupyter Lab Server v4.4.9 - to run Jupyter Notebooks in the browser
-- VS Code Web - to run VS Code in the browser
-- VS Code Service - connect to the workspace using VS Code
-
-Additional software may be installed using [`apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/) or [`pixi`](https://pixi.sh).
-
-## Creating a Workspace
+### Creating a Workspace
 
 1. Visit <https://coder.dreamlab.ucsb.edu>.
 2. Click "UCSB Login" and log in using UCSB SSO (via Google).
@@ -41,9 +18,60 @@ Additional software may be installed using [`apt`](https://documentation.ubuntu.
 4. On the "Create Workspace" page:
     *  Give the workspace a name.
     *  Check "I understand the usage policies".
-    *  Select additional software to enable.
+    *  Select additional software to enable (see below).
     *  Click "Create Workspace".
     *  It may take a few minutes for the workspace to boot.
+
+You should see an interface for using the workspace (yours may be configured with slightly different software).
+
+![Web UI for a new Coder Workspace](images/workspace.png)
+
+See our guides (in the top menu) for additional instructions.
+
+### Getting Help
+
+For questions or support:
+
+* Email: <dreamlab@library.ucsb.edu>
+* Join the [UCSB Carpentry Slack](https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ)
+
+## Hardware and Software
+
+Each worskpace is a virtual machine (running Ubuntu linux) with the following hardware:
+
+| Resources      | Description |
+| :------------- | :---------- |
+| CPU            | 4 vCPUs     |
+| Memory         | 16 GiB      |
+| User Data Disk | 64 GB       |
+| OS Disk        | 15 GB       |
+
+#### Default Software
+
+All workspaces include the following software:
+
+| Name                                           | Version   | Description                 |
+| :--------------------------------------------- | :-------- | :-------------------------- |
+| [Ubuntu Linux](https://ubuntu.com/)            | 24.04 LTS | Operating System            |
+| [Docker](https://docs.docker.com/get-started/) | 28.4.0    | Container Runtime           |
+| [Pixi](https://pixi.sh/latest/)                | v0.55.0   | Python package manager      |
+| [R](https://www.r-project.org/)                | v4.5.1    | R programming language      |
+| Git                                            | v2.43.0   | Version control software    |
+| `gh`                                           | v2.80.0   | Github CLI                  |
+| `jq`                                           | v1.7      | Command line JSON processor |
+
+Additional software may be installed using [`apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/) or [`pixi`](https://pixi.sh).
+
+#### Optional Software
+Services can be enabled when the workspace is created:
+
+| Service            | Version    | Description                            |
+| :----------------- | :--------- | :------------------------------------- |
+| RStudio Server     | v2025.09.1 | Run RStudio in the browser             |
+| Jupyter Lab Server | v4.4.9     | Run Jupyter Notebooks in the browser   |
+| VS Code Web        | -          | Run VS Code in the browser             |
+| VS Code Service    | -          | Connect to the workspace using VS Code |
+
 
 ## Workspace Lifecycle
 
