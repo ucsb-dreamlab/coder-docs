@@ -1,0 +1,16 @@
+---
+title: "Administration the service"
+---
+
+Primarily administered by Seth Erickson (Library) and LSIT members (user/template management).
+
+## Messaging Users
+
+To generate a list of user emails (requires admin privileges):
+
+```bash
+coder login coder.dreamlab.ucsb.edu
+coder users list --column email
+```
+
+These commands can be run from a coder workspace.

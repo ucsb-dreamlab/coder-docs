@@ -1,0 +1,64 @@
+---
+title: "Workspaces Overview"
+---
+
+Coder Workspaces are on-demand virtual machines provided by UCSB Dreamlab with commonly used data science tools. They are accessible to anyone with an active UCSB Net ID. 
+
+<https://coder.dreamlab.ucsb.edu>
+
+## Hardware
+| Resources | Description                       |
+| :-------- | :-------------------------------- |
+| CPU       | 4 vCPUs                           |
+| Memory    | 16 GiB                            |
+| Disk      | 15 GB for OS, 64 GB for user data |
+
+## Software
+
+All workspaces include the following software:
+
+- [Ubuntu Linux](https://ubuntu.com/) (24.04 LTS) - Operating System
+- [`pixi`](https://pixi.sh/latest/) v0.55.0 - Python package manager
+- [`R`](https://www.r-project.org/) v4.5.1
+- `git`v2.43.0 - version control software
+- `gh` v2.80.0 - Github CLI
+- `jq`v1.7 - command line JSON processor
+
+Service can be enabled when the workspace is created:
+
+- RStudio Server v2025.09.1 - to run RStudio in the browser
+- Jupyter Lab Server v4.4.9 - to run Jupyter Notebooks in the browser
+- VS Code Web - to run VS Code in the browser
+- VS Code Service - connect to the workspace using VS Code
+
+Additional software may be installed using [`apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/) or [`pixi`](https://pixi.sh).
+
+## Creating a Workspace
+
+1. Visit <https://coder.dreamlab.ucsb.edu>.
+2. Click "UCSB Login" and log in using UCSB SSO (via Google).
+3. Click the button to create a Dreamlab Workspace.
+4. On the "Create Workspace" page:
+    *  Give the workspace a name.
+    *  Check "I understand the usage policies".
+    *  Select additional software to enable.
+    *  Click "Create Workspace".
+    *  It may take a few minutes for the workspace to boot.
+
+## Workspace Lifecycle
+
+* Workspaces shut down (stop) after __four hours__ of inactivity.
+* You can manually __stop__ a workspace by clicking the "stop" button.
+* To __start__ a stopped workspace, click the workspace's "Start" button. It may take a few minutes to resume.
+* Deleting a workspace deletes all files on the workspace!
+* All workspaces will be deleted at the end of each academic quarter.
+
+## Policies
+
+* **Backup your data:** Data is not backed up; users are responsible for their own backups.
+* **Deletion:** All workspaces are automatically deleted at the end of each quarter.
+* **Limits:** Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.
+* **Maintenance:** Workspaces may be inaccessible during scheduled maintenance windows (announced via email).
+* **Inactivity:** Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the "start" button.
+* **Software Installation:** Users may install additional software.
+* **Access by Staff:** Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored.

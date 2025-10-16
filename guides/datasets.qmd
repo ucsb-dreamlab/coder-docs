@@ -1,0 +1,9 @@
+---
+title: "Shared Datasets"
+---
+
+```bash
+sudo apt install nfs-common
+sudo mkdir /mnt/datasets
+sudo mount 10.2.17.91:/mnt/datasets /mnt/datasets
+```

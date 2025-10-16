@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "DREAM Lab Coder Workspaces"
+  navbar:
+    left:
+      - text: Guides
+        menu: 
+        - text: AI Code Agents
+          href: guides/ai-agents.qmd
+        - text: Administering
+          href: guides/admin.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
