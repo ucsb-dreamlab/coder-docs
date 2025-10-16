@@ -1,0 +1,124 @@
+---
+title: "Getting Started with RStudio"
+---
+
+RStudio is a powerful integrated development environment (IDE) for R
+programming. Coder workspaces allow you to run RStudio Server, which
+provides the full RStudio interface accessible through your web browser.
+
+## Enabling RStudio in Your Workspace
+
+When creating a new workspace, you need to enable the RStudio service to
+make it available.
+
+::: {.callout-important}
+RStudio must be enabled when the workspace is created. You cannot add it
+to an existing workspace without recreating the workspace.
+:::
+
+### Creating a Workspace with RStudio
+
+1. Navigate to the "New Workspace" Page
+2. Complete the required fields
+3. Make sure "Include RStudio" is set to "Yes"
+4. Complete the workspace creation process
+
+Once your workspace is provisioned, RStudio will be accessible through a
+dedicated URL or port that appears in your workspace dashboard.
+
+![Web UI for a new Coder Workspace with RStudio Installed](../images/workspace-rstudio.png)
+
+## Accessing RStudio
+
+After your workspace starts, you can access RStudio by:
+
+1. Opening your workspace dashboard
+2. Clicking on the RStudio service link
+3. The RStudio interface will open in a new browser window.
+
+The RStudio session runs inside your workspace, so all files, packages,
+and settings are isolated to your workspace environment.
+
+## Setting Up Your First RStudio Project
+
+RStudio Projects make it easy to organize your work and manage working
+directories. Here's how to create your first project:
+
+### Create a New Project
+
+1. In RStudio, click **File** → **New Project**
+2. Choose one of the following options:
+   - **New Directory**: Start a fresh project
+   - **Existing Directory**: Convert an existing folder to a project
+   - **Version Control**: Clone a Git repository
+
+### Project Structure
+
+For a new directory project:
+
+1. Select the project type (e.g., "New Project", "R Package", "Quarto
+   Project")
+2. Enter a directory name for your project
+3. Choose where to create the project (default is your home directory)
+4. Click **Create Project**
+
+RStudio will create a `.Rproj` file in your project directory. This
+file stores project-specific settings and makes it easy to return to
+your work.
+
+## Installing R Packages
+
+You can install packages in your workspace just like a local RStudio
+installation:
+
+```r
+# Install from CRAN
+install.packages("tidyverse")
+install.packages("ggplot2")
+
+# Install from GitHub
+install.packages("devtools")
+devtools::install_github("username/repository")
+```
+
+::: {.callout-tip}
+Packages installed in your workspace persist across sessions but are
+isolated from other workspaces. This ensures reproducibility and avoids
+package conflicts.
+:::
+
+## Configuring RStudio
+
+### Setting Up Git
+
+If you plan to use version control:
+
+1. Open the Terminal in RStudio (**Tools** → **Terminal** → **New
+   Terminal**)
+2. Configure your Git identity:
+
+```sh
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+
+### Customizing Appearance
+
+You can customize RStudio's appearance:
+
+- **Tools** → **Global Options** → **Appearance**
+- Choose your preferred theme, font, and font size
+- Settings are saved in your workspace
+
+## Learn More About RStudio
+
+Here are some helpful resources to get the most out of RStudio:
+
+- [RStudio User Guide](https://docs.posit.co/ide/user/) -
+  Comprehensive documentation
+- [RStudio Cheat Sheets](https://posit.co/resources/cheatsheets/) -
+  Quick reference guides
+- [R for Data Science](https://r4ds.hadley.nz/) - Learn R programming
+  with RStudio
+- [Posit Community](https://community.rstudio.com/) - Get help and
+  share knowledge
