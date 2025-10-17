@@ -7,6 +7,62 @@
     "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
   },
   {
+    "objectID": "guides/ai-agents.html",
+    "href": "guides/ai-agents.html",
+    "title": "Using AI Coding Agents",
+    "section": "",
+    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. Simon Willison has identified dozens of examples of “prompt injection” attacks, which can trick AI tools into running nefarious code. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
+  },
+  {
+    "objectID": "guides/ai-agents.html#installing-an-agent",
+    "href": "guides/ai-agents.html#installing-an-agent",
+    "title": "Using AI Coding Agents",
+    "section": "Installing an Agent",
+    "text": "Installing an Agent\n\n\n\n\n\n\nNote\n\n\n\nTo use an AI coding agent, you may need an account or API key from a model provider like Google, OpenAI, or Anthropic. We are not able to provide API keys.\n\n\nMost AI coding agents are distributed as NodeJS packages, so we need to install nodejs and its package manager npm.\n# use pixi to install nodejs (also installs npm)\n$ pixi global install nodejs\nNow we need to update the shell’s $PATH to include the directory where npm will install things:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to make new $PATH active\nsource ~/.bashrc\n\nGemini CLI\nWith NodeJS installed, you should now be able to install and run your coding agent. To install the Gemini CLI:\n# install gemini\n$ npm install -g @google/gemini-cli\n\n# create a new workspace to run the agent in\n$ mkdir workspace\n$ cd workspace\n\n# run gemini\n$ gemini\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Coder Workspaces: Overview",
+    "section": "",
+    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.\nThe service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT"
+  },
+  {
+    "objectID": "index.html#hardware-and-software",
+    "href": "index.html#hardware-and-software",
+    "title": "Coder Workspaces: Overview",
+    "section": "Hardware and Software",
+    "text": "Hardware and Software\nEach worskpace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04 LTS\nOperating System\n\n\nDocker\n28.4.0\nContainer Runtime\n\n\nPixi\nv0.55.0\nPython package manager\n\n\nR\nv4.5.1\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.80.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\n\n\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2025.09.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Service\n-\nConnect to the workspace using VS Code"
+  },
+  {
+    "objectID": "index.html#workspace-lifecycle",
+    "href": "index.html#workspace-lifecycle",
+    "title": "Coder Workspaces: Overview",
+    "section": "Workspace Lifecycle",
+    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
+  },
+  {
+    "objectID": "index.html#policies",
+    "href": "index.html#policies",
+    "title": "Coder Workspaces: Overview",
+    "section": "Policies",
+    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+  },
+  {
+    "objectID": "guides/admin.html",
+    "href": "guides/admin.html",
+    "title": "Administration the service",
+    "section": "",
+    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+  },
+  {
+    "objectID": "guides/admin.html#messaging-users",
+    "href": "guides/admin.html#messaging-users",
+    "title": "Administration the service",
+    "section": "Messaging Users",
+    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+  },
+  {
     "objectID": "guides/rstudio.html",
     "href": "guides/rstudio.html",
     "title": "Getting Started with RStudio",
@@ -54,54 +110,5 @@
     "title": "Getting Started with RStudio",
     "section": "Learn More About RStudio",
     "text": "Learn More About RStudio\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Coder Workspaces: Overview",
-    "section": "",
-    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.\nThe service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT"
-  },
-  {
-    "objectID": "index.html#hardware-and-software",
-    "href": "index.html#hardware-and-software",
-    "title": "Coder Workspaces: Overview",
-    "section": "Hardware and Software",
-    "text": "Hardware and Software\nEach worskpace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04 LTS\nOperating System\n\n\nDocker\n28.4.0\nContainer Runtime\n\n\nPixi\nv0.55.0\nPython package manager\n\n\nR\nv4.5.1\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.80.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\n\n\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2025.09.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Service\n-\nConnect to the workspace using VS Code"
-  },
-  {
-    "objectID": "index.html#workspace-lifecycle",
-    "href": "index.html#workspace-lifecycle",
-    "title": "Coder Workspaces: Overview",
-    "section": "Workspace Lifecycle",
-    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
-  },
-  {
-    "objectID": "index.html#policies",
-    "href": "index.html#policies",
-    "title": "Coder Workspaces: Overview",
-    "section": "Policies",
-    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
-  },
-  {
-    "objectID": "guides/admin.html",
-    "href": "guides/admin.html",
-    "title": "Administration the service",
-    "section": "",
-    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
-  },
-  {
-    "objectID": "guides/admin.html#messaging-users",
-    "href": "guides/admin.html#messaging-users",
-    "title": "Administration the service",
-    "section": "Messaging Users",
-    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
-  },
-  {
-    "objectID": "guides/ai-agents.html",
-    "href": "guides/ai-agents.html",
-    "title": "Installing AI Coding Agents",
-    "section": "",
-    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. Simon Willison has identified dozens of examples of “prompt injection” attacks, which can trick AI tools into running nefarious code. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).\n\n\n\n\n\n\nNote\n\n\n\nTo use an AI coding agent, you will most likely need an API key from an LLM provider. We are not able to provide API keys.\n\n\nMost AI coding agents are distributed as NodeJS packages, so we need to install nodejs and a package manager (we’ll use pnpm).\n# use pixi to install nodejs and pnpm\n$ pixi global install nodejs pnpm\nThe package manager, pnpm, has a setup script that we need to run so that the tools we install are available in the $PATH.\n# setup pnpm\n$ pnpm setup\n\n# update our current $PATH variable\n$ source /home/coder/.bashrc\nYou should now be able to install and run your coding agent. For example, to install the Gemini CLI:\n# install gemini\n$ pnpm install -g @google/gemini-cli\n\n# create a new workspace to run the agent in\n$ mkdir workspace\n$ cd workspace\n\n# set any credentials as environment variables\nexport GOOGLE_CLOUD_PROJECT=...\nexport GEMINI_API_KEY=...\n\n# run gemini\n$ gemini"
   }
 ]
