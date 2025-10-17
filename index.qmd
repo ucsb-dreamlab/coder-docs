@@ -37,7 +37,7 @@ For questions or support:
 
 ## Hardware and Software
 
-Each worskpace is a virtual machine (running Ubuntu linux) with the following hardware:
+Each workspace is a virtual machine (running Ubuntu linux) with the following hardware:
 
 | Resources      | Description |
 | :------------- | :---------- |
