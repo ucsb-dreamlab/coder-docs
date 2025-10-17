@@ -5,10 +5,20 @@ title: "Using AI Coding Agents"
 Coder workspaces provide a relatively safe way to experiment with AI coding
 agents, like Claude Code, Gemini CLI, or Open AI's Codex. These tools, which
 generate and also *execute* code, can be useful but they are also inherently
-dangerous. "[Prompt injection]((https://simonwillison.net/tags/prompt-injection/))" 
+dangerous. "[Prompt injection](https://simonwillison.net/tags/prompt-injection/)" 
 attacks can trick AI tools into running nefarious code on your system. Because
 Coder workspaces are isolated virtual machines, the potential damage a rogue AI
 agent running in a workspace can cause is reduced (but not eliminated).
+
+
+::: {.callout-note}
+
+To use an AI coding agent, you typically need an account from a model
+provider like Google, OpenAI, or Anthropic. UCSB faculty and staff can use
+their UCSB email to authenticate the Gemini CLI. Unfortunately, UCSB students
+cannot access Gemini using their UCSB accounts at this time.
+
+:::
 
 ## Getting Started
 
@@ -53,14 +63,6 @@ cd my-project
 We're ready to install and run the agent!
 
 ### Installing the agent
-
-::: {.callout-note}
-
-To use an AI coding agent, you may need an account or API key from a model
-provider like Google, OpenAI, or Anthropic. The DREAM Lab is not able to
-provide accounts or API keys for these services.
-
-:::
 
 To install the [Gemini CLI](https://github.com/google-gemini/gemini-cli): 
 

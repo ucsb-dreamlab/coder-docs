@@ -65,13 +65,12 @@ Additional software may be installed using [`apt`](https://documentation.ubuntu.
 #### Optional Software
 Services can be enabled when the workspace is created:
 
-| Service            | Version    | Description                            |
-| :----------------- | :--------- | :------------------------------------- |
-| RStudio Server     | v2025.09.1 | Run RStudio in the browser             |
-| Jupyter Lab Server | v4.4.9     | Run Jupyter Notebooks in the browser   |
-| VS Code Web        | -          | Run VS Code in the browser             |
-| VS Code Service    | -          | Connect to the workspace using VS Code |
-
+| Service                                                                             | Version    | Description                            |
+| :---------------------------------------------------------------------------------- | :--------- | :------------------------------------- |
+| RStudio Server                                                                      | v2025.09.1 | Run RStudio in the browser             |
+| Jupyter Lab Server                                                                  | v4.4.9     | Run Jupyter Notebooks in the browser   |
+| [VS Code Web](https://github.com/coder/code-server)                                 | -          | Run VS Code in the browser             |
+| [VS Code Desktop (Server)](https://code.visualstudio.com/docs/remote/vscode-server) | -          | Connect to the workspace using VS Code |
 
 ## Workspace Lifecycle
 
