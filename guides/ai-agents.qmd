@@ -15,7 +15,7 @@ agent running in a workspace can cause is reduced (but not eliminated).
 
 To use an AI coding agent, you typically need an account from a model
 provider like Google, OpenAI, or Anthropic. UCSB faculty and staff can use
-their UCSB email to authenticate the Gemini CLI. Unfortunately, UCSB students
+their UCSB email to authenticate Google's Gemini CLI. Unfortunately, UCSB students
 cannot access Gemini using their UCSB accounts at this time.
 
 :::
