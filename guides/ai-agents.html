@@ -134,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-guides">    
         <li>
     <a class="dropdown-item" href="../guides/ai-agents.html">
- <span class="dropdown-text">AI Code Agents</span></a>
+ <span class="dropdown-text">Using AI Code Agents</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../guides/rstudio.html">
@@ -162,9 +162,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installing-an-agent" id="toc-installing-an-agent" class="nav-link active" data-scroll-target="#installing-an-agent">Installing an Agent</a>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting Started</a>
   <ul class="collapse">
-  <li><a href="#gemini-cli" id="toc-gemini-cli" class="nav-link" data-scroll-target="#gemini-cli">Gemini CLI</a></li>
+  <li><a href="#create-a-project-directory" id="toc-create-a-project-directory" class="nav-link" data-scroll-target="#create-a-project-directory">Create a project directory</a></li>
+  <li><a href="#installing-the-agent" id="toc-installing-the-agent" class="nav-link" data-scroll-target="#installing-the-agent">Installing the agent</a></li>
+  <li><a href="#example-prompt" id="toc-example-prompt" class="nav-link" data-scroll-target="#example-prompt">Example Prompt</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -192,8 +194,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. <a href="https://simonwillison.net/tags/prompt-injection/">Simon Willison</a> has identified dozens of examples of “prompt injection” attacks, which can trick AI tools into running nefarious code. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
-<section id="installing-an-agent" class="level2">
-<h2 class="anchored" data-anchor-id="installing-an-agent">Installing an Agent</h2>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<p>Most AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install <code>nodejs</code> and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use pixi to install nodejs and npm (package manager)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> global install nodejs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we need to update the shell’s <code>$PATH</code> to include the “global” directory where the NodeJS package manager (<code>npm</code>) will install the agent:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># update our current $PATH variable</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"export PATH=</span><span class="dt">\$</span><span class="st">PATH:</span><span class="dt">\$</span><span class="st">(npm prefix -g)/bin"</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run ~/.bashrc to activate our new $PATH settings</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="create-a-project-directory" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-project-directory">Create a project directory</h3>
+<p>You shouldn’t run the agent from the home directory (<code>~</code>). To start a new project, make a new directory and set it is as the working directory.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start a new project</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my-project</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or `git clone` an existing one</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># git clone git@github.com:my-account/my-project.git</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set the project as the working directory</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my-project</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We’re ready to install and run the agent!</p>
+</section>
+<section id="installing-the-agent" class="level3">
+<h3 class="anchored" data-anchor-id="installing-the-agent">Installing the agent</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -204,46 +230,31 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To use an AI coding agent, you may need an account or API key from a model provider like Google, OpenAI, or Anthropic. <strong>We are not able to provide API keys.</strong></p>
+<p>To use an AI coding agent, you may need an account or API key from a model provider like Google, OpenAI, or Anthropic. The DREAM Lab is not able to provide accounts or API keys for these services.</p>
 </div>
 </div>
-<p>Most AI coding agents are distributed as NodeJS packages, so we need to install <code>nodejs</code> and its package manager <code>npm</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use pixi to install nodejs (also installs npm)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pixi global install nodejs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now we need to update the shell’s <code>$PATH</code> to include the directory where <code>npm</code> will install things:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># update our current $PATH variable</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"export PATH=</span><span class="dt">\$</span><span class="st">PATH:</span><span class="dt">\$</span><span class="st">(npm prefix -g)/bin"</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run ~/.bashrc to make new $PATH active</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="gemini-cli" class="level3">
-<h3 class="anchored" data-anchor-id="gemini-cli">Gemini CLI</h3>
-<p>With NodeJS installed, you should now be able to install and run your coding agent. To install the <a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install gemini</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> npm install <span class="at">-g</span> @google/gemini-cli</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new workspace to run the agent in</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir workspace</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd workspace</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># run gemini</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gemini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="example-prompt" class="level4">
-<h4 class="anchored" data-anchor-id="example-prompt">Example Prompt</h4>
-<p>Here is an example prompt to generate a map based on COVID-19 fatality data using R.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Calculate the Local Moran's I statistic for covid-19 fatality rates </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>in US counties (contiguous 48 states only), then make a map of counties </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>in the continental US showing outliers. A csv with covid fatality rates </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>is available at this URL: </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>https://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Make an R script called 'map.R' to generate the map. The map should be </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>saved to 'map.png'. Use "tidy" R conventions. You are running in a headless </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>environment, without a graphical display.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-
+<p>To install the <a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install gemini as a global command</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @google/gemini-cli</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># run gemini (inside the project directory)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gemini</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="example-prompt" class="level3">
+<h3 class="anchored" data-anchor-id="example-prompt">Example Prompt</h3>
+<p>Here is an example prompt to generate a map based on COVID-19 fatality data using R.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Calculate the Local Moran's I statistic for covid-19 fatality rates </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>in US counties (contiguous 48 states only), then make a map of counties </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>in the continental US showing outliers. A csv with covid fatality rates </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>is available at this URL: </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>https://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Make an R script called 'map.R' to generate the map. The map should be </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>saved to 'map.png'. Use "tidy" R conventions. You are running in a headless </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>environment, without a graphical display.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+
 </section>
 </section>
 
