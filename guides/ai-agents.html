@@ -193,7 +193,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. “<a href="(https://simonwillison.net/tags/prompt-injection/)">Prompt injection</a>” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
+<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. “<a href="https://simonwillison.net/tags/prompt-injection/">Prompt injection</a>” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To use an AI coding agent, you typically need an account from a model provider like Google, OpenAI, or Anthropic. UCSB faculty and staff can use their UCSB email to authenticate the Gemini CLI. Unfortunately, UCSB students cannot access Gemini using their UCSB accounts at this time.</p>
+</div>
+</div>
 <section id="getting-started" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
 <p>Most AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install <code>nodejs</code> and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)</p>
@@ -220,19 +233,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="installing-the-agent" class="level3">
 <h3 class="anchored" data-anchor-id="installing-the-agent">Installing the agent</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>To use an AI coding agent, you may need an account or API key from a model provider like Google, OpenAI, or Anthropic. The DREAM Lab is not able to provide accounts or API keys for these services.</p>
-</div>
-</div>
 <p>To install the <a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install gemini as a global command</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @google/gemini-cli</span>
