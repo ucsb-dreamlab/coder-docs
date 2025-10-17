@@ -11,53 +11,69 @@ AI tools into running nefarious code. Because Coder workspaces are isolated
 virtual machines, the potential damage a rogue AI agent running in a workspace
 can cause is reduced (but not eliminated).
 
-## Installing an Agent
+## Getting Started
 
-::: {.callout-note}
-
-To use an AI coding agent, you may need an account or API key from a model
-provider like Google, OpenAI, or Anthropic. **We are not able to provide API
-keys.** 
-
-:::
-
-Most AI coding agents are distributed as NodeJS packages, so we need to install
-`nodejs` and its package manager `npm`.
+Most AI coding agents run in the terminal and are distributed as NodeJS
+applications. We'll use the terminal to install `nodejs` and the agent itself.
+You can use the  default web-based terminal that is included with every 
+workspace to run the shell commands below. (If you prefer to use VS Code's
+built-in terminal, then you will need to enable VS Code when you create the 
+workspace.)
 
 ```sh
-# use pixi to install nodejs (also installs npm)
-$ pixi global install nodejs
+# use pixi to install nodejs and npm (package manager)
+pixi global install nodejs
 ```
 
-Now we need to update the shell's `$PATH` to include the directory where `npm`
-will install things:
+Now we need to update the shell's `$PATH` to include the "global" directory where the 
+NodeJS package manager (`npm`) will install the agent:
 
 ```sh
 # update our current $PATH variable
 echo "export PATH=\$PATH:\$(npm prefix -g)/bin" >> ~/.bashrc
 
-# re-run ~/.bashrc to make new $PATH active
+# re-run ~/.bashrc to activate our new $PATH settings
 source ~/.bashrc
 ```
 
-### Gemini CLI
+### Create a project directory
 
-With NodeJS installed, you should now be able to install and run your coding agent. To
-install the [Gemini CLI](https://github.com/google-gemini/gemini-cli): 
+You shouldn't run the agent from the home directory (`~`). To start a new project, 
+make a new directory and set it is as the working directory.
 
 ```sh
-# install gemini
-$ npm install -g @google/gemini-cli
+# start a new project
+mkdir my-project
 
-# create a new workspace to run the agent in
-$ mkdir workspace
-$ cd workspace
+# or `git clone` an existing one
+# git clone git@github.com:my-account/my-project.git
+ 
+# set the project as the working directory
+cd my-project
+```
+We're ready to install and run the agent!
 
-# run gemini
-$ gemini
+### Installing the agent
+
+::: {.callout-note}
+
+To use an AI coding agent, you may need an account or API key from a model
+provider like Google, OpenAI, or Anthropic. The DREAM Lab is not able to
+provide accounts or API keys for these services.
+
+:::
+
+To install the [Gemini CLI](https://github.com/google-gemini/gemini-cli): 
+
+```sh
+# install gemini as a global command
+npm install -g @google/gemini-cli
+
+# run gemini (inside the project directory)
+gemini
 ```
 
-#### Example Prompt
+### Example Prompt
 
 Here is an example prompt to generate a map based on COVID-19 fatality data using R.
 

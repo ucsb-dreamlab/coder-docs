@@ -8,7 +8,7 @@ website:
     left:
       - text: Guides
         menu:
-        - text: AI Code Agents
+        - text: Using AI Code Agents
           href: guides/ai-agents.qmd
         - text: Getting Started with RStudio
           href: guides/rstudio.qmd
