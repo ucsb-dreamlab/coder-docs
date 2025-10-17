@@ -2,52 +2,52 @@
 title: "Installing AI Coding Agents"
 ---
 
-Coder workspaces provide a relatively safe way to experiment with AI coding agents, 
-like Claude Code, Gemini CLI, or Open AI's Codex. These tools, which generate and 
-also *execute* code, can be useful but they are also inherently dangerous. [Simon Willison](https://simonwillison.net/tags/prompt-injection/)
-has identified dozens of examples of "prompt injection" attacks, which can trick AI
-tools into running nefarious code. Because Coder workspaces are isolated virtual 
-machines, the potential damage a rogue AI agent running in a workspace can cause
-is reduced (but not eliminated).
+Coder workspaces provide a relatively safe way to experiment with AI coding
+agents, like Claude Code, Gemini CLI, or Open AI's Codex. These tools, which
+generate and also *execute* code, can be useful but they are also inherently
+dangerous. [Simon Willison](https://simonwillison.net/tags/prompt-injection/)
+has identified dozens of examples of "prompt injection" attacks, which can trick
+AI tools into running nefarious code. Because Coder workspaces are isolated
+virtual machines, the potential damage a rogue AI agent running in a workspace
+can cause is reduced (but not eliminated).
 
 ::: {.callout-note}
-To use an AI coding agent, you will most likely need an API key from an LLM provider. 
-**We are not able to provide API keys.**
+
+To use an AI coding agent, you may need an account or API key from a model
+provider like Google, OpenAI, or Anthropic. **We are not able to provide API
+keys.** 
+
 :::
 
-Most AI coding agents are distributed as NodeJS packages, so we need to install 
-`nodejs` and a package manager (we'll use `pnpm`).
+Most AI coding agents are distributed as NodeJS packages, so we need to install
+`nodejs` and its package manager `npm`.
 
 ```sh
-# use pixi to install nodejs and pnpm
-$ pixi global install nodejs pnpm
+# use pixi to install nodejs (also installs npm)
+$ pixi global install nodejs
 ```
 
-The package manager, `pnpm`, has a setup script that we need to run so that
-the tools we install are available in the `$PATH`.
+Now we need to update the shell's $PATH to include the directory where `npm`
+will install things:
 
 ```sh
-# setup pnpm
-$ pnpm setup
-
 # update our current $PATH variable
-$ source /home/coder/.bashrc
+echo "export PATH=\$PATH:\$(npm prefix -g)/bin" >> ~/.bashrc
+
+# re-run ~/.bashrc to make new $PATH active
+source ~/.bashrc
 ```
 
-You should now be able to install and run your coding agent. For example,
-to install the [Gemini CLI](https://github.com/google-gemini/gemini-cli): 
+You should now be able to install and run your coding agent. For example, to
+install the [Gemini CLI](https://github.com/google-gemini/gemini-cli): 
 
 ```sh
 # install gemini
-$ pnpm install -g @google/gemini-cli
+$ npm install -g @google/gemini-cli
 
 # create a new workspace to run the agent in
 $ mkdir workspace
 $ cd workspace
-
-# set any credentials as environment variables
-export GOOGLE_CLOUD_PROJECT=...
-export GEMINI_API_KEY=...
 
 # run gemini
 $ gemini
