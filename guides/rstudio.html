@@ -162,23 +162,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#enabling-rstudio-in-your-workspace" id="toc-enabling-rstudio-in-your-workspace" class="nav-link active" data-scroll-target="#enabling-rstudio-in-your-workspace">Enabling RStudio in Your Workspace</a>
-  <ul class="collapse">
-  <li><a href="#creating-a-workspace-with-rstudio" id="toc-creating-a-workspace-with-rstudio" class="nav-link" data-scroll-target="#creating-a-workspace-with-rstudio">Creating a Workspace with RStudio</a></li>
-  </ul></li>
-  <li><a href="#accessing-rstudio" id="toc-accessing-rstudio" class="nav-link" data-scroll-target="#accessing-rstudio">Accessing RStudio</a></li>
-  <li><a href="#setting-up-your-first-rstudio-project" id="toc-setting-up-your-first-rstudio-project" class="nav-link" data-scroll-target="#setting-up-your-first-rstudio-project">Setting Up Your First RStudio Project</a>
-  <ul class="collapse">
-  <li><a href="#create-a-new-project" id="toc-create-a-new-project" class="nav-link" data-scroll-target="#create-a-new-project">Create a New Project</a></li>
-  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure">Project Structure</a></li>
-  </ul></li>
+  <li><a href="#creating-a-workspace-with-rstudio" id="toc-creating-a-workspace-with-rstudio" class="nav-link active" data-scroll-target="#creating-a-workspace-with-rstudio">Creating a Workspace with RStudio</a></li>
+  <li><a href="#setting-up-an-rstudio-project" id="toc-setting-up-an-rstudio-project" class="nav-link" data-scroll-target="#setting-up-an-rstudio-project">Setting Up an RStudio Project</a></li>
   <li><a href="#installing-r-packages" id="toc-installing-r-packages" class="nav-link" data-scroll-target="#installing-r-packages">Installing R Packages</a></li>
-  <li><a href="#configuring-rstudio" id="toc-configuring-rstudio" class="nav-link" data-scroll-target="#configuring-rstudio">Configuring RStudio</a>
-  <ul class="collapse">
   <li><a href="#setting-up-git" id="toc-setting-up-git" class="nav-link" data-scroll-target="#setting-up-git">Setting Up Git</a></li>
-  <li><a href="#customizing-appearance" id="toc-customizing-appearance" class="nav-link" data-scroll-target="#customizing-appearance">Customizing Appearance</a></li>
-  </ul></li>
-  <li><a href="#learn-more-about-rstudio" id="toc-learn-more-about-rstudio" class="nav-link" data-scroll-target="#learn-more-about-rstudio">Learn More About RStudio</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -205,75 +193,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser.</p>
-<section id="enabling-rstudio-in-your-workspace" class="level2">
-<h2 class="anchored" data-anchor-id="enabling-rstudio-in-your-workspace">Enabling RStudio in Your Workspace</h2>
+<section id="creating-a-workspace-with-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-workspace-with-rstudio">Creating a Workspace with RStudio</h3>
 <p>When creating a new workspace, you need to enable the RStudio service to make it available.</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>RStudio must be enabled when the workspace is created. You cannot add it to an existing workspace without recreating the workspace.</p>
+<p>RStudio must be enabled when the workspace is created. It can’t be added to an existing workspace.</p>
 </div>
 </div>
-<section id="creating-a-workspace-with-rstudio" class="level3">
-<h3 class="anchored" data-anchor-id="creating-a-workspace-with-rstudio">Creating a Workspace with RStudio</h3>
 <ol type="1">
 <li>Navigate to the “New Workspace” Page</li>
 <li>Complete the required fields</li>
 <li>Make sure “Include RStudio” is set to “Yes”</li>
 <li>Complete the workspace creation process</li>
 </ol>
-<p>Once your workspace is provisioned, RStudio will be accessible through a dedicated URL or port that appears in your workspace dashboard.</p>
+<p>Once your workspace has booted, you can start RStudio in a new browser window using the button on the workspace dashboard.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/workspace-rstudio.png" class="img-fluid figure-img"></p>
-<figcaption>Web UI for a new Coder Workspace with RStudio Installed</figcaption>
+<figcaption>Workspace Dashboard with RStudio Installed</figcaption>
 </figure>
 </div>
 </section>
-</section>
-<section id="accessing-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-rstudio">Accessing RStudio</h2>
-<p>After your workspace starts, you can access RStudio by:</p>
-<ol type="1">
-<li>Opening your workspace dashboard</li>
-<li>Clicking on the RStudio service link</li>
-<li>The RStudio interface will open in a new browser window.</li>
-</ol>
-<p>The RStudio session runs inside your workspace, so all files, packages, and settings are isolated to your workspace environment.</p>
-</section>
-<section id="setting-up-your-first-rstudio-project" class="level2">
-<h2 class="anchored" data-anchor-id="setting-up-your-first-rstudio-project">Setting Up Your First RStudio Project</h2>
-<p>RStudio Projects make it easy to organize your work and manage working directories. Here’s how to create your first project:</p>
-<section id="create-a-new-project" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-new-project">Create a New Project</h3>
+<section id="setting-up-an-rstudio-project" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-an-rstudio-project">Setting Up an RStudio Project</h2>
+<p>RStudio Projects are used to organize your work and manage working directories. Here’s how to create a new project:</p>
 <ol type="1">
 <li>In RStudio, click <strong>File</strong> → <strong>New Project</strong></li>
-<li>Choose one of the following options:
-<ul>
-<li><strong>New Directory</strong>: Start a fresh project</li>
-<li><strong>Existing Directory</strong>: Convert an existing folder to a project</li>
-<li><strong>Version Control</strong>: Clone a Git repository</li>
-</ul></li>
-</ol>
-</section>
-<section id="project-structure" class="level3">
-<h3 class="anchored" data-anchor-id="project-structure">Project Structure</h3>
-<p>For a new directory project:</p>
-<ol type="1">
-<li>Select the project type (e.g., “New Project”, “R Package”, “Quarto Project”)</li>
-<li>Enter a directory name for your project</li>
-<li>Choose where to create the project (default is your home directory)</li>
+<li>In the New Project Wizard, choose “New Directory”, to create a new directory for your project</li>
+<li>For the project type, select “New Project”</li>
+<li>Enter a name for the new directory: <code>my-project</code>. Leave “Create project as a subdirectory of” set to <code>~</code>.</li>
 <li>Click <strong>Create Project</strong></li>
 </ol>
 <p>RStudio will create a <code>.Rproj</code> file in your project directory. This file stores project-specific settings and makes it easy to return to your work.</p>
-</section>
 </section>
 <section id="installing-r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="installing-r-packages">Installing R Packages</h2>
@@ -299,10 +259,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="configuring-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="configuring-rstudio">Configuring RStudio</h2>
-<section id="setting-up-git" class="level3">
-<h3 class="anchored" data-anchor-id="setting-up-git">Setting Up Git</h3>
+<section id="setting-up-git" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-git">Setting Up Git</h2>
 <p>If you plan to use version control:</p>
 <ol type="1">
 <li>Open the Terminal in RStudio (<strong>Tools</strong> → <strong>Terminal</strong> → <strong>New Terminal</strong>)</li>
@@ -311,18 +269,8 @@ Tip
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your.email@example.com"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="customizing-appearance" class="level3">
-<h3 class="anchored" data-anchor-id="customizing-appearance">Customizing Appearance</h3>
-<p>You can customize RStudio’s appearance:</p>
-<ul>
-<li><strong>Tools</strong> → <strong>Global Options</strong> → <strong>Appearance</strong></li>
-<li>Choose your preferred theme, font, and font size</li>
-<li>Settings are saved in your workspace</li>
-</ul>
-</section>
-</section>
-<section id="learn-more-about-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="learn-more-about-rstudio">Learn More About RStudio</h2>
+<section id="additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
 <p>Here are some helpful resources to get the most out of RStudio:</p>
 <ul>
 <li><a href="https://docs.posit.co/ide/user/">RStudio User Guide</a> - Comprehensive documentation</li>

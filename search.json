@@ -70,25 +70,11 @@
     "text": "RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser."
   },
   {
-    "objectID": "guides/rstudio.html#enabling-rstudio-in-your-workspace",
-    "href": "guides/rstudio.html#enabling-rstudio-in-your-workspace",
+    "objectID": "guides/rstudio.html#setting-up-an-rstudio-project",
+    "href": "guides/rstudio.html#setting-up-an-rstudio-project",
     "title": "Getting Started with RStudio",
-    "section": "Enabling RStudio in Your Workspace",
-    "text": "Enabling RStudio in Your Workspace\nWhen creating a new workspace, you need to enable the RStudio service to make it available.\n\n\n\n\n\n\nImportant\n\n\n\nRStudio must be enabled when the workspace is created. You cannot add it to an existing workspace without recreating the workspace.\n\n\n\nCreating a Workspace with RStudio\n\nNavigate to the “New Workspace” Page\nComplete the required fields\nMake sure “Include RStudio” is set to “Yes”\nComplete the workspace creation process\n\nOnce your workspace is provisioned, RStudio will be accessible through a dedicated URL or port that appears in your workspace dashboard.\n\n\n\nWeb UI for a new Coder Workspace with RStudio Installed"
-  },
-  {
-    "objectID": "guides/rstudio.html#accessing-rstudio",
-    "href": "guides/rstudio.html#accessing-rstudio",
-    "title": "Getting Started with RStudio",
-    "section": "Accessing RStudio",
-    "text": "Accessing RStudio\nAfter your workspace starts, you can access RStudio by:\n\nOpening your workspace dashboard\nClicking on the RStudio service link\nThe RStudio interface will open in a new browser window.\n\nThe RStudio session runs inside your workspace, so all files, packages, and settings are isolated to your workspace environment."
-  },
-  {
-    "objectID": "guides/rstudio.html#setting-up-your-first-rstudio-project",
-    "href": "guides/rstudio.html#setting-up-your-first-rstudio-project",
-    "title": "Getting Started with RStudio",
-    "section": "Setting Up Your First RStudio Project",
-    "text": "Setting Up Your First RStudio Project\nRStudio Projects make it easy to organize your work and manage working directories. Here’s how to create your first project:\n\nCreate a New Project\n\nIn RStudio, click File → New Project\nChoose one of the following options:\n\nNew Directory: Start a fresh project\nExisting Directory: Convert an existing folder to a project\nVersion Control: Clone a Git repository\n\n\n\n\nProject Structure\nFor a new directory project:\n\nSelect the project type (e.g., “New Project”, “R Package”, “Quarto Project”)\nEnter a directory name for your project\nChoose where to create the project (default is your home directory)\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
+    "section": "Setting Up an RStudio Project",
+    "text": "Setting Up an RStudio Project\nRStudio Projects are used to organize your work and manage working directories. Here’s how to create a new project:\n\nIn RStudio, click File → New Project\nIn the New Project Wizard, choose “New Directory”, to create a new directory for your project\nFor the project type, select “New Project”\nEnter a name for the new directory: my-project. Leave “Create project as a subdirectory of” set to ~.\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
   },
   {
     "objectID": "guides/rstudio.html#installing-r-packages",
@@ -98,17 +84,17 @@
     "text": "Installing R Packages\nYou can install packages in your workspace just like a local RStudio installation:\n# Install from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(\"ggplot2\")\n\n# Install from GitHub\ninstall.packages(\"devtools\")\ndevtools::install_github(\"username/repository\")\n\n\n\n\n\n\nTip\n\n\n\nPackages installed in your workspace persist across sessions but are isolated from other workspaces. This ensures reproducibility and avoids package conflicts."
   },
   {
-    "objectID": "guides/rstudio.html#configuring-rstudio",
-    "href": "guides/rstudio.html#configuring-rstudio",
+    "objectID": "guides/rstudio.html#setting-up-git",
+    "href": "guides/rstudio.html#setting-up-git",
     "title": "Getting Started with RStudio",
-    "section": "Configuring RStudio",
-    "text": "Configuring RStudio\n\nSetting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\"\n\n\nCustomizing Appearance\nYou can customize RStudio’s appearance:\n\nTools → Global Options → Appearance\nChoose your preferred theme, font, and font size\nSettings are saved in your workspace"
+    "section": "Setting Up Git",
+    "text": "Setting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\""
   },
   {
-    "objectID": "guides/rstudio.html#learn-more-about-rstudio",
-    "href": "guides/rstudio.html#learn-more-about-rstudio",
+    "objectID": "guides/rstudio.html#additional-resources",
+    "href": "guides/rstudio.html#additional-resources",
     "title": "Getting Started with RStudio",
-    "section": "Learn More About RStudio",
-    "text": "Learn More About RStudio\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
+    "section": "Additional Resources",
+    "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
   }
 ]
