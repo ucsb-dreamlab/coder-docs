@@ -1,0 +1,61 @@
+---
+title: Connecting to Google Drive
+---
+
+You can connect to Google Drive from your Coder Workspace to transfer files back and
+forth.
+
+::: {.callout-note}
+
+These instructions require connecting to your Workspace using the VS Code
+Desktop application. This is required only for giving rclone permissions to
+access Google Drive. Once you've completed that setp, you don't need to use VS
+Code.
+
+:::
+
+## Map a folder to your Google Drive with `rclone`
+
+You can use [rclone](https://rclone.org/) to map a local folder (`~/gdrive`) to
+your Google Drive. To avoid deleting anything in your Drive, use read-only
+permissions (as shown).
+
+1. Connect to your Workspace using the VS Code Deskop. Click the VS Code Desktop
+icon from the Workspace dashboard.
+
+2. In VS Code, open a Terminal window: View → Terminal (or Ctrl + \). The rest
+    of these instructions are shell commands you'll enter in the terminal.
+    
+3. Install rclone
+
+    `sudo apt update && sudo apt install rclone`
+
+4. Configure and authorize rclone with read-only access to your Google Drive.
+(For full read and write permissions, remove `scopes drive.readonly`. See
+rclone's [complete documentation](https://rclone.org/drive/#scopes) for Google
+Drive scopes).
+
+    `rclone config create gdrive drive scopes drive.readonly`
+
+5. A web browser should open. In the browser, grant rclone permission to access
+your Google Drive. (This access is limited to the workspace itself). Once
+completed, you should see a messaage: "Success! All done. Please go back to rclone."
+Close the browser window and go back to the VS Code Terminal window.
+
+6. Create a folder to map to your Google Drive
+    
+    `mkdir ~/gdrive`
+
+7. "mount" your Google Drive to the folder
+
+    `rclone mount gdrive: ~/gdrive --daemon`
+
+8. Confirm that you can list files in your drive
+    
+    `ls ~/gdrive`
+
+You can now access files in your Google Drive using the `~/gdrive` folder. To
+disconnect the folder from your Drive, use the command: `umount ~/gdrive` 
+
+If `umount` doesn't work, it's often because you have a file open or your
+terminal is running in a subdirectory of `~/gdrive`.

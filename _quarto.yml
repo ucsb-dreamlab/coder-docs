@@ -8,6 +8,8 @@ website:
     left:
       - text: Guides
         menu:
+        - text: Connecting to Google Drive
+          href: guides/gdrive.qmd
         - text: Getting Started with RStudio
           href: guides/rstudio.qmd
         - text: Using AI Code Agents
