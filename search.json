@@ -21,6 +21,20 @@
     "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   },
   {
+    "objectID": "guides/admin.html",
+    "href": "guides/admin.html",
+    "title": "Administration the service",
+    "section": "",
+    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+  },
+  {
+    "objectID": "guides/admin.html#messaging-users",
+    "href": "guides/admin.html#messaging-users",
+    "title": "Administration the service",
+    "section": "Messaging Users",
+    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Coder Workspaces: Overview",
@@ -47,20 +61,6 @@
     "title": "Coder Workspaces: Overview",
     "section": "Policies",
     "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
-  },
-  {
-    "objectID": "guides/admin.html",
-    "href": "guides/admin.html",
-    "title": "Administration the service",
-    "section": "",
-    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
-  },
-  {
-    "objectID": "guides/admin.html#messaging-users",
-    "href": "guides/admin.html#messaging-users",
-    "title": "Administration the service",
-    "section": "Messaging Users",
-    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
   },
   {
     "objectID": "guides/rstudio.html",
@@ -96,5 +96,19 @@
     "title": "Getting Started with RStudio",
     "section": "Additional Resources",
     "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
+  },
+  {
+    "objectID": "guides/gdrive.html",
+    "href": "guides/gdrive.html",
+    "title": "Connecting to Google Drive",
+    "section": "",
+    "text": "You can connect to Google Drive from your Coder Workspace to transfer files back and forth."
+  },
+  {
+    "objectID": "guides/gdrive.html#map-a-folder-to-your-google-drive-with-rclone",
+    "href": "guides/gdrive.html#map-a-folder-to-your-google-drive-with-rclone",
+    "title": "Connecting to Google Drive",
+    "section": "Map a folder to your Google Drive with rclone",
+    "text": "Map a folder to your Google Drive with rclone\nYou can use rclone to map a local folder (~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using the VS Code Deskop. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + ). The rest of these instructions are shell commands you’ll enter in the terminal.\nInstall rclone\nsudo apt update && sudo apt install rclone\nConfigure and authorize rclone with read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant rclone permission to access your Google Drive. (This access is limited to the workspace itself). Once completed, you should see a messaage: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your drive\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
   }
 ]

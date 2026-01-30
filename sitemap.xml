@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/datasets.html</loc>
-    <lastmod>2025-10-18T00:31:43.935Z</lastmod>
+    <lastmod>2026-01-30T22:44:43.768Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-agents.html</loc>
-    <lastmod>2025-10-18T00:31:43.935Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/index.html</loc>
-    <lastmod>2025-10-18T00:31:43.936Z</lastmod>
+    <lastmod>2026-01-30T22:44:43.768Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/admin.html</loc>
-    <lastmod>2025-10-18T00:31:43.934Z</lastmod>
+    <lastmod>2026-01-30T22:44:43.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/index.html</loc>
+    <lastmod>2026-01-30T22:44:43.769Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/rstudio.html</loc>
-    <lastmod>2025-10-18T00:31:43.935Z</lastmod>
+    <lastmod>2026-01-30T22:44:43.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/gdrive.html</loc>
+    <lastmod>2026-01-30T22:44:43.768Z</lastmod>
   </url>
 </urlset>
