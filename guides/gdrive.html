@@ -171,20 +171,20 @@ Note
 </div>
 <section id="map-a-folder-to-your-google-drive-with-rclone" class="level2">
 <h2 class="anchored" data-anchor-id="map-a-folder-to-your-google-drive-with-rclone">Map a folder to your Google Drive with <code>rclone</code></h2>
-<p>You can use <a href="https://rclone.org/">rclone</a> to map a local folder (<code>~/gdrive</code>) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).</p>
+<p>You can use <a href="https://rclone.org/">rclone</a> to map a Workspace folder (<code>~/gdrive</code>) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).</p>
 <ol type="1">
-<li><p>Connect to your Workspace using the VS Code Deskop. Click the VS Code Desktop icon from the Workspace dashboard.</p></li>
-<li><p>In VS Code, open a Terminal window: View → Terminal (or Ctrl + ). The rest of these instructions are shell commands you’ll enter in the terminal.</p></li>
+<li><p>Connect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.</p></li>
+<li><p>In VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.</p></li>
 <li><p>Install rclone</p>
 <p><code>sudo apt update &amp;&amp; sudo apt install rclone</code></p></li>
-<li><p>Configure and authorize rclone with read-only access to your Google Drive. (For full read and write permissions, remove <code>scopes drive.readonly</code>. See rclone’s <a href="https://rclone.org/drive/#scopes">complete documentation</a> for Google Drive scopes).</p>
+<li><p>Give rclone read-only access to your Google Drive. (For full read and write permissions, remove <code>scopes drive.readonly</code>. See rclone’s <a href="https://rclone.org/drive/#scopes">complete documentation</a> for Google Drive scopes).</p>
 <p><code>rclone config create gdrive drive scopes drive.readonly</code></p></li>
-<li><p>A web browser should open. In the browser, grant rclone permission to access your Google Drive. (This access is limited to the workspace itself). Once completed, you should see a messaage: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.</p></li>
+<li><p>A web browser should open. In the browser, grant rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.</p></li>
 <li><p>Create a folder to map to your Google Drive</p>
 <p><code>mkdir ~/gdrive</code></p></li>
 <li><p>“mount” your Google Drive to the folder</p>
 <p><code>rclone mount gdrive: ~/gdrive --daemon</code></p></li>
-<li><p>Confirm that you can list files in your drive</p>
+<li><p>Confirm that you can list files in your Drive using the folder.</p>
 <p><code>ls ~/gdrive</code></p></li>
 </ol>
 <p>You can now access files in your Google Drive using the <code>~/gdrive</code> folder. To disconnect the folder from your Drive, use the command: <code>umount ~/gdrive</code></p>
