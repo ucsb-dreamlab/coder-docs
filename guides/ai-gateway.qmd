@@ -1,0 +1,142 @@
+---
+title: AI Gateway
+---
+
+::: {.callout-important}
+
+The AI Gateway is an experimental feature for Coder Workspaces.
+You will need to request an API key to use it. Access is currently restricted to library staff.
+
+:::
+
+Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. 
+The gateway is only accessible from your Coder Workspace.
+
+The gateway URL is `http://litellm.dreamlab.ucsb.edu:4000`
+
+The LiteLLM API is documented here:
+<https://docs.litellm.ai/docs/supported_endpoints>
+
+
+## Currently Supported Models
+
+- `gemini-3-flash-preview`
+- `gemini-3-pro-preview`
+- `claude-opus-4-5-20251101`
+- `claude-opus-4-6`
+- `claude-sonnet-4-5-20250929`
+- `claude-haiku-4-5-20251001`
+
+## Using the LiteLLM API from Python
+
+This code is taken from the [LiteLLM documentation](https://docs.litellm.ai/docs/).
+
+First, create a `.env` file in your project directory with your API key:
+
+```sh
+LITELLM_PROXY_API_KEY=<YOUR_API_TOKEN_HERE>
+```
+
+Then use the following Python code to connect to the gateway:
+
+```python
+import litellm
+from litellm import completion
+from dotenv import load_dotenv
+
+# load environment variables from .env file
+load_dotenv()
+
+# set custom api base to your proxy
+litellm.api_base = "http://litellm.dreamlab.ucsb.edu:4000"
+
+messages = [{"content": "Hello, how are you?", "role": "user"}]
+
+# litellm proxy call
+response = completion(
+    model="litellm_proxy/gemini-3-flash-preview",
+    messages=messages,
+)
+```
+
+## Setting up Claude Code
+
+The following steps are taken from the [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
+for using a LiteLLM gateway.
+
+### 1. Create your workspace
+
+Any configuration will work since Claude Code runs from the command line.
+
+### 2. Install Claude Code
+
+Start the terminal and install Claude Code if necessary:
+
+```sh
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+### 3. Set environment variables
+
+You need to set three environment variables so Claude Code can connect to the
+gateway. You can add these to the bottom of your `~/.bashrc` file so they take
+effect automatically when you start the terminal.
+
+Open `~/.bashrc` in a text editor:
+
+```sh
+nano ~/.bashrc
+```
+
+Scroll to the bottom of the file and add the following lines. Replace
+`<YOUR_API_TOKEN_HERE>` with the token you received from DREAM Lab staff.
+
+```sh
+export ANTHROPIC_AUTH_TOKEN=<YOUR_API_TOKEN_HERE>
+export ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000
+export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+```
+
+Save the file (`Ctrl + O`, then `Ctrl + X` in nano) and reload it:
+
+```sh
+source ~/.bashrc
+```
+
+By adding these variables to `~/.bashrc`, you won't need to enter the API
+token or gateway address every time you log in to your Coder workspace.
+
+### 4. Start Claude Code
+
+You should start Claude Code from inside a project directory:
+
+```sh
+claude
+```
+
+The workspace will ask if it's a safe environment. Select **"Yes, I trust
+this folder"** and Claude will start.
+
+Once Claude starts, try asking it a question. You do not need to run `/init`
+like it says at the top.
+
+::: {.callout-tip}
+
+If you see a **Missing API Token** error in red to the right of the terminal,
+you are not connected to Anthropic and will need to either set up the
+environment variables in `~/.bashrc` (as described above) or exit Claude and
+manually export the variables in your terminal session.
+
+:::
+
+## Claude Code Tips
+
+You can check the spend (in dollars) associated with your API key using this
+command from a Coder workspace:
+
+```sh
+curl --silent \
+  "http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${ANTHROPIC_AUTH_TOKEN}" \
+  -H "Authorization: Bearer ${ANTHROPIC_AUTH_TOKEN}" \
+  | jq .info.spend
+```

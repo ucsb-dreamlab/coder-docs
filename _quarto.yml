@@ -16,6 +16,8 @@ website:
           href: guides/ai-agents.qmd
         - text: Administering
           href: guides/admin.qmd
+        - text: AI Gateway
+          href: guides/ai-gateway.qmd
 
 format:
   html:
