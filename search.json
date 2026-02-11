@@ -21,18 +21,39 @@
     "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   },
   {
-    "objectID": "guides/admin.html",
-    "href": "guides/admin.html",
-    "title": "Administration the service",
+    "objectID": "guides/ai-gateway.html",
+    "href": "guides/ai-gateway.html",
+    "title": "AI Gateway",
     "section": "",
-    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+    "text": "Important\n\n\n\nThe AI Gateway is an experimental feature for Coder Workspaces. You will need to request an API key to use it. Access is currently restricted to library staff.\nCoder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.\nThe gateway URL is http://litellm.dreamlab.ucsb.edu:4000\nThe LiteLLM API is documented here: https://docs.litellm.ai/docs/supported_endpoints"
   },
   {
-    "objectID": "guides/admin.html#messaging-users",
-    "href": "guides/admin.html#messaging-users",
-    "title": "Administration the service",
-    "section": "Messaging Users",
-    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+    "objectID": "guides/ai-gateway.html#currently-supported-models",
+    "href": "guides/ai-gateway.html#currently-supported-models",
+    "title": "AI Gateway",
+    "section": "Currently Supported Models",
+    "text": "Currently Supported Models\n\ngemini-3-flash-preview\ngemini-3-pro-preview\nclaude-opus-4-5-20251101\nclaude-opus-4-6\nclaude-sonnet-4-5-20250929\nclaude-haiku-4-5-20251001"
+  },
+  {
+    "objectID": "guides/ai-gateway.html#using-the-litellm-api-from-python",
+    "href": "guides/ai-gateway.html#using-the-litellm-api-from-python",
+    "title": "AI Gateway",
+    "section": "Using the LiteLLM API from Python",
+    "text": "Using the LiteLLM API from Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=&lt;YOUR_API_TOKEN_HERE&gt;\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"http://litellm.dreamlab.ucsb.edu:4000\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
+  },
+  {
+    "objectID": "guides/ai-gateway.html#setting-up-claude-code",
+    "href": "guides/ai-gateway.html#setting-up-claude-code",
+    "title": "AI Gateway",
+    "section": "Setting up Claude Code",
+    "text": "Setting up Claude Code\nThe following steps are taken from the Claude Code documentation for using a LiteLLM gateway.\n\n1. Create your workspace\nAny configuration will work since Claude Code runs from the command line.\n\n\n2. Install Claude Code\nStart the terminal and install Claude Code if necessary:\ncurl -fsSL https://claude.ai/install.sh | bash\n\n\n3. Set environment variables\nYou need to set three environment variables so Claude Code can connect to the gateway. You can add these to the bottom of your ~/.bashrc file so they take effect automatically when you start the terminal.\nOpen ~/.bashrc in a text editor:\nnano ~/.bashrc\nScroll to the bottom of the file and add the following lines. Replace &lt;YOUR_API_TOKEN_HERE&gt; with the token you received from DREAM Lab staff.\nexport ANTHROPIC_AUTH_TOKEN=&lt;YOUR_API_TOKEN_HERE&gt;\nexport ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000\nexport CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1\nSave the file (Ctrl + O, then Ctrl + X in nano) and reload it:\nsource ~/.bashrc\nBy adding these variables to ~/.bashrc, you won’t need to enter the API token or gateway address every time you log in to your Coder workspace.\n\n\n4. Start Claude Code\nYou should start Claude Code from inside a project directory:\nclaude\nThe workspace will ask if it’s a safe environment. Select “Yes, I trust this folder” and Claude will start.\nOnce Claude starts, try asking it a question. You do not need to run /init like it says at the top.\n\n\n\n\n\n\nTip\n\n\n\nIf you see a Missing API Token error in red to the right of the terminal, you are not connected to Anthropic and will need to either set up the environment variables in ~/.bashrc (as described above) or exit Claude and manually export the variables in your terminal session."
+  },
+  {
+    "objectID": "guides/ai-gateway.html#claude-code-tips",
+    "href": "guides/ai-gateway.html#claude-code-tips",
+    "title": "AI Gateway",
+    "section": "Claude Code Tips",
+    "text": "Claude Code Tips\nYou can check the spend (in dollars) associated with your API key using this command from a Coder workspace:\ncurl --silent \\\n  \"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${ANTHROPIC_AUTH_TOKEN}\" \\\n  -H \"Authorization: Bearer ${ANTHROPIC_AUTH_TOKEN}\" \\\n  | jq .info.spend"
   },
   {
     "objectID": "index.html",
@@ -61,6 +82,20 @@
     "title": "Coder Workspaces: Overview",
     "section": "Policies",
     "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+  },
+  {
+    "objectID": "guides/admin.html",
+    "href": "guides/admin.html",
+    "title": "Administration the service",
+    "section": "",
+    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+  },
+  {
+    "objectID": "guides/admin.html#messaging-users",
+    "href": "guides/admin.html#messaging-users",
+    "title": "Administration the service",
+    "section": "Messaging Users",
+    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
   },
   {
     "objectID": "guides/rstudio.html",

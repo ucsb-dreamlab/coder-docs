@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Connecting to Google Drive – DREAM Lab Coder Workspaces</title>
+<title>AI Gateway – DREAM Lab Coder Workspaces</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -133,7 +168,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#map-a-folder-to-your-google-drive-with-rclone" id="toc-map-a-folder-to-your-google-drive-with-rclone" class="nav-link active" data-scroll-target="#map-a-folder-to-your-google-drive-with-rclone">Map a folder to your Google Drive with <code>rclone</code></a></li>
+  <li><a href="#currently-supported-models" id="toc-currently-supported-models" class="nav-link active" data-scroll-target="#currently-supported-models">Currently Supported Models</a></li>
+  <li><a href="#using-the-litellm-api-from-python" id="toc-using-the-litellm-api-from-python" class="nav-link" data-scroll-target="#using-the-litellm-api-from-python">Using the LiteLLM API from Python</a></li>
+  <li><a href="#setting-up-claude-code" id="toc-setting-up-claude-code" class="nav-link" data-scroll-target="#setting-up-claude-code">Setting up Claude Code</a>
+  <ul class="collapse">
+  <li><a href="#create-your-workspace" id="toc-create-your-workspace" class="nav-link" data-scroll-target="#create-your-workspace">1. Create your workspace</a></li>
+  <li><a href="#install-claude-code" id="toc-install-claude-code" class="nav-link" data-scroll-target="#install-claude-code">2. Install Claude Code</a></li>
+  <li><a href="#set-environment-variables" id="toc-set-environment-variables" class="nav-link" data-scroll-target="#set-environment-variables">3. Set environment variables</a></li>
+  <li><a href="#start-claude-code" id="toc-start-claude-code" class="nav-link" data-scroll-target="#start-claude-code">4. Start Claude Code</a></li>
+  </ul></li>
+  <li><a href="#claude-code-tips" id="toc-claude-code-tips" class="nav-link" data-scroll-target="#claude-code-tips">Claude Code Tips</a></li>
   </ul>
 </nav>
     </div>
@@ -142,7 +186,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Connecting to Google Drive</h1>
+<h1 class="title">AI Gateway</h1>
 </div>
 
 
@@ -159,40 +203,110 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>You can connect to Google Drive from your Coder Workspace to transfer files back and forth.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>These instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving rclone permissions to access Google Drive. Once you’ve completed that setp, you don’t need to use VS Code.</p>
+<p>The AI Gateway is an experimental feature for Coder Workspaces. You will need to request an API key to use it. Access is currently restricted to library staff.</p>
 </div>
 </div>
-<section id="map-a-folder-to-your-google-drive-with-rclone" class="level2">
-<h2 class="anchored" data-anchor-id="map-a-folder-to-your-google-drive-with-rclone">Map a folder to your Google Drive with <code>rclone</code></h2>
-<p>You can use <a href="https://rclone.org/">rclone</a> to map a Workspace folder (<code>~/gdrive</code>) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).</p>
-<ol type="1">
-<li><p>Connect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.</p></li>
-<li><p>In VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.</p></li>
-<li><p>Install rclone</p>
-<p><code>sudo apt update &amp;&amp; sudo apt install rclone</code></p></li>
-<li><p>Give rclone read-only access to your Google Drive. (For full read and write permissions, remove <code>scopes drive.readonly</code>. See rclone’s <a href="https://rclone.org/drive/#scopes">complete documentation</a> for Google Drive scopes).</p>
-<p><code>rclone config create gdrive drive scopes drive.readonly</code></p></li>
-<li><p>A web browser should open. In the browser, grant rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.</p></li>
-<li><p>Create a folder to map to your Google Drive</p>
-<p><code>mkdir ~/gdrive</code></p></li>
-<li><p>“mount” your Google Drive to the folder</p>
-<p><code>rclone mount gdrive: ~/gdrive --daemon</code></p></li>
-<li><p>Confirm that you can list files in your Drive using the folder.</p>
-<p><code>ls ~/gdrive</code></p></li>
-</ol>
-<p>You can now access files in your Google Drive using the <code>~/gdrive</code> folder. To disconnect the folder from your Drive, use the command: <code>umount ~/gdrive</code></p>
-<p>If <code>umount</code> doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of <code>~/gdrive</code>.</p>
+<p>Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.</p>
+<p>The gateway URL is <code>http://litellm.dreamlab.ucsb.edu:4000</code></p>
+<p>The LiteLLM API is documented here: <a href="https://docs.litellm.ai/docs/supported_endpoints" class="uri">https://docs.litellm.ai/docs/supported_endpoints</a></p>
+<section id="currently-supported-models" class="level2">
+<h2 class="anchored" data-anchor-id="currently-supported-models">Currently Supported Models</h2>
+<ul>
+<li><code>gemini-3-flash-preview</code></li>
+<li><code>gemini-3-pro-preview</code></li>
+<li><code>claude-opus-4-5-20251101</code></li>
+<li><code>claude-opus-4-6</code></li>
+<li><code>claude-sonnet-4-5-20250929</code></li>
+<li><code>claude-haiku-4-5-20251001</code></li>
+</ul>
+</section>
+<section id="using-the-litellm-api-from-python" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-litellm-api-from-python">Using the LiteLLM API from Python</h2>
+<p>This code is taken from the <a href="https://docs.litellm.ai/docs/">LiteLLM documentation</a>.</p>
+<p>First, create a <code>.env</code> file in your project directory with your API key:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">LITELLM_PROXY_API_KEY</span><span class="op">=&lt;</span>YOUR_API_TOKEN_HERE<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then use the following Python code to connect to the gateway:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> litellm</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> litellm <span class="im">import</span> completion</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load environment variables from .env file</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set custom api base to your proxy</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>litellm.api_base <span class="op">=</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"content"</span>: <span class="st">"Hello, how are you?"</span>, <span class="st">"role"</span>: <span class="st">"user"</span>}]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># litellm proxy call</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"litellm_proxy/gemini-3-flash-preview"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>messages,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="setting-up-claude-code" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-claude-code">Setting up Claude Code</h2>
+<p>The following steps are taken from the <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code documentation</a> for using a LiteLLM gateway.</p>
+<section id="create-your-workspace" class="level3">
+<h3 class="anchored" data-anchor-id="create-your-workspace">1. Create your workspace</h3>
+<p>Any configuration will work since Claude Code runs from the command line.</p>
+</section>
+<section id="install-claude-code" class="level3">
+<h3 class="anchored" data-anchor-id="install-claude-code">2. Install Claude Code</h3>
+<p>Start the terminal and install Claude Code if necessary:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="set-environment-variables" class="level3">
+<h3 class="anchored" data-anchor-id="set-environment-variables">3. Set environment variables</h3>
+<p>You need to set three environment variables so Claude Code can connect to the gateway. You can add these to the bottom of your <code>~/.bashrc</code> file so they take effect automatically when you start the terminal.</p>
+<p>Open <code>~/.bashrc</code> in a text editor:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Scroll to the bottom of the file and add the following lines. Replace <code>&lt;YOUR_API_TOKEN_HERE&gt;</code> with the token you received from DREAM Lab staff.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_AUTH_TOKEN</span><span class="op">=&lt;</span>YOUR_API_TOKEN_HERE<span class="op">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_BASE_URL</span><span class="op">=</span>http://litellm.dreamlab.ucsb.edu:4000</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</span><span class="op">=</span>1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save the file (<code>Ctrl + O</code>, then <code>Ctrl + X</code> in nano) and reload it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>By adding these variables to <code>~/.bashrc</code>, you won’t need to enter the API token or gateway address every time you log in to your Coder workspace.</p>
+</section>
+<section id="start-claude-code" class="level3">
+<h3 class="anchored" data-anchor-id="start-claude-code">4. Start Claude Code</h3>
+<p>You should start Claude Code from inside a project directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The workspace will ask if it’s a safe environment. Select <strong>“Yes, I trust this folder”</strong> and Claude will start.</p>
+<p>Once Claude starts, try asking it a question. You do not need to run <code>/init</code> like it says at the top.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you see a <strong>Missing API Token</strong> error in red to the right of the terminal, you are not connected to Anthropic and will need to either set up the environment variables in <code>~/.bashrc</code> (as described above) or exit Claude and manually export the variables in your terminal session.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="claude-code-tips" class="level2">
+<h2 class="anchored" data-anchor-id="claude-code-tips">Claude Code Tips</h2>
+<p>You can check the spend (in dollars) associated with your API key using this command from a Coder workspace:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--silent</span> <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=</span><span class="va">${ANTHROPIC_AUTH_TOKEN}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${ANTHROPIC_AUTH_TOKEN}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">jq</span> .info.spend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
