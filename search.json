@@ -21,6 +21,69 @@
     "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   },
   {
+    "objectID": "guides/marimo.html",
+    "href": "guides/marimo.html",
+    "title": "Marimo Notebooks",
+    "section": "",
+    "text": "Marimo is a Python notebook tool. Unlike Jupyter, marimo notebooks are stored as plain Python files and automatically re-run dependent cells when a cell changes. It also includes an AI coding agent that can be used with the DREAMLab AI gateway."
+  },
+  {
+    "objectID": "guides/marimo.html#creating-the-workspace",
+    "href": "guides/marimo.html#creating-the-workspace",
+    "title": "Marimo Notebooks",
+    "section": "Creating the workspace",
+    "text": "Creating the workspace\nCreate a new workspace using the “New Workspace” form. You don’t need to select any of the optional settings (RStudio, VS Code etc)."
+  },
+  {
+    "objectID": "guides/marimo.html#install-marimo",
+    "href": "guides/marimo.html#install-marimo",
+    "title": "Marimo Notebooks",
+    "section": "Install Marimo",
+    "text": "Install Marimo\nOnce the workspace has booted, open a Terminal window from the workspace dashboard. Run the following commands (“#...” lines are comments):\n# create a project folder and set it as your working directory\nmkdir my-project\ncd my-project\n\n# create a python virtual environment for the project with uv\nuv venv\n\n# install marimo in the project\nuv pip install marimo\n\n# run this marimo server\nuv run marimo edit --no-token --headless\nThe last command runs the marimo server in the context of the Terminal window. (To quit the server, use ctrl+c or just close the Terminal window. For now, keep it running.)\nWith the marimo server running, you can access the Marimo UI using the “port” menu from the coder workspace dashboard. Click the port associated with “marimo” server.\n\n\n\nWorkspace Ports Menu\n\n\n\nMarimo Interface\nFrom the Marimo dashboard, you can create a new notebook, which will be saved in your project folder.\n\n\nConfiguring the AI Provider\nTo use the dreamlab AI provider, you need to add a “custom provider”. The settings are:\n\nprovider name: litellm_proxy\nbase url: http://litellm.dreamlab.ucsb.edu:4000\nAPI key: your personal API key.\n\nYou also need to add the specific model you want to use. In “AI Models” tab, click the “+ Add Model” button, select the Custom provider you just added and then enter a model name. I am using gemini-3-flash-preview\nThe AI integration has two parts: there is a panel on the left side with a chat interface (the chat has three modes: manual, ask, and agent); and in the main notebook area, there is a “generate with AI button” – using it, you can enter a prompt to generate code for a new cell.\nI’ve mostly been using the left-side chat interface in agent mode. What differentiates agent mode from the others is that it has the ability to add/modify/delete cells in the notebook."
+  },
+  {
+    "objectID": "guides/admin.html",
+    "href": "guides/admin.html",
+    "title": "Administration the service",
+    "section": "",
+    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
+  },
+  {
+    "objectID": "guides/admin.html#messaging-users",
+    "href": "guides/admin.html#messaging-users",
+    "title": "Administration the service",
+    "section": "Messaging Users",
+    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Coder Workspaces: Overview",
+    "section": "",
+    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.\nThe service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT"
+  },
+  {
+    "objectID": "index.html#hardware-and-software",
+    "href": "index.html#hardware-and-software",
+    "title": "Coder Workspaces: Overview",
+    "section": "Hardware and Software",
+    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04 LTS\nOperating System\n\n\nDocker\n28.4.0\nContainer Runtime\n\n\nPixi\nv0.55.0\nPython package manager\n\n\nR\nv4.5.1\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.80.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2025.09.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
+  },
+  {
+    "objectID": "index.html#workspace-lifecycle",
+    "href": "index.html#workspace-lifecycle",
+    "title": "Coder Workspaces: Overview",
+    "section": "Workspace Lifecycle",
+    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
+  },
+  {
+    "objectID": "index.html#policies",
+    "href": "index.html#policies",
+    "title": "Coder Workspaces: Overview",
+    "section": "Policies",
+    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+  },
+  {
     "objectID": "guides/ai-gateway.html",
     "href": "guides/ai-gateway.html",
     "title": "AI Gateway",
@@ -54,48 +117,6 @@
     "title": "AI Gateway",
     "section": "Claude Code Tips",
     "text": "Claude Code Tips\nYou can check the spend (in dollars) associated with your API key using this command from a Coder workspace:\ncurl --silent \\\n  \"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${ANTHROPIC_AUTH_TOKEN}\" \\\n  -H \"Authorization: Bearer ${ANTHROPIC_AUTH_TOKEN}\" \\\n  | jq .info.spend"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Coder Workspaces: Overview",
-    "section": "",
-    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.\nThe service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT"
-  },
-  {
-    "objectID": "index.html#hardware-and-software",
-    "href": "index.html#hardware-and-software",
-    "title": "Coder Workspaces: Overview",
-    "section": "Hardware and Software",
-    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04 LTS\nOperating System\n\n\nDocker\n28.4.0\nContainer Runtime\n\n\nPixi\nv0.55.0\nPython package manager\n\n\nR\nv4.5.1\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.80.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2025.09.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
-  },
-  {
-    "objectID": "index.html#workspace-lifecycle",
-    "href": "index.html#workspace-lifecycle",
-    "title": "Coder Workspaces: Overview",
-    "section": "Workspace Lifecycle",
-    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
-  },
-  {
-    "objectID": "index.html#policies",
-    "href": "index.html#policies",
-    "title": "Coder Workspaces: Overview",
-    "section": "Policies",
-    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
-  },
-  {
-    "objectID": "guides/admin.html",
-    "href": "guides/admin.html",
-    "title": "Administration the service",
-    "section": "",
-    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
-  },
-  {
-    "objectID": "guides/admin.html#messaging-users",
-    "href": "guides/admin.html#messaging-users",
-    "title": "Administration the service",
-    "section": "Messaging Users",
-    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
   },
   {
     "objectID": "guides/rstudio.html",
