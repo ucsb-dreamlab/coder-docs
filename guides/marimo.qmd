@@ -1,0 +1,71 @@
+---
+title: Marimo Notebooks
+---
+
+Marimo is a Python notebook tool. Unlike Jupyter, marimo notebooks are stored
+as plain Python files and automatically re-run dependent cells when a cell
+changes. It also includes an AI coding agent that can be used with the [DREAMLab AI gateway](ai-gateway.html).
+
+## Creating the workspace
+
+Create a new workspace using the "New Workspace" form. You don't need to select
+any of the optional settings (RStudio, VS Code etc).
+
+## Install Marimo
+
+Once the workspace has booted, open a Terminal window from the workspace
+dashboard. Run the following commands ("`#...`" lines are comments):
+
+```sh
+# create a project folder and set it as your working directory
+mkdir my-project
+cd my-project
+
+# create a python virtual environment for the project with uv
+uv venv
+
+# install marimo in the project
+uv pip install marimo
+
+# run this marimo server
+uv run marimo edit --no-token --headless
+```
+
+The last command runs the marimo server in the context of the Terminal window.
+(To quit the server, use `ctrl`+`c` or just close the Terminal window. For now,
+keep it running.)
+
+
+With the marimo server running, you can access the Marimo UI using the "port" menu from
+the coder workspace dashboard. Click the port associated with "marimo" server.
+
+![Workspace Ports Menu](../images/ports-menu.png)
+
+
+### Marimo Interface
+
+From the Marimo dashboard, you can create a new notebook, which will be saved in your project folder.
+
+
+### Configuring the AI Provider
+
+To use the dreamlab AI provider, you need to add a "custom provider". The
+settings are:
+
+- provider name: litellm_proxy
+- base url: http://litellm.dreamlab.ucsb.edu:4000
+- API key: your personal API key.
+
+You also need to add the specific model you want to use. In "AI Models" tab,
+click the "+ Add Model" button, select the Custom provider you just added and
+then enter a model name. I am using `gemini-3-flash-preview`
+
+The AI integration has two parts: there is a panel on the left side with a chat
+interface (the chat has three modes: manual, ask, and agent); and in the main
+notebook area, there is a "generate with AI button" -- using it, you can enter a
+prompt to generate code for a new cell.
+
+
+I've mostly been using the left-side chat interface in agent mode. What
+differentiates agent mode from the others is that it has the ability to
+add/modify/delete cells in the notebook.
