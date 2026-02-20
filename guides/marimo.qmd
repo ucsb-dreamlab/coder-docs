@@ -4,14 +4,15 @@ title: Marimo Notebooks
 
 Marimo is a Python notebook tool. Unlike Jupyter, marimo notebooks are stored
 as plain Python files and automatically re-run dependent cells when a cell
-changes. It also includes an AI coding agent that can be used with the [DREAMLab AI gateway](ai-gateway.html).
+changes. Marimo has integrated AI chat and agent tools that can be configured to use models through the [DREAMLab AI gateway](ai-gateway.html).
 
 ## Creating the workspace
 
-Create a new workspace using the "New Workspace" form. You don't need to select
-any of the optional settings (RStudio, VS Code etc).
+Create a new workspace using the "New Workspace" form. A default workspace is
+sufficient for installing Marimo. You don't need to select any of the optional
+settings (RStudio, VS Code etc).
 
-## Install Marimo
+## Installing Marimo
 
 Once the workspace has booted, open a Terminal window from the workspace
 dashboard. Run the following commands ("`#...`" lines are comments):
@@ -31,41 +32,91 @@ uv pip install marimo
 uv run marimo edit --no-token --headless
 ```
 
-The last command runs the marimo server in the context of the Terminal window.
+The last command runs the Marimo server in the context of the Terminal window.
 (To quit the server, use `ctrl`+`c` or just close the Terminal window. For now,
 keep it running.)
 
 
-With the marimo server running, you can access the Marimo UI using the "port" menu from
-the coder workspace dashboard. Click the port associated with "marimo" server.
+## Running Marimo in the Background
 
-![Workspace Ports Menu](../images/ports-menu.png)
+Instead of starting Marimo directly with `uv run marimo`, you may prefer to run
+Marimo in the background to prevent the server from stopping when you close the 
+Terminal window. You can use `tmux` to run Marimo in a persistent terminal session:
 
+```sh
+# run at workspace startup
+cd ~/my-project
+tmux new-session -d -s marimo 'uv run marimo edit --no-token --headless'
+```
+Run these commands each time the workspace starts to start the Marimo server. To
+quit the server: 
 
-### Marimo Interface
+```sh
+# quit the marimo server session
+tmux kill-session -t marimo
+```
+
+## Marimo Interface
+
+With the Marimo server running, you can access the Marimo UI using the "port"
+menu from the coder workspace dashboard. Click the port associated with "marimo"
+server.
+
+![Workspace Ports Menu](../images/ports-menu.png){width=50%}
 
 From the Marimo dashboard, you can create a new notebook, which will be saved in your project folder.
 
+![Marimo Dashboard](../images/marimo-dashboard.png){width=75%}
 
-### Configuring the AI Provider
+## Configuring Chat and Agents
 
-To use the dreamlab AI provider, you need to add a "custom provider". The
-settings are:
+Marimo has integrated AI chat and agent tools, which you can access through
+**Chat and Agents** icon on the notebook menu. The AI features are configured
+through the AI panel in the User Settings window. To open User Settings, click
+the gear icon in the top-right corner and then click **User settings**. 
 
-- provider name: litellm_proxy
-- base url: http://litellm.dreamlab.ucsb.edu:4000
-- API key: your personal API key.
+The AI integration has two parts: a panel on the left side with a chat interface
+and a **Generate with AI** button in the main notebook area that lets you enter
+a prompt to generate code for a new cell.
 
-You also need to add the specific model you want to use. In "AI Models" tab,
-click the "+ Add Model" button, select the Custom provider you just added and
-then enter a model name. I am using `gemini-3-flash-preview`
+You can configure your Marimo notebook to use AI models through the [DREAM Lab
+AI gateway](ai-gateway.html). For this to work, you need to: 
 
-The AI integration has two parts: there is a panel on the left side with a chat
-interface (the chat has three modes: manual, ask, and agent); and in the main
-notebook area, there is a "generate with AI button" -- using it, you can enter a
-prompt to generate code for a new cell.
+- Request a personal API key for the AI gateway.
+- Configure the notebook using the steps below. 
 
+### 1. Install AI Dependencies
 
-I've mostly been using the left-side chat interface in agent mode. What
-differentiates agent mode from the others is that it has the ability to
-add/modify/delete cells in the notebook.
+From the **Optional Dependencies** panel in the user settings, make sure **AI features** are installed. If not, click the **Install with uv** button.
+
+### 2. Add a Custom AI Provider
+
+From the **AI** panel in the user settings, go to the **AI Providers** tab and click **Add Provider**. Fill in the following:
+
+- **Provider name**: `litellm_proxy`
+- **Base URL**: `http://litellm.dreamlab.ucsb.edu:4000`
+- **API key**: your personal API key
+
+### 3. Add a Model
+
+Go to the **AI Models** tab and click **+ Add Model** at the bottom of the
+dialog. Select `litellm_proxy` as the provider and enter the model name. We
+recommend `gemini-3-flash-preview`. Click **Add**.
+
+![Adding a model in the AI Models tab](../images/marimo-add-model.png){width=60%}
+
+### 4. Configure AI Features to Use the Model
+
+Go to the **AI Features** tab. Under **Code Completion**, set the Provider
+to `custom` and select your model from the **Autocomplete Model** dropdown.
+Under **AI Assistant**, set the **Chat Model** and **Edit Model** to your
+model as well.
+
+![AI Features configuration](../images/marimo-ai-features.png){width=60%}
+
+### 5. Confirm Settings
+
+Close User settings, and open the **Chat and Agents** UI from the notebook menu.
+You should see a chat interface.
+
+![Marimo chat panel](../images/marimo-chat.png){width=50%}

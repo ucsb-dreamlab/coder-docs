@@ -12,13 +12,12 @@ website:
           href: guides/gdrive.qmd
         - text: Getting Started with RStudio
           href: guides/rstudio.qmd
+        - text: Using Marimo Notebooks
+          href: guides/marimo.qmd
         - text: Using AI Code Agents
           href: guides/ai-agents.qmd
-        - text: Administering
-          href: guides/admin.qmd
         - text: AI Gateway
           href: guides/ai-gateway.qmd
-
 format:
   html:
     theme: cosmo
