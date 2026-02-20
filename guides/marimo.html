@@ -139,12 +139,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Getting Started with RStudio</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../guides/ai-agents.html">
- <span class="dropdown-text">Using AI Code Agents</span></a>
+    <a class="dropdown-item" href="../guides/marimo.html">
+ <span class="dropdown-text">Using Marimo Notebooks</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../guides/admin.html">
- <span class="dropdown-text">Administering</span></a>
+    <a class="dropdown-item" href="../guides/ai-agents.html">
+ <span class="dropdown-text">Using AI Code Agents</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../guides/ai-gateway.html">
@@ -169,10 +169,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#creating-the-workspace" id="toc-creating-the-workspace" class="nav-link active" data-scroll-target="#creating-the-workspace">Creating the workspace</a></li>
-  <li><a href="#install-marimo" id="toc-install-marimo" class="nav-link" data-scroll-target="#install-marimo">Install Marimo</a>
-  <ul class="collapse">
+  <li><a href="#installing-marimo" id="toc-installing-marimo" class="nav-link" data-scroll-target="#installing-marimo">Installing Marimo</a></li>
+  <li><a href="#running-marimo-in-the-background" id="toc-running-marimo-in-the-background" class="nav-link" data-scroll-target="#running-marimo-in-the-background">Running Marimo in the Background</a></li>
   <li><a href="#marimo-interface" id="toc-marimo-interface" class="nav-link" data-scroll-target="#marimo-interface">Marimo Interface</a></li>
-  <li><a href="#configuring-the-ai-provider" id="toc-configuring-the-ai-provider" class="nav-link" data-scroll-target="#configuring-the-ai-provider">Configuring the AI Provider</a></li>
+  <li><a href="#configuring-chat-and-agents" id="toc-configuring-chat-and-agents" class="nav-link" data-scroll-target="#configuring-chat-and-agents">Configuring Chat and Agents</a>
+  <ul class="collapse">
+  <li><a href="#install-ai-dependencies" id="toc-install-ai-dependencies" class="nav-link" data-scroll-target="#install-ai-dependencies">1. Install AI Dependencies</a></li>
+  <li><a href="#add-a-custom-ai-provider" id="toc-add-a-custom-ai-provider" class="nav-link" data-scroll-target="#add-a-custom-ai-provider">2. Add a Custom AI Provider</a></li>
+  <li><a href="#add-a-model" id="toc-add-a-model" class="nav-link" data-scroll-target="#add-a-model">3. Add a Model</a></li>
+  <li><a href="#configure-ai-features-to-use-the-model" id="toc-configure-ai-features-to-use-the-model" class="nav-link" data-scroll-target="#configure-ai-features-to-use-the-model">4. Configure AI Features to Use the Model</a></li>
+  <li><a href="#confirm-settings" id="toc-confirm-settings" class="nav-link" data-scroll-target="#confirm-settings">5. Confirm Settings</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -199,13 +205,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Marimo is a Python notebook tool. Unlike Jupyter, marimo notebooks are stored as plain Python files and automatically re-run dependent cells when a cell changes. It also includes an AI coding agent that can be used with the <a href="ai-gateway.html">DREAMLab AI gateway</a>.</p>
+<p>Marimo is a Python notebook tool. Unlike Jupyter, marimo notebooks are stored as plain Python files and automatically re-run dependent cells when a cell changes. Marimo has integrated AI chat and agent tools that can be configured to use models through the <a href="ai-gateway.html">DREAMLab AI gateway</a>.</p>
 <section id="creating-the-workspace" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-workspace">Creating the workspace</h2>
-<p>Create a new workspace using the “New Workspace” form. You don’t need to select any of the optional settings (RStudio, VS Code etc).</p>
+<p>Create a new workspace using the “New Workspace” form. A default workspace is sufficient for installing Marimo. You don’t need to select any of the optional settings (RStudio, VS Code etc).</p>
 </section>
-<section id="install-marimo" class="level2">
-<h2 class="anchored" data-anchor-id="install-marimo">Install Marimo</h2>
+<section id="installing-marimo" class="level2">
+<h2 class="anchored" data-anchor-id="installing-marimo">Installing Marimo</h2>
 <p>Once the workspace has booted, open a Terminal window from the workspace dashboard. Run the following commands (“<code>#...</code>” lines are comments):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a project folder and set it as your working directory</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my-project</span>
@@ -219,29 +225,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># run this marimo server</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run marimo edit <span class="at">--no-token</span> <span class="at">--headless</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The last command runs the marimo server in the context of the Terminal window. (To quit the server, use <code>ctrl</code>+<code>c</code> or just close the Terminal window. For now, keep it running.)</p>
-<p>With the marimo server running, you can access the Marimo UI using the “port” menu from the coder workspace dashboard. Click the port associated with “marimo” server.</p>
+<p>The last command runs the Marimo server in the context of the Terminal window. (To quit the server, use <code>ctrl</code>+<code>c</code> or just close the Terminal window. For now, keep it running.)</p>
+</section>
+<section id="running-marimo-in-the-background" class="level2">
+<h2 class="anchored" data-anchor-id="running-marimo-in-the-background">Running Marimo in the Background</h2>
+<p>Instead of starting Marimo directly with <code>uv run marimo</code>, you may prefer to run Marimo in the background to prevent the server from stopping when you close the Terminal window. You can use <code>tmux</code> to run Marimo in a persistent terminal session:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run at workspace startup</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/my-project</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> new-session <span class="at">-d</span> <span class="at">-s</span> marimo <span class="st">'uv run marimo edit --no-token --headless'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run these commands each time the workspace starts to start the Marimo server. To quit the server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quit the marimo server session</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> kill-session <span class="at">-t</span> marimo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="marimo-interface" class="level2">
+<h2 class="anchored" data-anchor-id="marimo-interface">Marimo Interface</h2>
+<p>With the Marimo server running, you can access the Marimo UI using the “port” menu from the coder workspace dashboard. Click the port associated with “marimo” server.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../images/ports-menu.png" class="img-fluid figure-img"></p>
+<p><img src="../images/ports-menu.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>Workspace Ports Menu</figcaption>
 </figure>
 </div>
-<section id="marimo-interface" class="level3">
-<h3 class="anchored" data-anchor-id="marimo-interface">Marimo Interface</h3>
 <p>From the Marimo dashboard, you can create a new notebook, which will be saved in your project folder.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/marimo-dashboard.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Marimo Dashboard</figcaption>
+</figure>
+</div>
 </section>
-<section id="configuring-the-ai-provider" class="level3">
-<h3 class="anchored" data-anchor-id="configuring-the-ai-provider">Configuring the AI Provider</h3>
-<p>To use the dreamlab AI provider, you need to add a “custom provider”. The settings are:</p>
+<section id="configuring-chat-and-agents" class="level2">
+<h2 class="anchored" data-anchor-id="configuring-chat-and-agents">Configuring Chat and Agents</h2>
+<p>Marimo has integrated AI chat and agent tools, which you can access through <strong>Chat and Agents</strong> icon on the notebook menu. The AI features are configured through the AI panel in the User Settings window. To open User Settings, click the gear icon in the top-right corner and then click <strong>User settings</strong>.</p>
+<p>The AI integration has two parts: a panel on the left side with a chat interface and a <strong>Generate with AI</strong> button in the main notebook area that lets you enter a prompt to generate code for a new cell.</p>
+<p>You can configure your Marimo notebook to use AI models through the <a href="ai-gateway.html">DREAM Lab AI gateway</a>. For this to work, you need to:</p>
 <ul>
-<li>provider name: litellm_proxy</li>
-<li>base url: http://litellm.dreamlab.ucsb.edu:4000</li>
-<li>API key: your personal API key.</li>
+<li>Request a personal API key for the AI gateway.</li>
+<li>Configure the notebook using the steps below.</li>
 </ul>
-<p>You also need to add the specific model you want to use. In “AI Models” tab, click the “+ Add Model” button, select the Custom provider you just added and then enter a model name. I am using <code>gemini-3-flash-preview</code></p>
-<p>The AI integration has two parts: there is a panel on the left side with a chat interface (the chat has three modes: manual, ask, and agent); and in the main notebook area, there is a “generate with AI button” – using it, you can enter a prompt to generate code for a new cell.</p>
-<p>I’ve mostly been using the left-side chat interface in agent mode. What differentiates agent mode from the others is that it has the ability to add/modify/delete cells in the notebook.</p>
+<section id="install-ai-dependencies" class="level3">
+<h3 class="anchored" data-anchor-id="install-ai-dependencies">1. Install AI Dependencies</h3>
+<p>From the <strong>Optional Dependencies</strong> panel in the user settings, make sure <strong>AI features</strong> are installed. If not, click the <strong>Install with uv</strong> button.</p>
+</section>
+<section id="add-a-custom-ai-provider" class="level3">
+<h3 class="anchored" data-anchor-id="add-a-custom-ai-provider">2. Add a Custom AI Provider</h3>
+<p>From the <strong>AI</strong> panel in the user settings, go to the <strong>AI Providers</strong> tab and click <strong>Add Provider</strong>. Fill in the following:</p>
+<ul>
+<li><strong>Provider name</strong>: <code>litellm_proxy</code></li>
+<li><strong>Base URL</strong>: <code>http://litellm.dreamlab.ucsb.edu:4000</code></li>
+<li><strong>API key</strong>: your personal API key</li>
+</ul>
+</section>
+<section id="add-a-model" class="level3">
+<h3 class="anchored" data-anchor-id="add-a-model">3. Add a Model</h3>
+<p>Go to the <strong>AI Models</strong> tab and click <strong>+ Add Model</strong> at the bottom of the dialog. Select <code>litellm_proxy</code> as the provider and enter the model name. We recommend <code>gemini-3-flash-preview</code>. Click <strong>Add</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/marimo-add-model.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Adding a model in the AI Models tab</figcaption>
+</figure>
+</div>
+</section>
+<section id="configure-ai-features-to-use-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="configure-ai-features-to-use-the-model">4. Configure AI Features to Use the Model</h3>
+<p>Go to the <strong>AI Features</strong> tab. Under <strong>Code Completion</strong>, set the Provider to <code>custom</code> and select your model from the <strong>Autocomplete Model</strong> dropdown. Under <strong>AI Assistant</strong>, set the <strong>Chat Model</strong> and <strong>Edit Model</strong> to your model as well.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/marimo-ai-features.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>AI Features configuration</figcaption>
+</figure>
+</div>
+</section>
+<section id="confirm-settings" class="level3">
+<h3 class="anchored" data-anchor-id="confirm-settings">5. Confirm Settings</h3>
+<p>Close User settings, and open the <strong>Chat and Agents</strong> UI from the notebook menu. You should see a chat interface.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/marimo-chat.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Marimo chat panel</figcaption>
+</figure>
+</div>
 
 
 </section>
