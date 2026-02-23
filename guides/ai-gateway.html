@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ai-assisted-coding-tools" id="toc-ai-assisted-coding-tools" class="nav-link active" data-scroll-target="#ai-assisted-coding-tools">AI-Assisted Coding Tools</a>
+  <li><a href="#ai-assisted-coding-tools" id="toc-ai-assisted-coding-tools" class="nav-link active" data-scroll-target="#ai-assisted-coding-tools">AI-assisted Coding Tools</a>
   <ul class="collapse">
   <li><a href="#claude-code" id="toc-claude-code" class="nav-link" data-scroll-target="#claude-code">Claude Code</a></li>
   <li><a href="#opencode" id="toc-opencode" class="nav-link" data-scroll-target="#opencode">OpenCode</a></li>
@@ -212,12 +212,11 @@ Important
 <p>Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.</p>
 <p>The gateway URL is <code>http://litellm.dreamlab.ucsb.edu:4000</code></p>
 <section id="ai-assisted-coding-tools" class="level2">
-<h2 class="anchored" data-anchor-id="ai-assisted-coding-tools">AI-Assisted Coding Tools</h2>
+<h2 class="anchored" data-anchor-id="ai-assisted-coding-tools">AI-assisted Coding Tools</h2>
 <p>Most AI-assisted coding tools can be configured to use the AI gateway.</p>
-<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. “<a href="https://simonwillison.net/tags/prompt-injection/">Prompt injection</a>” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
 <section id="claude-code" class="level3">
 <h3 class="anchored" data-anchor-id="claude-code">Claude Code</h3>
-<p>The following steps are taken from the <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code documentation</a> for using a LiteLLM gateway.</p>
+<p>These instructions are based on <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code’s documentation</a> for connecting to a LiteLLM gateway.</p>
 <section id="install-claude-code" class="level4">
 <h4 class="anchored" data-anchor-id="install-claude-code">1. Install Claude Code</h4>
 <p>Start the terminal and install Claude Code if necessary:</p>
