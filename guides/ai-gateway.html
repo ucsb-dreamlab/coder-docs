@@ -143,10 +143,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Using Marimo Notebooks</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../guides/ai-agents.html">
- <span class="dropdown-text">Using AI Code Agents</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../guides/ai-gateway.html">
  <span class="dropdown-text">AI Gateway</span></a>
   </li>  
@@ -168,12 +164,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ai-assisted-coding-tools." id="toc-ai-assisted-coding-tools." class="nav-link active" data-scroll-target="#ai-assisted-coding-tools.">AI-Assisted Coding Tools.</a>
+  <li><a href="#ai-assisted-coding-tools" id="toc-ai-assisted-coding-tools" class="nav-link active" data-scroll-target="#ai-assisted-coding-tools">AI-Assisted Coding Tools</a>
   <ul class="collapse">
   <li><a href="#claude-code" id="toc-claude-code" class="nav-link" data-scroll-target="#claude-code">Claude Code</a></li>
   <li><a href="#opencode" id="toc-opencode" class="nav-link" data-scroll-target="#opencode">OpenCode</a></li>
-  <li><a href="#install-opencode" id="toc-install-opencode" class="nav-link" data-scroll-target="#install-opencode">1. Install OpenCode</a></li>
-  <li><a href="#configure-opencode" id="toc-configure-opencode" class="nav-link" data-scroll-target="#configure-opencode">2. Configure OpenCode</a></li>
   </ul></li>
   <li><a href="#using-the-litellm-api-with-curl" id="toc-using-the-litellm-api-with-curl" class="nav-link" data-scroll-target="#using-the-litellm-api-with-curl">Using the LiteLLM API with Curl</a></li>
   <li><a href="#using-the-litellm-api-from-python" id="toc-using-the-litellm-api-from-python" class="nav-link" data-scroll-target="#using-the-litellm-api-from-python">Using the LiteLLM API from Python</a></li>
@@ -217,8 +211,8 @@ Important
 </div>
 <p>Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.</p>
 <p>The gateway URL is <code>http://litellm.dreamlab.ucsb.edu:4000</code></p>
-<section id="ai-assisted-coding-tools." class="level2">
-<h2 class="anchored" data-anchor-id="ai-assisted-coding-tools.">AI-Assisted Coding Tools.</h2>
+<section id="ai-assisted-coding-tools" class="level2">
+<h2 class="anchored" data-anchor-id="ai-assisted-coding-tools">AI-Assisted Coding Tools</h2>
 <p>Most AI-assisted coding tools can be configured to use the AI gateway.</p>
 <p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. “<a href="https://simonwillison.net/tags/prompt-injection/">Prompt injection</a>” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
 <section id="claude-code" class="level3">
@@ -266,24 +260,23 @@ Tip
 <section id="opencode" class="level3">
 <h3 class="anchored" data-anchor-id="opencode">OpenCode</h3>
 <p>These instructions are from <a href="https://docs.litellm.ai/docs/tutorials/opencode_integration">LiteLLM’s OpenCode QuickStart</a>.</p>
-</section>
-<section id="install-opencode" class="level3">
-<h3 class="anchored" data-anchor-id="install-opencode">1. Install OpenCode</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download and install open code</span></span>
+<section id="install-opencode" class="level4">
+<h4 class="anchored" data-anchor-id="install-opencode">1. Install OpenCode</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download and install opencode</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://opencode.ai/install <span class="kw">|</span> <span class="fu">bash</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply updated $PATH</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configure-opencode" class="level3">
-<h3 class="anchored" data-anchor-id="configure-opencode">2. Configure OpenCode</h3>
+<section id="configure-opencode" class="level4">
+<h4 class="anchored" data-anchor-id="configure-opencode">2. Configure OpenCode</h4>
 <p>Configure OpenCode:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create opencode config folder</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.config/opencode</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># edit the config file (opencode.json)</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.config/opencode/opencode.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Paste the following as the contents of <code>~/.config/opencode/opencode.json</code>.</p>
+<p>Paste the following into <code>nano</code> as the contents of <code>~/.config/opencode/opencode.json</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"$schema"</span><span class="fu">:</span> <span class="st">"https://opencode.ai/config.json"</span><span class="fu">,</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"provider"</span><span class="fu">:</span> <span class="fu">{</span></span>
@@ -319,11 +312,12 @@ Tip
 <p>Use <code>/exit</code> to quit OpenCode. The configured provider and model should persist with your next session.</p>
 </section>
 </section>
+</section>
 <section id="using-the-litellm-api-with-curl" class="level2">
 <h2 class="anchored" data-anchor-id="using-the-litellm-api-with-curl">Using the LiteLLM API with Curl</h2>
 <p>You can use curl to call the LiteLLM API directly. The LiteLLM API is documented here: <a href="https://docs.litellm.ai/docs/supported_endpoints" class="uri">https://docs.litellm.ai/docs/supported_endpoints</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get spend ($) for your API key</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LITELLM_API_KEY</span><span class="op">=&lt;</span>YOUR API KEY<span class="op">&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LITELLM_API_KEY</span><span class="op">=</span><span class="st">"YOUR API KEY..."</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=</span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="kw">|</span> <span class="ex">jq</span> .info.spend</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># list available models</span></span>
