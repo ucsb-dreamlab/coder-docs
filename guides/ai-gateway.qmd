@@ -19,74 +19,11 @@ The gateway URL is `http://litellm.dreamlab.ucsb.edu:4000`
 
 Most AI-assisted coding tools can be configured to use the AI gateway.
 
-### Claude Code
-
-These instructions are based on [Claude Code's documentation](https://docs.anthropic.com/en/docs/claude-code) for connecting to a LiteLLM gateway.
-
-#### 1. Install Claude Code
-
-Start the terminal and install Claude Code if necessary:
-
-```sh
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-#### 2. Configure Claude Code
-
-You need to set three environment variables so Claude Code can connect to
-authenticate with the AI gateway. You can add these to the bottom of your
-`~/.bashrc` file so they take effect automatically when you start the terminal.
-
-Open `~/.bashrc` in a text editor:
-
-```sh
-nano ~/.bashrc
-```
-
-Scroll to the bottom of the file and add the following lines. Replace
-`"YOUR_API_KEY..."` with the key you received from DREAM Lab staff.
-
-```sh
-export ANTHROPIC_AUTH_TOKEN="YOUR_API_KEY..."
-export ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000
-export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
-```
-
-Save the file (`Ctrl + O`, then `Ctrl + X` in nano) and reload it:
-
-```sh
-source ~/.bashrc
-```
-
-By adding these variables to `~/.bashrc`, you won't need to enter the API
-key or gateway address every time you log in to your Coder workspace.
-
-#### 3. Start Claude Code
-
-You should start Claude Code from inside a project directory:
-
-```sh
-claude
-```
-
-The workspace will ask if it's a safe environment. Select **"Yes, I trust
-this folder"** and Claude will start.
-
-Once Claude starts, try asking it a question. You do not need to run `/init`
-like it says at the top.
-
-::: {.callout-tip}
-
-If you see a **Missing API Token** error in red to the right of the terminal,
-you are not connected to Anthropic and will need to either set up the
-environment variables in `~/.bashrc` (as described above) or exit Claude and
-manually export the variables in your terminal session.
-
-:::
-
 ### OpenCode
 
-These instructions are from [LiteLLM's OpenCode QuickStart](https://docs.litellm.ai/docs/tutorials/opencode_integration).
+[OpenCode](https://opencode.ai/) is open-source coding agent that works with a
+wide range of model providers. These instructions are from [LiteLLM's
+OpenCodeQuickStart](https://docs.litellm.ai/docs/tutorials/opencode_integration).
 
 #### 1. Install OpenCode
 
@@ -151,7 +88,78 @@ we set in the configuration file. Press Enter to select the provider.
 Use `/exit` to quit OpenCode. The configured provider and model should persist
 with your next session.
 
-## Using the LiteLLM API with Curl
+
+### Claude Code
+
+[Claude Code](https://claude.com/product/claude-code) is Anthropic's coding
+agent. It works primarily with Anthropic models (Opus, Sonnet, and Haiku), which
+some users may have access to through the AI gateway. These instructions are
+based on [Claude Code's
+documentation](https://docs.anthropic.com/en/docs/claude-code) for connecting to
+a LiteLLM gateway.
+
+#### 1. Install Claude Code
+
+Start the terminal and install Claude Code if necessary:
+
+```sh
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+#### 2. Configure Claude Code
+
+You need to set three environment variables so Claude Code can connect to
+authenticate with the AI gateway. You can add these to the bottom of your
+`~/.bashrc` file so they take effect automatically when you start the terminal.
+
+Open `~/.bashrc` in a text editor:
+
+```sh
+nano ~/.bashrc
+```
+
+Scroll to the bottom of the file and add the following lines. Replace
+`"YOUR_API_KEY..."` with the key you received from DREAM Lab staff.
+
+```sh
+export ANTHROPIC_AUTH_TOKEN="YOUR_API_KEY..."
+export ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000
+export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+```
+
+Save the file (`Ctrl + O`, then `Ctrl + X` in nano) and reload it:
+
+```sh
+source ~/.bashrc
+```
+
+By adding these variables to `~/.bashrc`, you won't need to enter the API
+key or gateway address every time you log in to your Coder workspace.
+
+#### 3. Start Claude Code
+
+You should start Claude Code from inside a project directory:
+
+```sh
+claude
+```
+
+The workspace will ask if it's a safe environment. Select **"Yes, I trust
+this folder"** and Claude will start.
+
+Once Claude starts, try asking it a question. You do not need to run `/init`
+like it says at the top.
+
+::: {.callout-tip}
+
+If you see a **Missing API Token** error in red to the right of the terminal,
+you are not connected to Anthropic and will need to either set up the
+environment variables in `~/.bashrc` (as described above) or exit Claude and
+manually export the variables in your terminal session.
+
+:::
+
+## LiteLLM API with curl
 
 You can use curl to call the LiteLLM API directly. The LiteLLM API is documented here:
 <https://docs.litellm.ai/docs/supported_endpoints>
@@ -166,7 +174,7 @@ curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" http://litellm.dreamlab.uc
 
 ```
 
-## Using the LiteLLM API from Python
+## LiteLLM API with Python
 
 This code is taken from the [LiteLLM documentation](https://docs.litellm.ai/docs/).
 
