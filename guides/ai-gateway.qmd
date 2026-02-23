@@ -5,7 +5,8 @@ title: AI Gateway
 ::: {.callout-important}
 
 The AI Gateway is an experimental feature for Coder Workspaces.
-You will need to request an API key to use it. Access is currently restricted to library staff.
+An **API key is required** to use the gateway. 
+Access is currently restricted to library staff.
 
 :::
 
@@ -14,61 +15,24 @@ The gateway is only accessible from your Coder Workspace.
 
 The gateway URL is `http://litellm.dreamlab.ucsb.edu:4000`
 
-The LiteLLM API is documented here:
-<https://docs.litellm.ai/docs/supported_endpoints>
+## AI-Assisted Coding Tools.
 
+Most AI-assisted coding tools can be configured to use the AI gateway.
 
-## Currently Supported Models
+Coder workspaces provide a relatively safe way to experiment with AI coding
+agents, like Claude Code, Gemini CLI, or Open AI's Codex. These tools, which
+generate and also *execute* code, can be useful but they are also inherently
+dangerous. "[Prompt injection](https://simonwillison.net/tags/prompt-injection/)" 
+attacks can trick AI tools into running nefarious code on your system. Because
+Coder workspaces are isolated virtual machines, the potential damage a rogue AI
+agent running in a workspace can cause is reduced (but not eliminated). 
 
-- `gemini-3-flash-preview`
-- `gemini-3-pro-preview`
-- `claude-opus-4-5-20251101`
-- `claude-opus-4-6`
-- `claude-sonnet-4-5-20250929`
-- `claude-haiku-4-5-20251001`
-
-## Using the LiteLLM API from Python
-
-This code is taken from the [LiteLLM documentation](https://docs.litellm.ai/docs/).
-
-First, create a `.env` file in your project directory with your API key:
-
-```sh
-LITELLM_PROXY_API_KEY=<YOUR_API_TOKEN_HERE>
-```
-
-Then use the following Python code to connect to the gateway:
-
-```python
-import litellm
-from litellm import completion
-from dotenv import load_dotenv
-
-# load environment variables from .env file
-load_dotenv()
-
-# set custom api base to your proxy
-litellm.api_base = "http://litellm.dreamlab.ucsb.edu:4000"
-
-messages = [{"content": "Hello, how are you?", "role": "user"}]
-
-# litellm proxy call
-response = completion(
-    model="litellm_proxy/gemini-3-flash-preview",
-    messages=messages,
-)
-```
-
-## Setting up Claude Code
+### Claude Code
 
 The following steps are taken from the [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
 for using a LiteLLM gateway.
 
-### 1. Create your workspace
-
-Any configuration will work since Claude Code runs from the command line.
-
-### 2. Install Claude Code
+#### 1. Install Claude Code
 
 Start the terminal and install Claude Code if necessary:
 
@@ -76,11 +40,11 @@ Start the terminal and install Claude Code if necessary:
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-### 3. Set environment variables
+#### 2. Configure Claude Code
 
-You need to set three environment variables so Claude Code can connect to the
-gateway. You can add these to the bottom of your `~/.bashrc` file so they take
-effect automatically when you start the terminal.
+You need to set three environment variables so Claude Code can connect to
+authenticate with the AI gateway. You can add these to the bottom of your
+`~/.bashrc` file so they take effect automatically when you start the terminal.
 
 Open `~/.bashrc` in a text editor:
 
@@ -89,10 +53,10 @@ nano ~/.bashrc
 ```
 
 Scroll to the bottom of the file and add the following lines. Replace
-`<YOUR_API_TOKEN_HERE>` with the token you received from DREAM Lab staff.
+`"YOUR_API_KEY..."` with the key you received from DREAM Lab staff.
 
 ```sh
-export ANTHROPIC_AUTH_TOKEN=<YOUR_API_TOKEN_HERE>
+export ANTHROPIC_AUTH_TOKEN="YOUR_API_KEY..."
 export ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000
 export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
 ```
@@ -104,9 +68,9 @@ source ~/.bashrc
 ```
 
 By adding these variables to `~/.bashrc`, you won't need to enter the API
-token or gateway address every time you log in to your Coder workspace.
+key or gateway address every time you log in to your Coder workspace.
 
-### 4. Start Claude Code
+#### 3. Start Claude Code
 
 You should start Claude Code from inside a project directory:
 
@@ -129,14 +93,116 @@ manually export the variables in your terminal session.
 
 :::
 
-## Claude Code Tips
+### OpenCode
 
-You can check the spend (in dollars) associated with your API key using this
-command from a Coder workspace:
+These instructions are from [LiteLLM's OpenCode QuickStart](https://docs.litellm.ai/docs/tutorials/opencode_integration).
+
+### 1. Install OpenCode
 
 ```sh
-curl --silent \
-  "http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${ANTHROPIC_AUTH_TOKEN}" \
-  -H "Authorization: Bearer ${ANTHROPIC_AUTH_TOKEN}" \
-  | jq .info.spend
+# download and install open code
+curl -fsSL https://opencode.ai/install | bash
+
+# apply updated $PATH
+source ~/.bashrc
+```
+
+### 2. Configure OpenCode
+
+Configure OpenCode:
+
+```sh
+# create opencode config folder
+mkdir -p ~/.config/opencode
+
+# edit the config file (opencode.json)
+nano ~/.config/opencode/opencode.json
+```
+
+Paste the following as the contents of `~/.config/opencode/opencode.json`.
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "DREAM Lab LiteLLM",
+      "options": {
+        "baseURL": "http://litellm.dreamlab.ucsb.edu:4000/v1"
+      },
+      "models": {
+        "gemini-3-flash-preview": {
+          "name": "Gemini 3 Flash"
+        }
+      }
+    }
+  }
+}
+```
+
+Save the file (`Ctrl + O`, then `Ctrl + X` in nano); then start OpenCode:
+
+```sh
+opencode
+```
+
+In OpenCode, enter `/connect` to start the **Connect a provider** configuration:
+
+- Enter **DREAM Lab** in the search box, to filter the list to just the provider
+we set in the configuration file. Press Enter to select the provider. 
+- In the **API key** input, enter your personal API key and hit Enter.
+- Hit enter again to select the model, **Gemini 3 Flash**
+- You should now be back in OpenCode's main screen.Confirm that the connection is working with a simple question ("Are we connected?")
+
+![OpenCode User Interface](../images/opencode.png)
+
+Use `/exit` to quit OpenCode. The configured provider and model should persist
+with your next session.
+
+## Using the LiteLLM API with Curl
+
+You can use curl to call the LiteLLM API directly. The LiteLLM API is documented here:
+<https://docs.litellm.ai/docs/supported_endpoints>
+
+```sh
+# get spend ($) for your API key
+export LITELLM_API_KEY=<YOUR API KEY>
+curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" "http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${LITELLM_API_KEY}" | jq .info.spend
+
+# list available models
+curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" http://litellm.dreamlab.ucsb.edu:4000/v1/models | jq .data[].id
+
+```
+
+## Using the LiteLLM API from Python
+
+This code is taken from the [LiteLLM documentation](https://docs.litellm.ai/docs/).
+
+First, create a `.env` file in your project directory with your API key:
+
+```sh
+LITELLM_PROXY_API_KEY="YOUR_API_KEY..."
+```
+
+Then use the following Python code to connect to the gateway:
+
+```python
+import litellm
+from litellm import completion
+from dotenv import load_dotenv
+
+# load environment variables from .env file
+load_dotenv()
+
+# set custom api base to your proxy
+litellm.api_base = "http://litellm.dreamlab.ucsb.edu:4000"
+
+messages = [{"content": "Hello, how are you?", "role": "user"}]
+
+# litellm proxy call
+response = completion(
+    model="litellm_proxy/gemini-3-flash-preview",
+    messages=messages,
+)
 ```
