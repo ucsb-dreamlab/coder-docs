@@ -168,16 +168,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#currently-supported-models" id="toc-currently-supported-models" class="nav-link active" data-scroll-target="#currently-supported-models">Currently Supported Models</a></li>
-  <li><a href="#using-the-litellm-api-from-python" id="toc-using-the-litellm-api-from-python" class="nav-link" data-scroll-target="#using-the-litellm-api-from-python">Using the LiteLLM API from Python</a></li>
-  <li><a href="#setting-up-claude-code" id="toc-setting-up-claude-code" class="nav-link" data-scroll-target="#setting-up-claude-code">Setting up Claude Code</a>
+  <li><a href="#ai-assisted-coding-tools." id="toc-ai-assisted-coding-tools." class="nav-link active" data-scroll-target="#ai-assisted-coding-tools.">AI-Assisted Coding Tools.</a>
   <ul class="collapse">
-  <li><a href="#create-your-workspace" id="toc-create-your-workspace" class="nav-link" data-scroll-target="#create-your-workspace">1. Create your workspace</a></li>
-  <li><a href="#install-claude-code" id="toc-install-claude-code" class="nav-link" data-scroll-target="#install-claude-code">2. Install Claude Code</a></li>
-  <li><a href="#set-environment-variables" id="toc-set-environment-variables" class="nav-link" data-scroll-target="#set-environment-variables">3. Set environment variables</a></li>
-  <li><a href="#start-claude-code" id="toc-start-claude-code" class="nav-link" data-scroll-target="#start-claude-code">4. Start Claude Code</a></li>
+  <li><a href="#claude-code" id="toc-claude-code" class="nav-link" data-scroll-target="#claude-code">Claude Code</a></li>
+  <li><a href="#opencode" id="toc-opencode" class="nav-link" data-scroll-target="#opencode">OpenCode</a></li>
+  <li><a href="#install-opencode" id="toc-install-opencode" class="nav-link" data-scroll-target="#install-opencode">1. Install OpenCode</a></li>
+  <li><a href="#configure-opencode" id="toc-configure-opencode" class="nav-link" data-scroll-target="#configure-opencode">2. Configure OpenCode</a></li>
   </ul></li>
-  <li><a href="#claude-code-tips" id="toc-claude-code-tips" class="nav-link" data-scroll-target="#claude-code-tips">Claude Code Tips</a></li>
+  <li><a href="#using-the-litellm-api-with-curl" id="toc-using-the-litellm-api-with-curl" class="nav-link" data-scroll-target="#using-the-litellm-api-with-curl">Using the LiteLLM API with Curl</a></li>
+  <li><a href="#using-the-litellm-api-from-python" id="toc-using-the-litellm-api-from-python" class="nav-link" data-scroll-target="#using-the-litellm-api-from-python">Using the LiteLLM API from Python</a></li>
   </ul>
 </nav>
     </div>
@@ -213,76 +212,40 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The AI Gateway is an experimental feature for Coder Workspaces. You will need to request an API key to use it. Access is currently restricted to library staff.</p>
+<p>The AI Gateway is an experimental feature for Coder Workspaces. An <strong>API key is required</strong> to use the gateway. Access is currently restricted to library staff.</p>
 </div>
 </div>
 <p>Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.</p>
 <p>The gateway URL is <code>http://litellm.dreamlab.ucsb.edu:4000</code></p>
-<p>The LiteLLM API is documented here: <a href="https://docs.litellm.ai/docs/supported_endpoints" class="uri">https://docs.litellm.ai/docs/supported_endpoints</a></p>
-<section id="currently-supported-models" class="level2">
-<h2 class="anchored" data-anchor-id="currently-supported-models">Currently Supported Models</h2>
-<ul>
-<li><code>gemini-3-flash-preview</code></li>
-<li><code>gemini-3-pro-preview</code></li>
-<li><code>claude-opus-4-5-20251101</code></li>
-<li><code>claude-opus-4-6</code></li>
-<li><code>claude-sonnet-4-5-20250929</code></li>
-<li><code>claude-haiku-4-5-20251001</code></li>
-</ul>
-</section>
-<section id="using-the-litellm-api-from-python" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-litellm-api-from-python">Using the LiteLLM API from Python</h2>
-<p>This code is taken from the <a href="https://docs.litellm.ai/docs/">LiteLLM documentation</a>.</p>
-<p>First, create a <code>.env</code> file in your project directory with your API key:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">LITELLM_PROXY_API_KEY</span><span class="op">=&lt;</span>YOUR_API_TOKEN_HERE<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then use the following Python code to connect to the gateway:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> litellm</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> litellm <span class="im">import</span> completion</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load environment variables from .env file</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set custom api base to your proxy</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>litellm.api_base <span class="op">=</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000"</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"content"</span>: <span class="st">"Hello, how are you?"</span>, <span class="st">"role"</span>: <span class="st">"user"</span>}]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># litellm proxy call</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion(</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"litellm_proxy/gemini-3-flash-preview"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>messages,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="setting-up-claude-code" class="level2">
-<h2 class="anchored" data-anchor-id="setting-up-claude-code">Setting up Claude Code</h2>
+<section id="ai-assisted-coding-tools." class="level2">
+<h2 class="anchored" data-anchor-id="ai-assisted-coding-tools.">AI-Assisted Coding Tools.</h2>
+<p>Most AI-assisted coding tools can be configured to use the AI gateway.</p>
+<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. “<a href="https://simonwillison.net/tags/prompt-injection/">Prompt injection</a>” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
+<section id="claude-code" class="level3">
+<h3 class="anchored" data-anchor-id="claude-code">Claude Code</h3>
 <p>The following steps are taken from the <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code documentation</a> for using a LiteLLM gateway.</p>
-<section id="create-your-workspace" class="level3">
-<h3 class="anchored" data-anchor-id="create-your-workspace">1. Create your workspace</h3>
-<p>Any configuration will work since Claude Code runs from the command line.</p>
-</section>
-<section id="install-claude-code" class="level3">
-<h3 class="anchored" data-anchor-id="install-claude-code">2. Install Claude Code</h3>
+<section id="install-claude-code" class="level4">
+<h4 class="anchored" data-anchor-id="install-claude-code">1. Install Claude Code</h4>
 <p>Start the terminal and install Claude Code if necessary:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="set-environment-variables" class="level3">
-<h3 class="anchored" data-anchor-id="set-environment-variables">3. Set environment variables</h3>
-<p>You need to set three environment variables so Claude Code can connect to the gateway. You can add these to the bottom of your <code>~/.bashrc</code> file so they take effect automatically when you start the terminal.</p>
+<section id="configure-claude-code" class="level4">
+<h4 class="anchored" data-anchor-id="configure-claude-code">2. Configure Claude Code</h4>
+<p>You need to set three environment variables so Claude Code can connect to authenticate with the AI gateway. You can add these to the bottom of your <code>~/.bashrc</code> file so they take effect automatically when you start the terminal.</p>
 <p>Open <code>~/.bashrc</code> in a text editor:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Scroll to the bottom of the file and add the following lines. Replace <code>&lt;YOUR_API_TOKEN_HERE&gt;</code> with the token you received from DREAM Lab staff.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_AUTH_TOKEN</span><span class="op">=&lt;</span>YOUR_API_TOKEN_HERE<span class="op">&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_BASE_URL</span><span class="op">=</span>http://litellm.dreamlab.ucsb.edu:4000</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</span><span class="op">=</span>1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Scroll to the bottom of the file and add the following lines. Replace <code>"YOUR_API_KEY..."</code> with the key you received from DREAM Lab staff.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_AUTH_TOKEN</span><span class="op">=</span><span class="st">"YOUR_API_KEY..."</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_BASE_URL</span><span class="op">=</span>http://litellm.dreamlab.ucsb.edu:4000</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</span><span class="op">=</span>1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save the file (<code>Ctrl + O</code>, then <code>Ctrl + X</code> in nano) and reload it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>By adding these variables to <code>~/.bashrc</code>, you won’t need to enter the API token or gateway address every time you log in to your Coder workspace.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>By adding these variables to <code>~/.bashrc</code>, you won’t need to enter the API key or gateway address every time you log in to your Coder workspace.</p>
 </section>
-<section id="start-claude-code" class="level3">
-<h3 class="anchored" data-anchor-id="start-claude-code">4. Start Claude Code</h3>
+<section id="start-claude-code" class="level4">
+<h4 class="anchored" data-anchor-id="start-claude-code">3. Start Claude Code</h4>
 <p>You should start Claude Code from inside a project directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The workspace will ask if it’s a safe environment. Select <strong>“Yes, I trust this folder”</strong> and Claude will start.</p>
 <p>Once Claude starts, try asking it a question. You do not need to run <code>/init</code> like it says at the top.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -300,13 +263,95 @@ Tip
 </div>
 </section>
 </section>
-<section id="claude-code-tips" class="level2">
-<h2 class="anchored" data-anchor-id="claude-code-tips">Claude Code Tips</h2>
-<p>You can check the spend (in dollars) associated with your API key using this command from a Coder workspace:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--silent</span> <span class="dt">\</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=</span><span class="va">${ANTHROPIC_AUTH_TOKEN}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${ANTHROPIC_AUTH_TOKEN}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">jq</span> .info.spend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="opencode" class="level3">
+<h3 class="anchored" data-anchor-id="opencode">OpenCode</h3>
+<p>These instructions are from <a href="https://docs.litellm.ai/docs/tutorials/opencode_integration">LiteLLM’s OpenCode QuickStart</a>.</p>
+</section>
+<section id="install-opencode" class="level3">
+<h3 class="anchored" data-anchor-id="install-opencode">1. Install OpenCode</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download and install open code</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://opencode.ai/install <span class="kw">|</span> <span class="fu">bash</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply updated $PATH</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="configure-opencode" class="level3">
+<h3 class="anchored" data-anchor-id="configure-opencode">2. Configure OpenCode</h3>
+<p>Configure OpenCode:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create opencode config folder</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.config/opencode</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># edit the config file (opencode.json)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.config/opencode/opencode.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Paste the following as the contents of <code>~/.config/opencode/opencode.json</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"$schema"</span><span class="fu">:</span> <span class="st">"https://opencode.ai/config.json"</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"provider"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"litellm"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"npm"</span><span class="fu">:</span> <span class="st">"@ai-sdk/openai-compatible"</span><span class="fu">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"DREAM Lab LiteLLM"</span><span class="fu">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"options"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"baseURL"</span><span class="fu">:</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000/v1"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"models"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"gemini-3-flash-preview"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Gemini 3 Flash"</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save the file (<code>Ctrl + O</code>, then <code>Ctrl + X</code> in nano); then start OpenCode:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opencode</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In OpenCode, enter <code>/connect</code> to start the <strong>Connect a provider</strong> configuration:</p>
+<ul>
+<li>Enter <strong>DREAM Lab</strong> in the search box, to filter the list to just the provider we set in the configuration file. Press Enter to select the provider.</li>
+<li>In the <strong>API key</strong> input, enter your personal API key and hit Enter.</li>
+<li>Hit enter again to select the model, <strong>Gemini 3 Flash</strong></li>
+<li>You should now be back in OpenCode’s main screen.Confirm that the connection is working with a simple question (“Are we connected?”)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/opencode.png" class="img-fluid figure-img"></p>
+<figcaption>OpenCode User Interface</figcaption>
+</figure>
+</div>
+<p>Use <code>/exit</code> to quit OpenCode. The configured provider and model should persist with your next session.</p>
+</section>
+</section>
+<section id="using-the-litellm-api-with-curl" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-litellm-api-with-curl">Using the LiteLLM API with Curl</h2>
+<p>You can use curl to call the LiteLLM API directly. The LiteLLM API is documented here: <a href="https://docs.litellm.ai/docs/supported_endpoints" class="uri">https://docs.litellm.ai/docs/supported_endpoints</a></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get spend ($) for your API key</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LITELLM_API_KEY</span><span class="op">=&lt;</span>YOUR API KEY<span class="op">&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=</span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="kw">|</span> <span class="ex">jq</span> .info.spend</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># list available models</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> http://litellm.dreamlab.ucsb.edu:4000/v1/models <span class="kw">|</span> <span class="ex">jq</span> .data[].id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-the-litellm-api-from-python" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-litellm-api-from-python">Using the LiteLLM API from Python</h2>
+<p>This code is taken from the <a href="https://docs.litellm.ai/docs/">LiteLLM documentation</a>.</p>
+<p>First, create a <code>.env</code> file in your project directory with your API key:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">LITELLM_PROXY_API_KEY</span><span class="op">=</span><span class="st">"YOUR_API_KEY..."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then use the following Python code to connect to the gateway:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> litellm</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> litellm <span class="im">import</span> completion</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load environment variables from .env file</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set custom api base to your proxy</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>litellm.api_base <span class="op">=</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000"</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"content"</span>: <span class="st">"Hello, how are you?"</span>, <span class="st">"role"</span>: <span class="st">"user"</span>}]</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># litellm proxy call</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"litellm_proxy/gemini-3-flash-preview"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>messages,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

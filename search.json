@@ -63,20 +63,6 @@
     "text": "Configuring Chat and Agents\nMarimo has integrated AI chat and agent tools, which you can access through Chat and Agents icon on the notebook menu. The AI features are configured through the AI panel in the User Settings window. To open User Settings, click the gear icon in the top-right corner and then click User settings.\nThe AI integration has two parts: a panel on the left side with a chat interface and a Generate with AI button in the main notebook area that lets you enter a prompt to generate code for a new cell.\nYou can configure your Marimo notebook to use AI models through the DREAM Lab AI gateway. For this to work, you need to:\n\nRequest a personal API key for the AI gateway.\nConfigure the notebook using the steps below.\n\n\n1. Install AI Dependencies\nFrom the Optional Dependencies panel in the user settings, make sure AI features are installed. If not, click the Install with uv button.\n\n\n2. Add a Custom AI Provider\nFrom the AI panel in the user settings, go to the AI Providers tab and click Add Provider. Fill in the following:\n\nProvider name: litellm_proxy\nBase URL: http://litellm.dreamlab.ucsb.edu:4000\nAPI key: your personal API key\n\n\n\n3. Add a Model\nGo to the AI Models tab and click + Add Model at the bottom of the dialog. Select litellm_proxy as the provider and enter the model name. We recommend gemini-3-flash-preview. Click Add.\n\n\n\nAdding a model in the AI Models tab\n\n\n\n\n4. Configure AI Features to Use the Model\nGo to the AI Features tab. Under Code Completion, set the Provider to custom and select your model from the Autocomplete Model dropdown. Under AI Assistant, set the Chat Model and Edit Model to your model as well.\n\n\n\nAI Features configuration\n\n\n\n\n5. Confirm Settings\nClose User settings, and open the Chat and Agents UI from the notebook menu. You should see a chat interface.\n\n\n\nMarimo chat panel"
   },
   {
-    "objectID": "guides/admin.html",
-    "href": "guides/admin.html",
-    "title": "Administration the service",
-    "section": "",
-    "text": "Primarily administered by Seth Erickson (Library) and LSIT members (user/template management)."
-  },
-  {
-    "objectID": "guides/admin.html#messaging-users",
-    "href": "guides/admin.html#messaging-users",
-    "title": "Administration the service",
-    "section": "Messaging Users",
-    "text": "Messaging Users\nTo generate a list of user emails (requires admin privileges):\ncoder login coder.dreamlab.ucsb.edu\ncoder users list --column email\nThese commands can be run from a coder workspace."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Coder Workspaces: Overview",
@@ -109,35 +95,28 @@
     "href": "guides/ai-gateway.html",
     "title": "AI Gateway",
     "section": "",
-    "text": "Important\n\n\n\nThe AI Gateway is an experimental feature for Coder Workspaces. You will need to request an API key to use it. Access is currently restricted to library staff.\nCoder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.\nThe gateway URL is http://litellm.dreamlab.ucsb.edu:4000\nThe LiteLLM API is documented here: https://docs.litellm.ai/docs/supported_endpoints"
+    "text": "Important\n\n\n\nThe AI Gateway is an experimental feature for Coder Workspaces. An API key is required to use the gateway. Access is currently restricted to library staff.\nCoder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.\nThe gateway URL is http://litellm.dreamlab.ucsb.edu:4000"
   },
   {
-    "objectID": "guides/ai-gateway.html#currently-supported-models",
-    "href": "guides/ai-gateway.html#currently-supported-models",
+    "objectID": "guides/ai-gateway.html#ai-assisted-coding-tools.",
+    "href": "guides/ai-gateway.html#ai-assisted-coding-tools.",
     "title": "AI Gateway",
-    "section": "Currently Supported Models",
-    "text": "Currently Supported Models\n\ngemini-3-flash-preview\ngemini-3-pro-preview\nclaude-opus-4-5-20251101\nclaude-opus-4-6\nclaude-sonnet-4-5-20250929\nclaude-haiku-4-5-20251001"
+    "section": "AI-Assisted Coding Tools.",
+    "text": "AI-Assisted Coding Tools.\nMost AI-assisted coding tools can be configured to use the AI gateway.\nCoder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. “Prompt injection” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).\n\nClaude Code\nThe following steps are taken from the Claude Code documentation for using a LiteLLM gateway.\n\n1. Install Claude Code\nStart the terminal and install Claude Code if necessary:\ncurl -fsSL https://claude.ai/install.sh | bash\n\n\n2. Configure Claude Code\nYou need to set three environment variables so Claude Code can connect to authenticate with the AI gateway. You can add these to the bottom of your ~/.bashrc file so they take effect automatically when you start the terminal.\nOpen ~/.bashrc in a text editor:\nnano ~/.bashrc\nScroll to the bottom of the file and add the following lines. Replace \"YOUR_API_KEY...\" with the key you received from DREAM Lab staff.\nexport ANTHROPIC_AUTH_TOKEN=\"YOUR_API_KEY...\"\nexport ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000\nexport CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1\nSave the file (Ctrl + O, then Ctrl + X in nano) and reload it:\nsource ~/.bashrc\nBy adding these variables to ~/.bashrc, you won’t need to enter the API key or gateway address every time you log in to your Coder workspace.\n\n\n3. Start Claude Code\nYou should start Claude Code from inside a project directory:\nclaude\nThe workspace will ask if it’s a safe environment. Select “Yes, I trust this folder” and Claude will start.\nOnce Claude starts, try asking it a question. You do not need to run /init like it says at the top.\n\n\n\n\n\n\nTip\n\n\n\nIf you see a Missing API Token error in red to the right of the terminal, you are not connected to Anthropic and will need to either set up the environment variables in ~/.bashrc (as described above) or exit Claude and manually export the variables in your terminal session.\n\n\n\n\n\nOpenCode\nThese instructions are from LiteLLM’s OpenCode QuickStart.\n\n\n1. Install OpenCode\n# download and install open code\ncurl -fsSL https://opencode.ai/install | bash\n\n# apply updated $PATH\nsource ~/.bashrc\n\n\n2. Configure OpenCode\nConfigure OpenCode:\n# create opencode config folder\nmkdir -p ~/.config/opencode\n\n# edit the config file (opencode.json)\nnano ~/.config/opencode/opencode.json\nPaste the following as the contents of ~/.config/opencode/opencode.json.\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"litellm\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"DREAM Lab LiteLLM\",\n      \"options\": {\n        \"baseURL\": \"http://litellm.dreamlab.ucsb.edu:4000/v1\"\n      },\n      \"models\": {\n        \"gemini-3-flash-preview\": {\n          \"name\": \"Gemini 3 Flash\"\n        }\n      }\n    }\n  }\n}\nSave the file (Ctrl + O, then Ctrl + X in nano); then start OpenCode:\nopencode\nIn OpenCode, enter /connect to start the Connect a provider configuration:\n\nEnter DREAM Lab in the search box, to filter the list to just the provider we set in the configuration file. Press Enter to select the provider.\nIn the API key input, enter your personal API key and hit Enter.\nHit enter again to select the model, Gemini 3 Flash\nYou should now be back in OpenCode’s main screen.Confirm that the connection is working with a simple question (“Are we connected?”)\n\n\n\n\nOpenCode User Interface\n\n\nUse /exit to quit OpenCode. The configured provider and model should persist with your next session."
+  },
+  {
+    "objectID": "guides/ai-gateway.html#using-the-litellm-api-with-curl",
+    "href": "guides/ai-gateway.html#using-the-litellm-api-with-curl",
+    "title": "AI Gateway",
+    "section": "Using the LiteLLM API with Curl",
+    "text": "Using the LiteLLM API with Curl\nYou can use curl to call the LiteLLM API directly. The LiteLLM API is documented here: https://docs.litellm.ai/docs/supported_endpoints\n# get spend ($) for your API key\nexport LITELLM_API_KEY=&lt;YOUR API KEY&gt;\ncurl -s -H \"Authorization: Bearer ${LITELLM_API_KEY}\" \"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${LITELLM_API_KEY}\" | jq .info.spend\n\n# list available models\ncurl -s -H \"Authorization: Bearer ${LITELLM_API_KEY}\" http://litellm.dreamlab.ucsb.edu:4000/v1/models | jq .data[].id"
   },
   {
     "objectID": "guides/ai-gateway.html#using-the-litellm-api-from-python",
     "href": "guides/ai-gateway.html#using-the-litellm-api-from-python",
     "title": "AI Gateway",
     "section": "Using the LiteLLM API from Python",
-    "text": "Using the LiteLLM API from Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=&lt;YOUR_API_TOKEN_HERE&gt;\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"http://litellm.dreamlab.ucsb.edu:4000\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
-  },
-  {
-    "objectID": "guides/ai-gateway.html#setting-up-claude-code",
-    "href": "guides/ai-gateway.html#setting-up-claude-code",
-    "title": "AI Gateway",
-    "section": "Setting up Claude Code",
-    "text": "Setting up Claude Code\nThe following steps are taken from the Claude Code documentation for using a LiteLLM gateway.\n\n1. Create your workspace\nAny configuration will work since Claude Code runs from the command line.\n\n\n2. Install Claude Code\nStart the terminal and install Claude Code if necessary:\ncurl -fsSL https://claude.ai/install.sh | bash\n\n\n3. Set environment variables\nYou need to set three environment variables so Claude Code can connect to the gateway. You can add these to the bottom of your ~/.bashrc file so they take effect automatically when you start the terminal.\nOpen ~/.bashrc in a text editor:\nnano ~/.bashrc\nScroll to the bottom of the file and add the following lines. Replace &lt;YOUR_API_TOKEN_HERE&gt; with the token you received from DREAM Lab staff.\nexport ANTHROPIC_AUTH_TOKEN=&lt;YOUR_API_TOKEN_HERE&gt;\nexport ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000\nexport CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1\nSave the file (Ctrl + O, then Ctrl + X in nano) and reload it:\nsource ~/.bashrc\nBy adding these variables to ~/.bashrc, you won’t need to enter the API token or gateway address every time you log in to your Coder workspace.\n\n\n4. Start Claude Code\nYou should start Claude Code from inside a project directory:\nclaude\nThe workspace will ask if it’s a safe environment. Select “Yes, I trust this folder” and Claude will start.\nOnce Claude starts, try asking it a question. You do not need to run /init like it says at the top.\n\n\n\n\n\n\nTip\n\n\n\nIf you see a Missing API Token error in red to the right of the terminal, you are not connected to Anthropic and will need to either set up the environment variables in ~/.bashrc (as described above) or exit Claude and manually export the variables in your terminal session."
-  },
-  {
-    "objectID": "guides/ai-gateway.html#claude-code-tips",
-    "href": "guides/ai-gateway.html#claude-code-tips",
-    "title": "AI Gateway",
-    "section": "Claude Code Tips",
-    "text": "Claude Code Tips\nYou can check the spend (in dollars) associated with your API key using this command from a Coder workspace:\ncurl --silent \\\n  \"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${ANTHROPIC_AUTH_TOKEN}\" \\\n  -H \"Authorization: Bearer ${ANTHROPIC_AUTH_TOKEN}\" \\\n  | jq .info.spend"
+    "text": "Using the LiteLLM API from Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=\"YOUR_API_KEY...\"\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"http://litellm.dreamlab.ucsb.edu:4000\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
   },
   {
     "objectID": "guides/rstudio.html",
