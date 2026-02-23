@@ -15,7 +15,7 @@ The gateway is only accessible from your Coder Workspace.
 
 The gateway URL is `http://litellm.dreamlab.ucsb.edu:4000`
 
-## AI-Assisted Coding Tools.
+## AI-Assisted Coding Tools
 
 Most AI-assisted coding tools can be configured to use the AI gateway.
 
@@ -97,17 +97,17 @@ manually export the variables in your terminal session.
 
 These instructions are from [LiteLLM's OpenCode QuickStart](https://docs.litellm.ai/docs/tutorials/opencode_integration).
 
-### 1. Install OpenCode
+#### 1. Install OpenCode
 
 ```sh
-# download and install open code
+# download and install opencode
 curl -fsSL https://opencode.ai/install | bash
 
 # apply updated $PATH
 source ~/.bashrc
 ```
 
-### 2. Configure OpenCode
+#### 2. Configure OpenCode
 
 Configure OpenCode:
 
@@ -119,7 +119,7 @@ mkdir -p ~/.config/opencode
 nano ~/.config/opencode/opencode.json
 ```
 
-Paste the following as the contents of `~/.config/opencode/opencode.json`.
+Paste the following into `nano` as the contents of `~/.config/opencode/opencode.json`.
 
 ```json
 {
@@ -167,7 +167,7 @@ You can use curl to call the LiteLLM API directly. The LiteLLM API is documented
 
 ```sh
 # get spend ($) for your API key
-export LITELLM_API_KEY=<YOUR API KEY>
+export LITELLM_API_KEY="YOUR API KEY..."
 curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" "http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${LITELLM_API_KEY}" | jq .info.spend
 
 # list available models
