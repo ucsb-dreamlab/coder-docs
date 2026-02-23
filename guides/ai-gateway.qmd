@@ -15,22 +15,13 @@ The gateway is only accessible from your Coder Workspace.
 
 The gateway URL is `http://litellm.dreamlab.ucsb.edu:4000`
 
-## AI-Assisted Coding Tools
+## AI-assisted Coding Tools
 
 Most AI-assisted coding tools can be configured to use the AI gateway.
 
-Coder workspaces provide a relatively safe way to experiment with AI coding
-agents, like Claude Code, Gemini CLI, or Open AI's Codex. These tools, which
-generate and also *execute* code, can be useful but they are also inherently
-dangerous. "[Prompt injection](https://simonwillison.net/tags/prompt-injection/)" 
-attacks can trick AI tools into running nefarious code on your system. Because
-Coder workspaces are isolated virtual machines, the potential damage a rogue AI
-agent running in a workspace can cause is reduced (but not eliminated). 
-
 ### Claude Code
 
-The following steps are taken from the [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code)
-for using a LiteLLM gateway.
+These instructions are based on [Claude Code's documentation](https://docs.anthropic.com/en/docs/claude-code) for connecting to a LiteLLM gateway.
 
 #### 1. Install Claude Code
 
