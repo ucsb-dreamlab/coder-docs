@@ -159,6 +159,112 @@ manually export the variables in your terminal session.
 
 :::
 
+### Pi Agent
+
+[Pi](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) is a
+minimal, extensible terminal coding agent that supports custom model providers
+via a `models.json` configuration file.
+
+#### 1. Install Node.js and Pi
+
+Pi is distributed as an npm package. Install Node.js via `pixi global`, then
+use it to install Pi:
+
+```sh
+# install Node.js (exposes node, npm, npx)
+pixi global install nodejs
+
+# apply updated $PATH
+source ~/.bashrc
+
+# install pi globally
+npm install -g @mariozechner/pi-coding-agent
+```
+
+#### 2. Configure the AI Gateway
+
+Pi supports custom providers through `~/.pi/agent/models.json`. Create the
+configuration directory and file:
+
+```sh
+mkdir -p ~/.pi/agent
+nano ~/.pi/agent/models.json
+```
+
+Paste the following into `nano` as the contents of `~/.pi/agent/models.json`.
+Replace `"YOUR_API_KEY..."` with your personal API key.
+
+```json
+{
+  "providers": {
+    "dreamlab-gemini": {
+      "baseUrl": "http://litellm.dreamlab.ucsb.edu:4000",
+      "api": "google-generative-ai",
+      "apiKey": "LITELLM_KEY",
+      "models": [
+        { "id": "gemini-3-flash-preview" }
+      ]
+    },
+    "dreamlab-anthropic": {
+      "baseUrl": "http://litellm.dreamlab.ucsb.edu:4000",
+      "api": "anthropic-messages",
+      "apiKey": "LITELLM_KEY",
+      "models": [
+        { "id": "claude-sonnet-4-6" }
+      ]
+    }
+  }
+}
+```
+
+The `apiKey` field is the **name of an environment variable** that holds your
+key — it is not the key itself. Set that variable so Pi can read it:
+
+```sh
+export LITELLM_KEY="YOUR_API_KEY..."
+```
+
+Add this line to `~/.bashrc` to make it permanent:
+
+```sh
+echo 'export LITELLM_KEY="YOUR_API_KEY..."' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Save the `models.json` file (`Ctrl + O`, then `Ctrl + X` in nano).
+
+::: {.callout-note}
+
+**About `models.json`**
+
+Each entry under `providers` defines a custom provider with:
+
+- `baseUrl` — the gateway endpoint
+- `api` — the API protocol Pi should use (`google-generative-ai`, `anthropic-messages`, or `openai-completions`)
+- `apiKey` — the name of an environment variable containing your API key
+- `models` — a list of model IDs to expose in Pi's model selector
+
+The two providers above expose the DREAM Lab gateway's Gemini and Anthropic
+models respectively. You can remove either block if you only have access to one
+model family. The `models.json` file is reloaded each time you open Pi's model
+selector (`/model`), so edits take effect without restarting.
+
+:::
+
+#### 3. Start Pi
+
+Navigate to your project directory and start Pi:
+
+```sh
+pi
+```
+
+To select a model, type `/model` (or press `Ctrl+L`) and choose from the
+`dreamlab-gemini` or `dreamlab-anthropic` providers. Confirm the connection
+with a simple question ("Are we connected?").
+
+Use `/quit` to quit Pi.
+
 ## LiteLLM API with curl
 
 You can use curl to call the LiteLLM API directly. The LiteLLM API is documented here:
