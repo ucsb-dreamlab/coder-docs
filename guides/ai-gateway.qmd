@@ -174,11 +174,14 @@ use it to install Pi:
 # install Node.js (exposes node, npm, npx)
 pixi global install nodejs
 
-# apply updated $PATH
-source ~/.bashrc
-
 # install pi globally
 npm install -g @mariozechner/pi-coding-agent
+
+# add npm's install location to $PATH
+echo "export PATH=\$PATH:\$(npm prefix -g)/bin" >> ~/.bashrc
+
+# apply updated $PATH
+source ~/.bashrc
 ```
 
 #### 2. Configure the AI Gateway
