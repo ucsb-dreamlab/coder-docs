@@ -54,14 +54,20 @@ Paste the following into `nano` as the contents of `~/.config/opencode/opencode.
   "$schema": "https://opencode.ai/config.json",
   "provider": {
     "litellm": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "DREAM Lab LiteLLM",
+      "npm": "@ai-sdk/google",
+      "name": "DREAM Lab LiteLLM Proxy",
       "options": {
-        "baseURL": "http://litellm.dreamlab.ucsb.edu:4000/v1"
+        "baseURL": "http://litellm.dreamlab.ucsb.edu:4000"
       },
       "models": {
         "gemini-3-flash-preview": {
           "name": "Gemini 3 Flash"
+        },
+        "gemini-3.1-pro-preview": {
+        	"name": "Gemini 3.1 Pro"
+        },
+        "gemini-3.1-pro-preview-customtools": {
+        	"name": "Gemini 3.1 Pro (Custom Tools)"
         }
       }
     }
