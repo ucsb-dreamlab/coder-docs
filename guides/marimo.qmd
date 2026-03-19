@@ -94,7 +94,7 @@ From the **Optional Dependencies** panel in the user settings, make sure **AI fe
 From the **AI** panel in the user settings, go to the **AI Providers** tab and click **Add Provider**. Fill in the following:
 
 - **Provider name**: `litellm_proxy`
-- **Base URL**: `http://litellm.dreamlab.ucsb.edu:4000`
+- **Base URL**: `https://litellm.dreamlab.ucsb.edu`
 - **API key**: your personal API key
 
 ### 3. Add a Model

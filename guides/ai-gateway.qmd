@@ -13,7 +13,7 @@ Access is currently restricted to library staff.
 Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. 
 The gateway is only accessible from your Coder Workspace.
 
-The gateway URL is `http://litellm.dreamlab.ucsb.edu:4000`
+The gateway URL is `https://litellm.dreamlab.ucsb.edu`
 
 ## AI-assisted Coding Tools
 
@@ -57,7 +57,7 @@ Paste the following into `nano` as the contents of `~/.config/opencode/opencode.
       "npm": "@ai-sdk/google",
       "name": "DREAM Lab LiteLLM Proxy",
       "options": {
-        "baseURL": "http://litellm.dreamlab.ucsb.edu:4000"
+        "baseURL": "https://litellm.dreamlab.ucsb.edu"
       },
       "models": {
         "gemini-3-flash-preview": {
@@ -129,7 +129,7 @@ Scroll to the bottom of the file and add the following lines. Replace
 
 ```sh
 export ANTHROPIC_AUTH_TOKEN="YOUR_API_KEY..."
-export ANTHROPIC_BASE_URL=http://litellm.dreamlab.ucsb.edu:4000
+export ANTHROPIC_BASE_URL=https://litellm.dreamlab.ucsb.edu
 export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
 ```
 
@@ -173,10 +173,10 @@ You can use curl to call the LiteLLM API directly. The LiteLLM API is documented
 ```sh
 # get spend ($) for your API key
 export LITELLM_API_KEY="YOUR API KEY..."
-curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" "http://litellm.dreamlab.ucsb.edu:4000/key/info?key=${LITELLM_API_KEY}" | jq .info.spend
+curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" "https://litellm.dreamlab.ucsb.edu/key/info?key=${LITELLM_API_KEY}" | jq .info.spend
 
 # list available models
-curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" http://litellm.dreamlab.ucsb.edu:4000/v1/models | jq .data[].id
+curl -s -H "Authorization: Bearer ${LITELLM_API_KEY}" https://litellm.dreamlab.ucsb.edu/v1/models | jq .data[].id
 
 ```
 
@@ -201,7 +201,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # set custom api base to your proxy
-litellm.api_base = "http://litellm.dreamlab.ucsb.edu:4000"
+litellm.api_base = "https://litellm.dreamlab.ucsb.edu"
 
 messages = [{"content": "Hello, how are you?", "role": "user"}]
 
