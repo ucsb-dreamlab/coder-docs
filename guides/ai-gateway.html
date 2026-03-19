@@ -210,7 +210,7 @@ Important
 </div>
 </div>
 <p>Coder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.</p>
-<p>The gateway URL is <code>http://litellm.dreamlab.ucsb.edu:4000</code></p>
+<p>The gateway URL is <code>https://litellm.dreamlab.ucsb.edu</code></p>
 <section id="ai-assisted-coding-tools" class="level2">
 <h2 class="anchored" data-anchor-id="ai-assisted-coding-tools">AI-assisted Coding Tools</h2>
 <p>Most AI-assisted coding tools can be configured to use the AI gateway.</p>
@@ -241,7 +241,7 @@ Important
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"npm"</span><span class="fu">:</span> <span class="st">"@ai-sdk/google"</span><span class="fu">,</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"DREAM Lab LiteLLM Proxy"</span><span class="fu">,</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"options"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"baseURL"</span><span class="fu">:</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"baseURL"</span><span class="fu">:</span> <span class="st">"https://litellm.dreamlab.ucsb.edu"</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"models"</span><span class="fu">:</span> <span class="fu">{</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"gemini-3-flash-preview"</span><span class="fu">:</span> <span class="fu">{</span></span>
@@ -290,7 +290,7 @@ Important
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Scroll to the bottom of the file and add the following lines. Replace <code>"YOUR_API_KEY..."</code> with the key you received from DREAM Lab staff.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_AUTH_TOKEN</span><span class="op">=</span><span class="st">"YOUR_API_KEY..."</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_BASE_URL</span><span class="op">=</span>http://litellm.dreamlab.ucsb.edu:4000</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_BASE_URL</span><span class="op">=</span>https://litellm.dreamlab.ucsb.edu</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</span><span class="op">=</span>1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save the file (<code>Ctrl + O</code>, then <code>Ctrl + X</code> in nano) and reload it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -323,10 +323,10 @@ Tip
 <p>You can use curl to call the LiteLLM API directly. The LiteLLM API is documented here: <a href="https://docs.litellm.ai/docs/supported_endpoints" class="uri">https://docs.litellm.ai/docs/supported_endpoints</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get spend ($) for your API key</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LITELLM_API_KEY</span><span class="op">=</span><span class="st">"YOUR API KEY..."</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000/key/info?key=</span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="kw">|</span> <span class="ex">jq</span> .info.spend</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="st">"https://litellm.dreamlab.ucsb.edu/key/info?key=</span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> <span class="kw">|</span> <span class="ex">jq</span> .info.spend</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># list available models</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> http://litellm.dreamlab.ucsb.edu:4000/v1/models <span class="kw">|</span> <span class="ex">jq</span> .data[].id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-H</span> <span class="st">"Authorization: Bearer </span><span class="va">${LITELLM_API_KEY}</span><span class="st">"</span> https://litellm.dreamlab.ucsb.edu/v1/models <span class="kw">|</span> <span class="ex">jq</span> .data[].id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="litellm-api-with-python" class="level2">
 <h2 class="anchored" data-anchor-id="litellm-api-with-python">LiteLLM API with Python</h2>
@@ -342,7 +342,7 @@ Tip
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set custom api base to your proxy</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>litellm.api_base <span class="op">=</span> <span class="st">"http://litellm.dreamlab.ucsb.edu:4000"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>litellm.api_base <span class="op">=</span> <span class="st">"https://litellm.dreamlab.ucsb.edu"</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"content"</span>: <span class="st">"Hello, how are you?"</span>, <span class="st">"role"</span>: <span class="st">"user"</span>}]</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
