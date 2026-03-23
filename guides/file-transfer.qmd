@@ -24,7 +24,7 @@ settings).
 
 ## Magic Wormhole
 
-[Magic Wormhole](https://github.com/magic-wormhole/magic-wormhole) 
+[Magic Wormhole](https://magic-wormhole.readthedocs.io/en/latest/) 
 is a command line utility that makes it easy to send files
 and directories directly between two machines using a short, one-time
 code. No accounts, servers, or SSH configuration required — just run a
