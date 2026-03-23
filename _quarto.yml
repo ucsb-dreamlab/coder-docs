@@ -8,8 +8,8 @@ website:
     left:
       - text: Guides
         menu:
-        - text: Connecting to Google Drive
-          href: guides/gdrive.qmd
+        - text: Transferring Files
+          href: guides/file-transfer.qmd
         - text: Getting Started with RStudio
           href: guides/rstudio.qmd
         - text: Using Marimo Notebooks
