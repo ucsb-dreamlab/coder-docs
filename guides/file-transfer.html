@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Connecting to Google Drive – DREAM Lab Coder Workspaces</title>
+<title>Transferring files to/from your Workspace – DREAM Lab Coder Workspaces</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -32,15 +70,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-afa37c5c79185640b9c231024f4fe5ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dea667461a5c81afc9ba75ce94cd63f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -96,8 +133,8 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-guides">    
         <li>
-    <a class="dropdown-item" href="../guides/gdrive.html">
- <span class="dropdown-text">Connecting to Google Drive</span></a>
+    <a class="dropdown-item" href="../guides/file-transfer.html">
+ <span class="dropdown-text">Transferring Files</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../guides/rstudio.html">
@@ -129,7 +166,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#map-a-folder-to-your-google-drive-with-rclone" id="toc-map-a-folder-to-your-google-drive-with-rclone" class="nav-link active" data-scroll-target="#map-a-folder-to-your-google-drive-with-rclone">Map a folder to your Google Drive with <code>rclone</code></a></li>
+  <li><a href="#coder-file-browser" id="toc-coder-file-browser" class="nav-link active" data-scroll-target="#coder-file-browser">Coder File Browser</a></li>
+  <li><a href="#magic-wormhole" id="toc-magic-wormhole" class="nav-link" data-scroll-target="#magic-wormhole">Magic Wormhole</a></li>
+  <li><a href="#rclone-connecting-to-google-drive" id="toc-rclone-connecting-to-google-drive" class="nav-link" data-scroll-target="#rclone-connecting-to-google-drive">Rclone: Connecting to Google Drive</a></li>
   </ul>
 </nav>
     </div>
@@ -138,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Connecting to Google Drive</h1>
+<h1 class="title">Transferring files to/from your Workspace</h1>
 </div>
 
 
@@ -155,7 +194,41 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>You can connect to Google Drive from your Coder Workspace to transfer files back and forth.</p>
+<p>There are several ways to upload and download files to a Coder Workspace. Coder’s built-in <a href="#coder-file-browser">File Browser</a> is the most straightforward. <a href="#magic-wormhole">Magic Wormhole</a> is well suited for moving files between Workspaces. <a href="#rclone-connecting-to-google-drive">Rclone</a> is a more sophisticated option that supports advanced features like connecting to Google Drive.</p>
+<section id="coder-file-browser" class="level2">
+<h2 class="anchored" data-anchor-id="coder-file-browser">Coder File Browser</h2>
+<p>The most convenient way to transfer files to/from a Coder Workspace is to use the built-in File Browser, which you can access from Workspace’s dashboard.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/workspace.png" class="img-fluid figure-img"></p>
+<figcaption>Coder Workspace Dashboard</figcaption>
+</figure>
+</div>
+<p>Clicking the File Browser button from Workspace dashboard opens the File Browser in a new browser window. (You may need to enable popups in your browser settings).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/file-browser.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>File Browser UI</figcaption>
+</figure>
+</div>
+</section>
+<section id="magic-wormhole" class="level2">
+<h2 class="anchored" data-anchor-id="magic-wormhole">Magic Wormhole</h2>
+<p><a href="https://github.com/magic-wormhole/magic-wormhole">Magic Wormhole</a> is a command line utility that makes it easy to send files and directories directly between two machines using a short, one-time code. No accounts, servers, or SSH configuration required — just run a command on each side and the transfer happens over an end-to-end encrypted channel.</p>
+<p>You can use Magic Wormhole without installing it by running it with <a href="https://docs.astral.sh/uv/guides/tools/"><code>uvx</code></a>, which executes Python tools in temporary environments. <code>uvx</code> is part of <code>uv</code> and is installed on all Coder Workspaces by default</p>
+<p><strong>Sending a file or directory:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> magic-wormhole send ./myfile.txt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or for a directory</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> magic-wormhole send ./my-project</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Magic Wormhole will print a short code like <code>7-guitarist-revenge</code>. Use the code to download the files on the destination:</p>
+<p><strong>Receiving a file or directory:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> magic-wormhole receive 7-guitarist-revenge</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The code is single-use and expires once the transfer completes or is cancelled.</p>
+<p>This is a great way to migrate files and entire project directories between Coder workspaces!</p>
+</section>
+<section id="rclone-connecting-to-google-drive" class="level2">
+<h2 class="anchored" data-anchor-id="rclone-connecting-to-google-drive">Rclone: Connecting to Google Drive</h2>
+<p><a href="https://rclone.org/">Rclone</a> is a powerful file transfer tool that is installed on all Coder Workspaces by default. You can use it to connect to your Google Drive.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -166,20 +239,19 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>These instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving rclone permissions to access Google Drive. Once you’ve completed that setp, you don’t need to use VS Code.</p>
+<p>These instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving Rclone permissions to access Google Drive. Once you’ve completed that step, you don’t need to use VS Code.</p>
 </div>
 </div>
-<section id="map-a-folder-to-your-google-drive-with-rclone" class="level2">
-<h2 class="anchored" data-anchor-id="map-a-folder-to-your-google-drive-with-rclone">Map a folder to your Google Drive with <code>rclone</code></h2>
-<p>You can use <a href="https://rclone.org/">rclone</a> to map a Workspace folder (<code>~/gdrive</code>) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).</p>
+<p>Rclone can map a folder in your Workspace (e.g., <code>~/gdrive</code>) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).</p>
 <ol type="1">
 <li><p>Connect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.</p></li>
 <li><p>In VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.</p></li>
-<li><p>Install rclone</p>
+<li><p>Install Rclone (if necessary)</p>
+<p>Rclone should be installed on your workspace by default. If it isn’t, you can use this command to instal it”</p>
 <p><code>sudo apt update &amp;&amp; sudo apt install rclone</code></p></li>
-<li><p>Give rclone read-only access to your Google Drive. (For full read and write permissions, remove <code>scopes drive.readonly</code>. See rclone’s <a href="https://rclone.org/drive/#scopes">complete documentation</a> for Google Drive scopes).</p>
+<li><p>Give Rclone read-only access to your Google Drive. (For full read and write permissions, remove <code>scopes drive.readonly</code>. See Rclone’s <a href="https://rclone.org/drive/#scopes">complete documentation</a> for Google Drive scopes).</p>
 <p><code>rclone config create gdrive drive scopes drive.readonly</code></p></li>
-<li><p>A web browser should open. In the browser, grant rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.</p></li>
+<li><p>A web browser should open. In the browser, grant Rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.</p></li>
 <li><p>Create a folder to map to your Google Drive</p>
 <p><code>mkdir ~/gdrive</code></p></li>
 <li><p>“mount” your Google Drive to the folder</p>

@@ -63,18 +63,32 @@
     "text": "LiteLLM API with Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=\"YOUR_API_KEY...\"\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"https://litellm.dreamlab.ucsb.edu\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
   },
   {
-    "objectID": "guides/gdrive.html",
-    "href": "guides/gdrive.html",
-    "title": "Connecting to Google Drive",
+    "objectID": "guides/file-transfer.html",
+    "href": "guides/file-transfer.html",
+    "title": "Transferring files to/from your Workspace",
     "section": "",
-    "text": "You can connect to Google Drive from your Coder Workspace to transfer files back and forth."
+    "text": "There are several ways to upload and download files to a Coder Workspace. Coder’s built-in File Browser is the most straightforward. Magic Wormhole is well suited for moving files between Workspaces. Rclone is a more sophisticated option that supports advanced features like connecting to Google Drive."
   },
   {
-    "objectID": "guides/gdrive.html#map-a-folder-to-your-google-drive-with-rclone",
-    "href": "guides/gdrive.html#map-a-folder-to-your-google-drive-with-rclone",
-    "title": "Connecting to Google Drive",
-    "section": "Map a folder to your Google Drive with rclone",
-    "text": "Map a folder to your Google Drive with rclone\nYou can use rclone to map a Workspace folder (~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.\nInstall rclone\nsudo apt update && sudo apt install rclone\nGive rclone read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your Drive using the folder.\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
+    "objectID": "guides/file-transfer.html#coder-file-browser",
+    "href": "guides/file-transfer.html#coder-file-browser",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Coder File Browser",
+    "text": "Coder File Browser\nThe most convenient way to transfer files to/from a Coder Workspace is to use the built-in File Browser, which you can access from Workspace’s dashboard.\n\n\n\nCoder Workspace Dashboard\n\n\nClicking the File Browser button from Workspace dashboard opens the File Browser in a new browser window. (You may need to enable popups in your browser settings).\n\n\n\nFile Browser UI"
+  },
+  {
+    "objectID": "guides/file-transfer.html#magic-wormhole",
+    "href": "guides/file-transfer.html#magic-wormhole",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Magic Wormhole",
+    "text": "Magic Wormhole\nMagic Wormhole is a command line utility that makes it easy to send files and directories directly between two machines using a short, one-time code. No accounts, servers, or SSH configuration required — just run a command on each side and the transfer happens over an end-to-end encrypted channel.\nYou can use Magic Wormhole without installing it by running it with uvx, which executes Python tools in temporary environments. uvx is part of uv and is installed on all Coder Workspaces by default\nSending a file or directory:\nuvx magic-wormhole send ./myfile.txt\n# or for a directory\nuvx magic-wormhole send ./my-project\nMagic Wormhole will print a short code like 7-guitarist-revenge. Use the code to download the files on the destination:\nReceiving a file or directory:\nuvx magic-wormhole receive 7-guitarist-revenge\nThe code is single-use and expires once the transfer completes or is cancelled.\nThis is a great way to migrate files and entire project directories between Coder workspaces!"
+  },
+  {
+    "objectID": "guides/file-transfer.html#rclone-connecting-to-google-drive",
+    "href": "guides/file-transfer.html#rclone-connecting-to-google-drive",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Rclone: Connecting to Google Drive",
+    "text": "Rclone: Connecting to Google Drive\nRclone is a powerful file transfer tool that is installed on all Coder Workspaces by default. You can use it to connect to your Google Drive.\n\n\n\n\n\n\nNote\n\n\n\nThese instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving Rclone permissions to access Google Drive. Once you’ve completed that step, you don’t need to use VS Code.\n\n\nRclone can map a folder in your Workspace (e.g., ~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.\nInstall Rclone (if necessary)\nRclone should be installed on your workspace by default. If it isn’t, you can use this command to instal it”\nsudo apt update && sudo apt install rclone\nGive Rclone read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See Rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant Rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your Drive using the folder.\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
   },
   {
     "objectID": "index.html",
