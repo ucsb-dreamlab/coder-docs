@@ -5,28 +5,10 @@ title: "Coder Workspaces: Overview"
 Coder Workspaces are on-demand virtual machines with commonly used data
 science tools pre-installed. Anyone with a UCSB Net ID can create a
 workspace to use for the duration of the academic quarter. Workspaces are
-deleted at the end of each quarter.
-
-The service is managed by the [Library DREAM Lab](https://www.library.ucsb.edu/dreamlab) and uses
+deleted at the end of each quarter.The service is managed by the [Library DREAM Lab](https://www.library.ucsb.edu/dreamlab) and uses
 computing resources provided by the [College of Letters and Science IT](https://www.lsit.ucsb.edu)
 
-### Creating a Workspace
-
-1. Visit <https://coder.dreamlab.ucsb.edu>.
-2. Click "UCSB Login" and log in using UCSB SSO (via Google).
-3. Click the button to create a Dreamlab Workspace.
-4. On the "Create Workspace" page:
-    *  Give the workspace a name.
-    *  Check "I understand the usage policies".
-    *  Select additional software to enable (see [Optional Software](#optional-software)).
-    *  Click "Create Workspace".
-    *  It may take a few minutes for the workspace to boot.
-
-You should see an interface for using the workspace (yours may be configured with slightly different software).
-
-![Web UI for a new Coder Workspace](images/workspace.png)
-
-See our guides (in the top menu) for additional instructions.
+See our [**Getting Started Guide**](guides/getting-started.qmd) for an introduction to using Coder Workspaces.
 
 ### Getting Help
 
