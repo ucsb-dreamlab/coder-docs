@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Using AI Coding Agents – DREAM Lab Coder Workspaces</title>
+<title>Getting Started with Coder Workspaces – DREAM Lab Coder Workspaces</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -170,11 +170,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting Started</a>
+  <li><a href="#creating-a-workspace" id="toc-creating-a-workspace" class="nav-link active" data-scroll-target="#creating-a-workspace">Creating a Workspace</a></li>
+  <li><a href="#connecting-to-your-workspace" id="toc-connecting-to-your-workspace" class="nav-link" data-scroll-target="#connecting-to-your-workspace">Connecting to Your Workspace</a>
   <ul class="collapse">
-  <li><a href="#create-a-project-directory" id="toc-create-a-project-directory" class="nav-link" data-scroll-target="#create-a-project-directory">Create a project directory</a></li>
-  <li><a href="#installing-the-agent" id="toc-installing-the-agent" class="nav-link" data-scroll-target="#installing-the-agent">Installing the agent</a></li>
-  <li><a href="#example-prompt" id="toc-example-prompt" class="nav-link" data-scroll-target="#example-prompt">Example Prompt</a></li>
+  <li><a href="#connecting-with-locally-installed-software" id="toc-connecting-with-locally-installed-software" class="nav-link" data-scroll-target="#connecting-with-locally-installed-software">Connecting with Locally Installed Software</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -184,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Using AI Coding Agents</h1>
+<h1 class="title">Getting Started with Coder Workspaces</h1>
 </div>
 
 
@@ -201,68 +200,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also <em>execute</em> code, can be useful but they are also inherently dangerous. “<a href="https://simonwillison.net/tags/prompt-injection/">Prompt injection</a>” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>To use an AI coding agent, you typically need an account from a model provider like Google, OpenAI, or Anthropic. UCSB faculty and staff can use their UCSB email to authenticate Google’s Gemini CLI. Unfortunately, UCSB students cannot access Gemini using their UCSB accounts at this time.</p>
-</div>
-</div>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
-<p>Most AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install <code>nodejs</code> and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use pixi to install nodejs and npm (package manager)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> global install nodejs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now we need to update the shell’s <code>$PATH</code> to include the “global” directory where the NodeJS package manager (<code>npm</code>) will install the agent:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># update our current $PATH variable</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"export PATH=</span><span class="dt">\$</span><span class="st">PATH:</span><span class="dt">\$</span><span class="st">(npm prefix -g)/bin"</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run ~/.bashrc to activate our new $PATH settings</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="create-a-project-directory" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-project-directory">Create a project directory</h3>
-<p>You shouldn’t run the agent from the home directory (<code>~</code>). To start a new project, make a new directory and set it is as the working directory.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start a new project</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my-project</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or `git clone` an existing one</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># git clone git@github.com:my-account/my-project.git</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set the project as the working directory</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my-project</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We’re ready to install and run the agent!</p>
+<p>Welcome to Coder! This guide will help you create your first workspace and connect to it using various tools.</p>
+<section id="creating-a-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-workspace">Creating a Workspace</h2>
+<ol type="1">
+<li>Visit <a href="https://coder.dreamlab.ucsb.edu" class="uri">https://coder.dreamlab.ucsb.edu</a>.</li>
+<li>Click “UCSB Login” and log in using UCSB SSO (via Google).</li>
+<li>Click the button to create a Dreamlab Workspace.</li>
+<li>On the “Create Workspace” page:
+<ul>
+<li>Give the workspace a name.</li>
+<li>Check “I understand the usage policies”.</li>
+<li>Select additional software to enable.</li>
+<li>Click “Create Workspace”.</li>
+<li>It may take a few minutes for the workspace to boot.</li>
+</ul></li>
+</ol>
 </section>
-<section id="installing-the-agent" class="level3">
-<h3 class="anchored" data-anchor-id="installing-the-agent">Installing the agent</h3>
-<p>To install the <a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install gemini as a global command</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @google/gemini-cli</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># run gemini (inside the project directory)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gemini</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="connecting-to-your-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-to-your-workspace">Connecting to Your Workspace</h2>
+<p>Once your workspace is created, you should be directed to the workspace dashboard. There are two main ways to interact with your new workspace: directly through the browser or by using software locally installed on your machine.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/workspace-annotated.png" class="img-fluid figure-img"></p>
+<figcaption>Workspace Dashboard with dotted red line around buttons for browser-based tools</figcaption>
+</figure>
+</div>
+<p>Browser-based tools include:</p>
+<ul>
+<li><strong>JupyterLab</strong>, or <strong>RStudio</strong>: These are optional IDEs for data analyis using R or Python.</li>
+<li><strong>File Browser</strong>: for navigating your workspace’s file system and transfering files.</li>
+<li><strong>Terminal:</strong> a browser-based terminal that provides instant access to your workspace’s shell environment.</li>
+</ul>
+<p>To use these, simply click the corresponding icon on your workspace’s dashboard page.</p>
+<section id="connecting-with-locally-installed-software" class="level3">
+<h3 class="anchored" data-anchor-id="connecting-with-locally-installed-software">Connecting with Locally Installed Software</h3>
+<p>For a more integrated development experience, you can connect your local tools to your Coder workspace. This typically requires installing the Coder CLI and the appropriate extensions for your IDE.</p>
+<section id="connecting-via-vs-code" class="level4">
+<h4 class="anchored" data-anchor-id="connecting-via-vs-code">Connecting via VS Code</h4>
+<p>You can develop in your Coder workspace remotely using the Visual Studio Code desktop client.</p>
+<ol type="1">
+<li>Ensure you have the <a href="https://code.visualstudio.com/">Visual Studio Code</a> desktop application installed.</li>
+<li>Install the <strong>Coder</strong> extension from the VS Code Marketplace.</li>
+<li>Once the extension is installed, open the Command Palette (<code>Ctrl+Shift+P</code> or <code>Cmd+Shift+P</code> on macOS) and type <code>Coder: Login</code>.</li>
+<li>Enter your Coder deployment URL: <code>https://coder.dreamlab.ucsb.edu</code> .</li>
+<li>After logging in, you can browse your workspaces in the Coder view on the sidebar, or use the Command Palette (<code>Coder: Open Workspace</code>) to connect to your workspace and start coding.</li>
+</ol>
 </section>
-<section id="example-prompt" class="level3">
-<h3 class="anchored" data-anchor-id="example-prompt">Example Prompt</h3>
-<p>Here is an example prompt to generate a map based on COVID-19 fatality data using R.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Calculate the Local Moran's I statistic for covid-19 fatality rates </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>in US counties (contiguous 48 states only), then make a map of counties </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>in the continental US showing outliers. A csv with covid fatality rates </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>is available at this URL: </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>https://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Make an R script called 'map.R' to generate the map. The map should be </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>saved to 'map.png'. Use "tidy" R conventions. You are running in a headless </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>environment, without a graphical display.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="connecting-via-coder-cli" class="level4">
+<h4 class="anchored" data-anchor-id="connecting-via-coder-cli">Connecting via Coder CLI</h4>
+<p>The Coder CLI can be used to authenticate and connect to your workspaces from the command line.</p>
+<p><strong>Installing the Coder CLI:</strong></p>
+<p>On Linux/macOS, the fastest way to install the CLI is using the install script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://coder.com/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For Windows, download and run the installer program (<a href="https://github.com/coder/coder/releases/download/v2.30.6/coder_2.30.6_windows_amd64_installer.exe">coder_2.30.6_windows_amd64_installer.exe</a>) from <a href="https://github.com/coder/coder/releases">Coder’s GitHub Releases page</a>. You may want to refer to the <a href="https://coder.com/docs/install/cli">Coder CLI documentation</a>.</p>
+<p><strong>Authenticate the CLI:</strong></p>
+<p>Once installed, log in to your Coder deployment using your terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">coder</span> login https://coder.dreamlab.ucsb.edu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Follow the prompts to complete authentication via your web browser.</p>
+<p><strong>Connecting via SSH:</strong></p>
+<p>You can connect directly to your workspace using the Coder CLI:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">coder</span> ssh <span class="op">&lt;</span>workspace-name<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
 </section>
 </section>
 
