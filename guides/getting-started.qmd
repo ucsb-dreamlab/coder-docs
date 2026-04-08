@@ -25,8 +25,8 @@ Once your workspace is created, you should be directed to the workspace dashboar
 
 Browser-based tools include:
 
-- **JupyterLab**, or **RStudio**: These are optional IDEs for data analyis using R or Python.
-- **File Browser**: for navigating your workspace's file system and transfering files.
+- **JupyterLab**, or **RStudio**: These are optional IDEs for data analysis using R or Python.
+- **File Browser**: for navigating your workspace's file system and transferring files.
 - **Terminal:** a browser-based terminal that provides instant access to your workspace's shell environment.
 
 To use these, simply click the corresponding icon on your workspace's dashboard page.
