@@ -32,15 +32,17 @@ Each workspace is a virtual machine (running Ubuntu linux) with the following ha
 
 All workspaces include the following software:
 
-| Name                                           | Version   | Description                 |
-| :--------------------------------------------- | :-------- | :-------------------------- |
-| [Ubuntu Linux](https://ubuntu.com/)            | 24.04 LTS | Operating System            |
-| [Docker](https://docs.docker.com/get-started/) | 28.4.0    | Container Runtime           |
-| [Pixi](https://pixi.sh/latest/)                | v0.55.0   | Python package manager      |
-| [R](https://www.r-project.org/)                | v4.5.1    | R programming language      |
-| Git                                            | v2.43.0   | Version control software    |
-| `gh`                                           | v2.80.0   | Github CLI                  |
-| `jq`                                           | v1.7      | Command line JSON processor |
+| Name                                           | Version     | Description                 |
+| :--------------------------------------------- | :---------- | :-------------------------- |
+| [Ubuntu Linux](https://ubuntu.com/)            | 24.04.4 LTS | Operating System            |
+| [Docker](https://docs.docker.com/get-started/) | 29.3.1      | Container Runtime           |
+| [Pixi](https://pixi.sh/latest/)                | v0.65.0     | Python package manager      |
+| [R](https://www.r-project.org/)                | v4.5.3      | R programming language      |
+| Git                                            | v2.43.0     | Version control software    |
+| `gh`                                           | v2.89.0     | Github CLI                  |
+| `jq`                                           | v1.7        | Command line JSON processor |
+| `duckdb`                                       | v1.5.0      | DuckDB command line tool    |
+| `uv` / `uvx`                                   | 0.10.9      | Python package installer/runner |
 
 Additional software may be installed using [`apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/) or [`pixi`](https://pixi.sh).
 
@@ -49,7 +51,7 @@ Services can be enabled when the workspace is created:
 
 | Service                                                                             | Version    | Description                            |
 | :---------------------------------------------------------------------------------- | :--------- | :------------------------------------- |
-| RStudio Server                                                                      | v2025.09.1 | Run RStudio in the browser             |
+| RStudio Server                                                                      | v2026.01.1 | Run RStudio in the browser             |
 | Jupyter Lab Server                                                                  | v4.4.9     | Run Jupyter Notebooks in the browser   |
 | [VS Code Web](https://github.com/coder/code-server)                                 | -          | Run VS Code in the browser             |
 | [VS Code Desktop (Server)](https://code.visualstudio.com/docs/remote/vscode-server) | -          | Connect to the workspace using VS Code |
