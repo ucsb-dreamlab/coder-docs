@@ -1,31 +1,59 @@
 [
   {
-    "objectID": "guides/file-transfer.html",
-    "href": "guides/file-transfer.html",
-    "title": "Transferring files to/from your Workspace",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Coder Workspaces: Overview",
     "section": "",
-    "text": "There are several ways to upload and download files to a Coder Workspace. Coder’s built-in File Browser is the most straightforward. Magic Wormhole is well suited for moving files between Workspaces. Rclone is a more sophisticated option that supports advanced features like connecting to Google Drive."
+    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
   },
   {
-    "objectID": "guides/file-transfer.html#coder-file-browser",
-    "href": "guides/file-transfer.html#coder-file-browser",
-    "title": "Transferring files to/from your Workspace",
-    "section": "Coder File Browser",
-    "text": "Coder File Browser\nThe most convenient way to transfer files to/from a Coder Workspace is to use the built-in File Browser, which you can access from Workspace’s dashboard.\n\n\n\nCoder Workspace Dashboard\n\n\nClicking the File Browser button from Workspace dashboard opens the File Browser in a new browser window. (You may need to enable popups in your browser settings).\n\n\n\nFile Browser UI"
+    "objectID": "index.html#hardware-and-software",
+    "href": "index.html#hardware-and-software",
+    "title": "Coder Workspaces: Overview",
+    "section": "Hardware and Software",
+    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04.4 LTS\nOperating System\n\n\nDocker\n29.3.1\nContainer Runtime\n\n\nPixi\nv0.65.0\nPython package manager\n\n\nR\nv4.5.3\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.89.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\nduckdb\nv1.5.0\nDuckDB command line tool\n\n\nuv / uvx\n0.10.9\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.01.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
   },
   {
-    "objectID": "guides/file-transfer.html#magic-wormhole",
-    "href": "guides/file-transfer.html#magic-wormhole",
-    "title": "Transferring files to/from your Workspace",
-    "section": "Magic Wormhole",
-    "text": "Magic Wormhole\nMagic Wormhole is a command line utility that makes it easy to send files and directories directly between two machines using a short, one-time code. No accounts, servers, or SSH configuration required — just run a command on each side and the transfer happens over an end-to-end encrypted channel.\nYou can use Magic Wormhole without installing it by running it with uvx, which executes Python tools in temporary environments. uvx is part of uv and is installed on all Coder Workspaces by default\nSending a file or directory:\nuvx magic-wormhole send ./myfile.txt\n# or for a directory\nuvx magic-wormhole send ./my-project\nMagic Wormhole will print a short code like 7-guitarist-revenge. Use the code to download the files on the destination:\nReceiving a file or directory:\nuvx magic-wormhole receive 7-guitarist-revenge\nThe code is single-use and expires once the transfer completes or is cancelled.\nThis is a great way to migrate files and entire project directories between Coder workspaces!"
+    "objectID": "index.html#workspace-lifecycle",
+    "href": "index.html#workspace-lifecycle",
+    "title": "Coder Workspaces: Overview",
+    "section": "Workspace Lifecycle",
+    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
   },
   {
-    "objectID": "guides/file-transfer.html#rclone-connecting-to-google-drive",
-    "href": "guides/file-transfer.html#rclone-connecting-to-google-drive",
-    "title": "Transferring files to/from your Workspace",
-    "section": "Rclone: Connecting to Google Drive",
-    "text": "Rclone: Connecting to Google Drive\nRclone is a powerful file transfer tool that is installed on all Coder Workspaces by default. You can use it to connect to your Google Drive.\n\n\n\n\n\n\nNote\n\n\n\nThese instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving Rclone permissions to access Google Drive. Once you’ve completed that step, you don’t need to use VS Code.\n\n\nRclone can map a folder in your Workspace (e.g., ~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.\nInstall Rclone (if necessary)\nRclone should be installed on your workspace by default. If it isn’t, you can use this command to instal it”\nsudo apt update && sudo apt install rclone\nGive Rclone read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See Rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant Rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your Drive using the folder.\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
+    "objectID": "index.html#policies",
+    "href": "index.html#policies",
+    "title": "Coder Workspaces: Overview",
+    "section": "Policies",
+    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+  },
+  {
+    "objectID": "guides/ai-gateway.html",
+    "href": "guides/ai-gateway.html",
+    "title": "AI Gateway",
+    "section": "",
+    "text": "Important\n\n\n\nThe AI Gateway is an experimental feature for Coder Workspaces. An API key is required to use the gateway. Access is currently restricted to library staff.\nCoder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.\nThe gateway URL is https://litellm.dreamlab.ucsb.edu"
+  },
+  {
+    "objectID": "guides/ai-gateway.html#ai-assisted-coding-tools",
+    "href": "guides/ai-gateway.html#ai-assisted-coding-tools",
+    "title": "AI Gateway",
+    "section": "AI-assisted Coding Tools",
+    "text": "AI-assisted Coding Tools\nMost AI-assisted coding tools can be configured to use the AI gateway.\n\nOpenCode\nOpenCode is open-source coding agent that works with a wide range of model providers. These instructions are from LiteLLM’s OpenCode QuickStart.\n\n1. Install OpenCode\n# download and install opencode\ncurl -fsSL https://opencode.ai/install | bash\n\n# apply updated $PATH\nsource ~/.bashrc\n\n\n2. Configure OpenCode\nConfigure OpenCode:\n# create opencode config folder\nmkdir -p ~/.config/opencode\n\n# edit the config file (opencode.json)\nnano ~/.config/opencode/opencode.json\nPaste the following into nano as the contents of ~/.config/opencode/opencode.json.\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"litellm\": {\n      \"npm\": \"@ai-sdk/google\",\n      \"name\": \"DREAM Lab LiteLLM Proxy\",\n      \"options\": {\n        \"baseURL\": \"https://litellm.dreamlab.ucsb.edu\"\n      },\n      \"models\": {\n        \"gemini-3-flash-preview\": {\n          \"name\": \"Gemini 3 Flash\"\n        },\n        \"gemini-3.1-pro-preview\": {\n            \"name\": \"Gemini 3.1 Pro\"\n        },\n        \"gemini-3.1-pro-preview-customtools\": {\n            \"name\": \"Gemini 3.1 Pro (Custom Tools)\"\n        }\n      }\n    }\n  }\n}\nSave the file (Ctrl + O, then Ctrl + X in nano); then start OpenCode:\nopencode\nIn OpenCode, enter /connect to start the Connect a provider configuration:\n\nEnter DREAM Lab in the search box, to filter the list to just the provider we set in the configuration file. Press Enter to select the provider.\nIn the API key input, enter your personal API key and hit Enter.\nHit enter again to select the model, Gemini 3 Flash\nYou should now be back in OpenCode’s main screen.Confirm that the connection is working with a simple question (“Are we connected?”)\n\n\n\n\nOpenCode User Interface\n\n\nUse /exit to quit OpenCode. The configured provider and model should persist with your next session.\n\n\n\nClaude Code\nClaude Code is Anthropic’s coding agent. It works primarily with Anthropic models (Opus, Sonnet, and Haiku), which some users may have access to through the AI gateway. These instructions are based on Claude Code’s documentation for connecting to a LiteLLM gateway.\n\n1. Install Claude Code\nStart the terminal and install Claude Code if necessary:\ncurl -fsSL https://claude.ai/install.sh | bash\n\n\n2. Configure Claude Code\nYou need to set three environment variables so Claude Code can connect to authenticate with the AI gateway. You can add these to the bottom of your ~/.bashrc file so they take effect automatically when you start the terminal.\nOpen ~/.bashrc in a text editor:\nnano ~/.bashrc\nScroll to the bottom of the file and add the following lines. Replace \"YOUR_API_KEY...\" with the key you received from DREAM Lab staff.\nexport ANTHROPIC_AUTH_TOKEN=\"YOUR_API_KEY...\"\nexport ANTHROPIC_BASE_URL=https://litellm.dreamlab.ucsb.edu\nexport CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1\nSave the file (Ctrl + O, then Ctrl + X in nano) and reload it:\nsource ~/.bashrc\nBy adding these variables to ~/.bashrc, you won’t need to enter the API key or gateway address every time you log in to your Coder workspace.\n\n\n3. Start Claude Code\nYou should start Claude Code from inside a project directory:\nclaude\nThe workspace will ask if it’s a safe environment. Select “Yes, I trust this folder” and Claude will start.\nOnce Claude starts, try asking it a question. You do not need to run /init like it says at the top.\n\n\n\n\n\n\nTip\n\n\n\nIf you see a Missing API Token error in red to the right of the terminal, you are not connected to Anthropic and will need to either set up the environment variables in ~/.bashrc (as described above) or exit Claude and manually export the variables in your terminal session."
+  },
+  {
+    "objectID": "guides/ai-gateway.html#litellm-api-with-curl",
+    "href": "guides/ai-gateway.html#litellm-api-with-curl",
+    "title": "AI Gateway",
+    "section": "LiteLLM API with curl",
+    "text": "LiteLLM API with curl\nYou can use curl to call the LiteLLM API directly. The LiteLLM API is documented here: https://docs.litellm.ai/docs/supported_endpoints\n# get spend ($) for your API key\nexport LITELLM_API_KEY=\"YOUR API KEY...\"\ncurl -s -H \"Authorization: Bearer ${LITELLM_API_KEY}\" \"https://litellm.dreamlab.ucsb.edu/key/info?key=${LITELLM_API_KEY}\" | jq .info.spend\n\n# list available models\ncurl -s -H \"Authorization: Bearer ${LITELLM_API_KEY}\" https://litellm.dreamlab.ucsb.edu/v1/models | jq .data[].id"
+  },
+  {
+    "objectID": "guides/ai-gateway.html#litellm-api-with-python",
+    "href": "guides/ai-gateway.html#litellm-api-with-python",
+    "title": "AI Gateway",
+    "section": "LiteLLM API with Python",
+    "text": "LiteLLM API with Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=\"YOUR_API_KEY...\"\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"https://litellm.dreamlab.ucsb.edu\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
   },
   {
     "objectID": "guides/marimo.html",
@@ -70,81 +98,32 @@
     "text": "Configuring Chat and Agents\nMarimo has integrated AI chat and agent tools, which you can access through Chat and Agents icon on the notebook menu. The AI features are configured through the AI panel in the User Settings window. To open User Settings, click the gear icon in the top-right corner and then click User settings.\nThe AI integration has two parts: a panel on the left side with a chat interface and a Generate with AI button in the main notebook area that lets you enter a prompt to generate code for a new cell.\nYou can configure your Marimo notebook to use AI models through the DREAM Lab AI gateway. For this to work, you need to:\n\nRequest a personal API key for the AI gateway.\nConfigure the notebook using the steps below.\n\n\n1. Install AI Dependencies\nFrom the Optional Dependencies panel in the user settings, make sure AI features are installed. If not, click the Install with uv button.\n\n\n2. Add a Custom AI Provider\nFrom the AI panel in the user settings, go to the AI Providers tab and click Add Provider. Fill in the following:\n\nProvider name: litellm_proxy\nBase URL: https://litellm.dreamlab.ucsb.edu\nAPI key: your personal API key\n\n\n\n3. Add a Model\nGo to the AI Models tab and click + Add Model at the bottom of the dialog. Select litellm_proxy as the provider and enter the model name. We recommend gemini-3-flash-preview. Click Add.\n\n\n\nAdding a model in the AI Models tab\n\n\n\n\n4. Configure AI Features to Use the Model\nGo to the AI Features tab. Under Code Completion, set the Provider to custom and select your model from the Autocomplete Model dropdown. Under AI Assistant, set the Chat Model and Edit Model to your model as well.\n\n\n\nAI Features configuration\n\n\n\n\n5. Confirm Settings\nClose User settings, and open the Chat and Agents UI from the notebook menu. You should see a chat interface.\n\n\n\nMarimo chat panel"
   },
   {
-    "objectID": "guides/ai-gateway.html",
-    "href": "guides/ai-gateway.html",
-    "title": "AI Gateway",
+    "objectID": "guides/file-transfer.html",
+    "href": "guides/file-transfer.html",
+    "title": "Transferring files to/from your Workspace",
     "section": "",
-    "text": "Important\n\n\n\nThe AI Gateway is an experimental feature for Coder Workspaces. An API key is required to use the gateway. Access is currently restricted to library staff.\nCoder Workspaces can use an AI Gateway (LiteLLM) for API access to large language models. The gateway is only accessible from your Coder Workspace.\nThe gateway URL is https://litellm.dreamlab.ucsb.edu"
+    "text": "There are several ways to upload and download files to a Coder Workspace. Coder’s built-in File Browser is the most straightforward. Magic Wormhole is well suited for moving files between Workspaces. Rclone is a more sophisticated option that supports advanced features like connecting to Google Drive."
   },
   {
-    "objectID": "guides/ai-gateway.html#ai-assisted-coding-tools",
-    "href": "guides/ai-gateway.html#ai-assisted-coding-tools",
-    "title": "AI Gateway",
-    "section": "AI-assisted Coding Tools",
-    "text": "AI-assisted Coding Tools\nMost AI-assisted coding tools can be configured to use the AI gateway.\n\nOpenCode\nOpenCode is open-source coding agent that works with a wide range of model providers. These instructions are from LiteLLM’s OpenCodeQuickStart.\n\n1. Install OpenCode\n# download and install opencode\ncurl -fsSL https://opencode.ai/install | bash\n\n# apply updated $PATH\nsource ~/.bashrc\n\n\n2. Configure OpenCode\nConfigure OpenCode:\n# create opencode config folder\nmkdir -p ~/.config/opencode\n\n# edit the config file (opencode.json)\nnano ~/.config/opencode/opencode.json\nPaste the following into nano as the contents of ~/.config/opencode/opencode.json.\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"litellm\": {\n      \"npm\": \"@ai-sdk/google\",\n      \"name\": \"DREAM Lab LiteLLM Proxy\",\n      \"options\": {\n        \"baseURL\": \"https://litellm.dreamlab.ucsb.edu\"\n      },\n      \"models\": {\n        \"gemini-3-flash-preview\": {\n          \"name\": \"Gemini 3 Flash\"\n        },\n        \"gemini-3.1-pro-preview\": {\n            \"name\": \"Gemini 3.1 Pro\"\n        },\n        \"gemini-3.1-pro-preview-customtools\": {\n            \"name\": \"Gemini 3.1 Pro (Custom Tools)\"\n        }\n      }\n    }\n  }\n}\nSave the file (Ctrl + O, then Ctrl + X in nano); then start OpenCode:\nopencode\nIn OpenCode, enter /connect to start the Connect a provider configuration:\n\nEnter DREAM Lab in the search box, to filter the list to just the provider we set in the configuration file. Press Enter to select the provider.\nIn the API key input, enter your personal API key and hit Enter.\nHit enter again to select the model, Gemini 3 Flash\nYou should now be back in OpenCode’s main screen.Confirm that the connection is working with a simple question (“Are we connected?”)\n\n\n\n\nOpenCode User Interface\n\n\nUse /exit to quit OpenCode. The configured provider and model should persist with your next session.\n\n\n\nClaude Code\nClaude Code is Anthropic’s coding agent. It works primarily with Anthropic models (Opus, Sonnet, and Haiku), which some users may have access to through the AI gateway. These instructions are based on Claude Code’s documentation for connecting to a LiteLLM gateway.\n\n1. Install Claude Code\nStart the terminal and install Claude Code if necessary:\ncurl -fsSL https://claude.ai/install.sh | bash\n\n\n2. Configure Claude Code\nYou need to set three environment variables so Claude Code can connect to authenticate with the AI gateway. You can add these to the bottom of your ~/.bashrc file so they take effect automatically when you start the terminal.\nOpen ~/.bashrc in a text editor:\nnano ~/.bashrc\nScroll to the bottom of the file and add the following lines. Replace \"YOUR_API_KEY...\" with the key you received from DREAM Lab staff.\nexport ANTHROPIC_AUTH_TOKEN=\"YOUR_API_KEY...\"\nexport ANTHROPIC_BASE_URL=https://litellm.dreamlab.ucsb.edu\nexport CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1\nSave the file (Ctrl + O, then Ctrl + X in nano) and reload it:\nsource ~/.bashrc\nBy adding these variables to ~/.bashrc, you won’t need to enter the API key or gateway address every time you log in to your Coder workspace.\n\n\n3. Start Claude Code\nYou should start Claude Code from inside a project directory:\nclaude\nThe workspace will ask if it’s a safe environment. Select “Yes, I trust this folder” and Claude will start.\nOnce Claude starts, try asking it a question. You do not need to run /init like it says at the top.\n\n\n\n\n\n\nTip\n\n\n\nIf you see a Missing API Token error in red to the right of the terminal, you are not connected to Anthropic and will need to either set up the environment variables in ~/.bashrc (as described above) or exit Claude and manually export the variables in your terminal session."
+    "objectID": "guides/file-transfer.html#coder-file-browser",
+    "href": "guides/file-transfer.html#coder-file-browser",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Coder File Browser",
+    "text": "Coder File Browser\nThe most convenient way to transfer files to/from a Coder Workspace is to use the built-in File Browser, which you can access from Workspace’s dashboard.\n\n\n\nCoder Workspace Dashboard\n\n\nClicking the File Browser button from Workspace dashboard opens the File Browser in a new browser window. (You may need to enable popups in your browser settings).\n\n\n\nFile Browser UI"
   },
   {
-    "objectID": "guides/ai-gateway.html#litellm-api-with-curl",
-    "href": "guides/ai-gateway.html#litellm-api-with-curl",
-    "title": "AI Gateway",
-    "section": "LiteLLM API with curl",
-    "text": "LiteLLM API with curl\nYou can use curl to call the LiteLLM API directly. The LiteLLM API is documented here: https://docs.litellm.ai/docs/supported_endpoints\n# get spend ($) for your API key\nexport LITELLM_API_KEY=\"YOUR API KEY...\"\ncurl -s -H \"Authorization: Bearer ${LITELLM_API_KEY}\" \"https://litellm.dreamlab.ucsb.edu/key/info?key=${LITELLM_API_KEY}\" | jq .info.spend\n\n# list available models\ncurl -s -H \"Authorization: Bearer ${LITELLM_API_KEY}\" https://litellm.dreamlab.ucsb.edu/v1/models | jq .data[].id"
+    "objectID": "guides/file-transfer.html#magic-wormhole",
+    "href": "guides/file-transfer.html#magic-wormhole",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Magic Wormhole",
+    "text": "Magic Wormhole\nMagic Wormhole is a command line utility that makes it easy to send files and directories directly between two machines using a short, one-time code. No accounts, servers, or SSH configuration required — just run a command on each side and the transfer happens over an end-to-end encrypted channel.\nYou can use Magic Wormhole without installing it by running it with uvx, which executes Python tools in temporary environments. uvx is part of uv and is installed on all Coder Workspaces by default\nSending a file or directory:\nuvx magic-wormhole send ./myfile.txt\n# or for a directory\nuvx magic-wormhole send ./my-project\nMagic Wormhole will print a short code like 7-guitarist-revenge. Use the code to download the files on the destination:\nReceiving a file or directory:\nuvx magic-wormhole receive 7-guitarist-revenge\nThe code is single-use and expires once the transfer completes or is cancelled.\nThis is a great way to migrate files and entire project directories between Coder workspaces!"
   },
   {
-    "objectID": "guides/ai-gateway.html#litellm-api-with-python",
-    "href": "guides/ai-gateway.html#litellm-api-with-python",
-    "title": "AI Gateway",
-    "section": "LiteLLM API with Python",
-    "text": "LiteLLM API with Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=\"YOUR_API_KEY...\"\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"https://litellm.dreamlab.ucsb.edu\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
-  },
-  {
-    "objectID": "guides/getting-started.html",
-    "href": "guides/getting-started.html",
-    "title": "Getting Started with Coder Workspaces",
-    "section": "",
-    "text": "Welcome to Coder! This guide will help you create your first workspace and connect to it using various tools."
-  },
-  {
-    "objectID": "guides/getting-started.html#creating-a-workspace",
-    "href": "guides/getting-started.html#creating-a-workspace",
-    "title": "Getting Started with Coder Workspaces",
-    "section": "Creating a Workspace",
-    "text": "Creating a Workspace\n\nVisit https://coder.dreamlab.ucsb.edu.\nClick “UCSB Login” and log in using UCSB SSO (via Google).\nClick the button to create a Dreamlab Workspace.\nOn the “Create Workspace” page:\n\nGive the workspace a name.\nCheck “I understand the usage policies”.\nSelect additional software to enable.\nClick “Create Workspace”.\nIt may take a few minutes for the workspace to boot."
-  },
-  {
-    "objectID": "guides/getting-started.html#connecting-to-your-workspace",
-    "href": "guides/getting-started.html#connecting-to-your-workspace",
-    "title": "Getting Started with Coder Workspaces",
-    "section": "Connecting to Your Workspace",
-    "text": "Connecting to Your Workspace\nOnce your workspace is created, you should be directed to the workspace dashboard. There are two main ways to interact with your new workspace: directly through the browser or by using software locally installed on your machine.\n\n\n\nWorkspace Dashboard with dotted red line around buttons for browser-based tools\n\n\nBrowser-based tools include:\n\nJupyterLab, or RStudio: These are optional IDEs for data analysis using R or Python.\nFile Browser: for navigating your workspace’s file system and transferring files.\nTerminal: a browser-based terminal that provides instant access to your workspace’s shell environment.\n\nTo use these, simply click the corresponding icon on your workspace’s dashboard page.\n\nConnecting with Locally Installed Software\nFor a more integrated development experience, you can connect your local tools to your Coder workspace. This typically requires installing the Coder CLI and the appropriate extensions for your IDE.\n\nConnecting via VS Code\nYou can develop in your Coder workspace remotely using the Visual Studio Code desktop client.\n\nEnsure you have the Visual Studio Code desktop application installed.\nInstall the Coder extension from the VS Code Marketplace.\nOnce the extension is installed, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and type Coder: Login.\nEnter your Coder deployment URL: https://coder.dreamlab.ucsb.edu .\nAfter logging in, you can browse your workspaces in the Coder view on the sidebar, or use the Command Palette (Coder: Open Workspace) to connect to your workspace and start coding.\n\n\n\nConnecting via Coder CLI\nThe Coder CLI can be used to authenticate and connect to your workspaces from the command line.\nInstalling the Coder CLI:\nOn Linux/macOS, the fastest way to install the CLI is using the install script:\ncurl -L https://coder.com/install.sh | sh\nFor Windows, download and run the installer program (coder_2.30.6_windows_amd64_installer.exe) from Coder’s GitHub Releases page. You may want to refer to the Coder CLI documentation.\nAuthenticate the CLI:\nOnce installed, log in to your Coder deployment using your terminal:\ncoder login https://coder.dreamlab.ucsb.edu\nFollow the prompts to complete authentication via your web browser.\nConnecting via SSH:\nYou can connect directly to your workspace using the Coder CLI:\ncoder ssh &lt;workspace-name&gt;"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Coder Workspaces: Overview",
-    "section": "",
-    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter.The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
-  },
-  {
-    "objectID": "index.html#hardware-and-software",
-    "href": "index.html#hardware-and-software",
-    "title": "Coder Workspaces: Overview",
-    "section": "Hardware and Software",
-    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04.4 LTS\nOperating System\n\n\nDocker\n29.3.1\nContainer Runtime\n\n\nPixi\nv0.65.0\nPython package manager\n\n\nR\nv4.5.3\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.89.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\nduckdb\nv1.5.0\nDuckDB command line tool\n\n\nuv / uvx\n0.10.9\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.01.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
-  },
-  {
-    "objectID": "index.html#workspace-lifecycle",
-    "href": "index.html#workspace-lifecycle",
-    "title": "Coder Workspaces: Overview",
-    "section": "Workspace Lifecycle",
-    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
-  },
-  {
-    "objectID": "index.html#policies",
-    "href": "index.html#policies",
-    "title": "Coder Workspaces: Overview",
-    "section": "Policies",
-    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+    "objectID": "guides/file-transfer.html#rclone-connecting-to-google-drive",
+    "href": "guides/file-transfer.html#rclone-connecting-to-google-drive",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Rclone: Connecting to Google Drive",
+    "text": "Rclone: Connecting to Google Drive\nRclone is a powerful file transfer tool that is installed on all Coder Workspaces by default. You can use it to connect to your Google Drive.\n\n\n\n\n\n\nNote\n\n\n\nThese instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving Rclone permissions to access Google Drive. Once you’ve completed that step, you don’t need to use VS Code.\n\n\nRclone can map a folder in your Workspace (e.g., ~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.\nInstall Rclone (if necessary)\nRclone should be installed on your workspace by default. If it isn’t, you can use this command to instal it”\nsudo apt update && sudo apt install rclone\nGive Rclone read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See Rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant Rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your Drive using the folder.\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
   },
   {
     "objectID": "guides/datasets.html",
@@ -152,20 +131,6 @@
     "title": "Shared Datasets",
     "section": "",
     "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
-  },
-  {
-    "objectID": "guides/ai-agents.html",
-    "href": "guides/ai-agents.html",
-    "title": "Using AI Coding Agents",
-    "section": "",
-    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. “Prompt injection” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
-  },
-  {
-    "objectID": "guides/ai-agents.html#getting-started",
-    "href": "guides/ai-agents.html#getting-started",
-    "title": "Using AI Coding Agents",
-    "section": "Getting Started",
-    "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   },
   {
     "objectID": "guides/rstudio.html",
@@ -201,5 +166,40 @@
     "title": "Getting Started with RStudio",
     "section": "Additional Resources",
     "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
+  },
+  {
+    "objectID": "guides/getting-started.html",
+    "href": "guides/getting-started.html",
+    "title": "Getting Started with Coder Workspaces",
+    "section": "",
+    "text": "Welcome to Coder! This guide will help you create your first workspace and connect to it using various tools."
+  },
+  {
+    "objectID": "guides/getting-started.html#creating-a-workspace",
+    "href": "guides/getting-started.html#creating-a-workspace",
+    "title": "Getting Started with Coder Workspaces",
+    "section": "Creating a Workspace",
+    "text": "Creating a Workspace\n\nVisit https://coder.dreamlab.ucsb.edu.\nClick “UCSB Login” and log in using UCSB SSO (via Google).\nClick the button to create a Dreamlab Workspace.\nOn the “Create Workspace” page:\n\nGive the workspace a name.\nCheck “I understand the usage policies”.\nSelect additional software to enable.\nClick “Create Workspace”.\nIt may take a few minutes for the workspace to boot."
+  },
+  {
+    "objectID": "guides/getting-started.html#connecting-to-your-workspace",
+    "href": "guides/getting-started.html#connecting-to-your-workspace",
+    "title": "Getting Started with Coder Workspaces",
+    "section": "Connecting to Your Workspace",
+    "text": "Connecting to Your Workspace\nOnce your workspace is created, you should be directed to the workspace dashboard. There are two main ways to interact with your new workspace: directly through the browser or by using software locally installed on your machine.\n\n\n\nWorkspace Dashboard with dotted red line around buttons for browser-based tools\n\n\nBrowser-based tools include:\n\nJupyterLab, or RStudio: These are optional IDEs for data analysis using R or Python.\nFile Browser: for navigating your workspace’s file system and transferring files.\nTerminal: a browser-based terminal that provides instant access to your workspace’s shell environment.\n\nTo use these, simply click the corresponding icon on your workspace’s dashboard page.\n\nConnecting with Locally Installed Software\nFor a more integrated development experience, you can connect your local tools to your Coder workspace. This typically requires installing the Coder CLI and the appropriate extensions for your IDE.\n\nConnecting via VS Code\nYou can develop in your Coder workspace remotely using the Visual Studio Code desktop client.\n\nEnsure you have the Visual Studio Code desktop application installed.\nInstall the Coder extension from the VS Code Marketplace.\nOnce the extension is installed, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and type Coder: Login.\nEnter your Coder deployment URL: https://coder.dreamlab.ucsb.edu .\nAfter logging in, you can browse your workspaces in the Coder view on the sidebar, or use the Command Palette (Coder: Open Workspace) to connect to your workspace and start coding.\n\n\n\nConnecting via Coder CLI\nThe Coder CLI can be used to authenticate and connect to your workspaces from the command line.\nInstalling the Coder CLI:\nOn Linux/macOS, the fastest way to install the CLI is using the install script:\ncurl -L https://coder.com/install.sh | sh\nFor Windows, download and run the installer program (coder_2.30.6_windows_amd64_installer.exe) from Coder’s GitHub Releases page. You may want to refer to the Coder CLI documentation.\nAuthenticate the CLI:\nOnce installed, log in to your Coder deployment using your terminal:\ncoder login https://coder.dreamlab.ucsb.edu\nFollow the prompts to complete authentication via your web browser.\nConnecting via SSH:\nYou can connect directly to your workspace using the Coder CLI:\ncoder ssh &lt;workspace-name&gt;"
+  },
+  {
+    "objectID": "guides/ai-agents.html",
+    "href": "guides/ai-agents.html",
+    "title": "Using AI Coding Agents",
+    "section": "",
+    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. “Prompt injection” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
+  },
+  {
+    "objectID": "guides/ai-agents.html#getting-started",
+    "href": "guides/ai-agents.html#getting-started",
+    "title": "Using AI Coding Agents",
+    "section": "Getting Started",
+    "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   }
 ]

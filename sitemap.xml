@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/file-transfer.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/marimo.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/index.html</loc>
+    <lastmod>2026-04-09T22:31:34.787Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-gateway.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
   </url>
   <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/getting-started.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/marimo.html</loc>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
   </url>
   <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/index.html</loc>
-    <lastmod>2026-04-08T22:05:10.640Z</lastmod>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/file-transfer.html</loc>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/datasets.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-agents.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/rstudio.html</loc>
-    <lastmod>2026-04-08T22:05:10.637Z</lastmod>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/getting-started.html</loc>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-agents.html</loc>
+    <lastmod>2026-04-09T22:31:34.783Z</lastmod>
   </url>
 </urlset>
