@@ -23,7 +23,7 @@ Most AI-assisted coding tools can be configured to use the AI gateway.
 
 [OpenCode](https://opencode.ai/) is open-source coding agent that works with a
 wide range of model providers. These instructions are from [LiteLLM's
-OpenCodeQuickStart](https://docs.litellm.ai/docs/tutorials/opencode_integration).
+OpenCode QuickStart](https://docs.litellm.ai/docs/tutorials/opencode_integration).
 
 #### 1. Install OpenCode
 
