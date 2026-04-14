@@ -62,11 +62,11 @@ With the Marimo server running, you can access the Marimo UI using the "port"
 menu from the coder workspace dashboard. Click the port associated with "marimo"
 server.
 
-![Workspace Ports Menu](../images/ports-menu.png){width=50%}
+![Workspace Ports Menu](../images/ports-menu.png){fig-alt="Workspace Ports Menu" width=50%}
 
 From the Marimo dashboard, you can create a new notebook, which will be saved in your project folder.
 
-![Marimo Dashboard](../images/marimo-dashboard.png){width=75%}
+![Marimo Dashboard](../images/marimo-dashboard.png){fig-alt="Marimo Dashboard" width=75%}
 
 ## Configuring Chat and Agents
 
@@ -103,7 +103,7 @@ Go to the **AI Models** tab and click **+ Add Model** at the bottom of the
 dialog. Select `litellm_proxy` as the provider and enter the model name. We
 recommend `gemini-3-flash-preview`. Click **Add**.
 
-![Adding a model in the AI Models tab](../images/marimo-add-model.png){width=60%}
+![Adding a model in the AI Models tab](../images/marimo-add-model.png){fig-alt="Adding a model in the AI Models tab" width=60%}
 
 ### 4. Configure AI Features to Use the Model
 
@@ -112,11 +112,11 @@ to `custom` and select your model from the **Autocomplete Model** dropdown.
 Under **AI Assistant**, set the **Chat Model** and **Edit Model** to your
 model as well.
 
-![AI Features configuration](../images/marimo-ai-features.png){width=60%}
+![AI Features configuration](../images/marimo-ai-features.png){fig-alt="AI Features configuration" width=60%}
 
 ### 5. Confirm Settings
 
 Close User settings, and open the **Chat and Agents** UI from the notebook menu.
 You should see a chat interface.
 
-![Marimo chat panel](../images/marimo-chat.png){width=50%}
+![Marimo chat panel](../images/marimo-chat.png){fig-alt="Marimo chat panel" width=50%}

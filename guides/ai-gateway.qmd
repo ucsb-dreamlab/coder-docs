@@ -89,7 +89,7 @@ we set in the configuration file. Press Enter to select the provider.
 - Hit enter again to select the model, **Gemini 3 Flash**
 - You should now be back in OpenCode's main screen.Confirm that the connection is working with a simple question ("Are we connected?")
 
-![OpenCode User Interface](../images/opencode.png)
+![OpenCode User Interface](../images/opencode.png){fig-alt="OpenCode User Interface"}
 
 Use `/exit` to quit OpenCode. The configured provider and model should persist
 with your next session.

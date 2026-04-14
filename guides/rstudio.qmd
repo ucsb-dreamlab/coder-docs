@@ -24,7 +24,7 @@ to an existing workspace.
 Once your workspace has booted, you can start RStudio in a new browser
 window using the button on the workspace dashboard.
 
-![Workspace Dashboard with RStudio Installed](../images/workspace-rstudio.png)
+![Workspace Dashboard with RStudio Installed](../images/workspace-rstudio.png){fig-alt="Workspace Dashboard with RStudio Installed"}
 
 ## Setting Up an RStudio Project
 

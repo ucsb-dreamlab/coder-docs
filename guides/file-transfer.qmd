@@ -14,13 +14,13 @@ Google Drive.
 The most convenient way to transfer files to/from a Coder Workspace is to use
 the built-in File Browser, which you can access from Workspace's dashboard.
 
-![Coder Workspace Dashboard](../images/workspace.png)
+![Coder Workspace Dashboard](../images/workspace.png){fig-alt="Coder Workspace Dashboard"}
 
 Clicking the File Browser button from Workspace dashboard opens the File Browser
 in a new browser window. (You may need to enable popups in your browser
 settings). 
 
-![File Browser UI](../images/file-browser.png){width=70%}
+![File Browser UI](../images/file-browser.png){fig-alt="File Browser UI" width=70%}
 
 ## Magic Wormhole
 
