@@ -1,0 +1,88 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+
+    "dreamlab-litellm": {
+      "name": "DREAM Lab AI Gateway",
+      "options": {
+      	"baseURL": "https://litellm.dreamlab.ucsb.edu"
+      },
+      "models": {
+        "gemini-3.5-flash": {
+          "name": "Gemini 3.5 Flash",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gemini-3-flash-preview": {
+          "name": "Gemini 3 Flash",
+          "modalities": {
+          	"input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gemini-3.1-pro-preview": {
+          "name": "Gemini 3.1 Pro",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "gemini-3.1-pro-preview-customtools": {
+        	"name": "Gemini 3.1 Pro (Custom Tools)",
+          "modalities": {
+            "input": ["text", "image"],
+          	"output": ["text"]
+          }
+        }
+      }
+    },
+
+    "cit-litellm": {
+      "name": "CIT AI Gateway",
+      "options": {
+        "baseURL": "https://api.ai.college.ucsb.edu",
+        "apiKey": "{env:UCSB_CITAI_KEY}"
+      },
+      "models": {
+        "gemma-4-31b": {
+          "name": "Gemma 4"
+        },
+        "Qwen3-Coder-Next": {
+          "name": "Qwen3-Coder-Next"
+        },
+        "gpt-oss-120b": {
+          "name": "gpt-oss-120b"
+        }
+      }
+    },
+
+		"ai-commons": {
+      "name": "AI Commons",
+      "options": {
+        "baseURL": "https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1",
+        "apiKey": "{env:UCSB_AICOMMONS_KEY}"
+      },
+      "models": {
+        "claude-v4.5-haiku": {
+          "name": "Claude 4.5 Haiku"
+        },
+        "claude-v4.6-opus": {
+          "name": "Claude 4.6 Opus"
+        },
+        "claude-v4.6-sonnet": {
+          "name": "Claude 4.6 Sonnet"
+        },
+        "amazon-nova-pro": {
+          "name": "Amazon Nova Pro"
+        },
+        "qwen3-32b": {
+          "name": "Qwen3 32b"
+        }
+      }
+    }
+
+
+  }
+}
