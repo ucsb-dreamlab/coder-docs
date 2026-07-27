@@ -1,1 +1,1 @@
-Sitemap: https://ucsb-dreamlab.github.io/coder-docs/sitemap.xml
+Sitemap: https://dreamlab.ucsb.edu/sitemap.xml
