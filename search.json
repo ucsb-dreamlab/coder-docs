@@ -1,31 +1,59 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Coder Workspaces: Overview",
+    "objectID": "guides/ai-agents.html",
+    "href": "guides/ai-agents.html",
+    "title": "Using AI Coding Agents",
     "section": "",
-    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
+    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. “Prompt injection” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
   },
   {
-    "objectID": "index.html#hardware-and-software",
-    "href": "index.html#hardware-and-software",
-    "title": "Coder Workspaces: Overview",
-    "section": "Hardware and Software",
-    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n24.04.4 LTS\nOperating System\n\n\nDocker\n29.3.1\nContainer Runtime\n\n\nPixi\nv0.65.0\nPython package manager\n\n\nR\nv4.5.3\nR programming language\n\n\nGit\nv2.43.0\nVersion control software\n\n\ngh\nv2.89.0\nGithub CLI\n\n\njq\nv1.7\nCommand line JSON processor\n\n\nduckdb\nv1.5.0\nDuckDB command line tool\n\n\nuv / uvx\n0.10.9\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.01.1\nRun RStudio in the browser\n\n\nJupyter Lab Server\nv4.4.9\nRun Jupyter Notebooks in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
+    "objectID": "guides/ai-agents.html#getting-started",
+    "href": "guides/ai-agents.html#getting-started",
+    "title": "Using AI Coding Agents",
+    "section": "Getting Started",
+    "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   },
   {
-    "objectID": "index.html#workspace-lifecycle",
-    "href": "index.html#workspace-lifecycle",
-    "title": "Coder Workspaces: Overview",
-    "section": "Workspace Lifecycle",
-    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
+    "objectID": "guides/datasets.html",
+    "href": "guides/datasets.html",
+    "title": "Shared Datasets",
+    "section": "",
+    "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
   },
   {
-    "objectID": "index.html#policies",
-    "href": "index.html#policies",
-    "title": "Coder Workspaces: Overview",
-    "section": "Policies",
-    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+    "objectID": "guides/rstudio.html",
+    "href": "guides/rstudio.html",
+    "title": "Getting Started with RStudio",
+    "section": "",
+    "text": "RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser."
+  },
+  {
+    "objectID": "guides/rstudio.html#setting-up-an-rstudio-project",
+    "href": "guides/rstudio.html#setting-up-an-rstudio-project",
+    "title": "Getting Started with RStudio",
+    "section": "Setting Up an RStudio Project",
+    "text": "Setting Up an RStudio Project\nRStudio Projects are used to organize your work and manage working directories. Here’s how to create a new project:\n\nIn RStudio, click File → New Project\nIn the New Project Wizard, choose “New Directory”, to create a new directory for your project\nFor the project type, select “New Project”\nEnter a name for the new directory: my-project. Leave “Create project as a subdirectory of” set to ~.\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
+  },
+  {
+    "objectID": "guides/rstudio.html#installing-r-packages",
+    "href": "guides/rstudio.html#installing-r-packages",
+    "title": "Getting Started with RStudio",
+    "section": "Installing R Packages",
+    "text": "Installing R Packages\nYou can install packages in your workspace just like a local RStudio installation:\n# Install from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(\"ggplot2\")\n\n# Install from GitHub\ninstall.packages(\"devtools\")\ndevtools::install_github(\"username/repository\")\n\n\n\n\n\n\nTip\n\n\n\nPackages installed in your workspace persist across sessions but are isolated from other workspaces. This ensures reproducibility and avoids package conflicts."
+  },
+  {
+    "objectID": "guides/rstudio.html#setting-up-git",
+    "href": "guides/rstudio.html#setting-up-git",
+    "title": "Getting Started with RStudio",
+    "section": "Setting Up Git",
+    "text": "Setting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\""
+  },
+  {
+    "objectID": "guides/rstudio.html#additional-resources",
+    "href": "guides/rstudio.html#additional-resources",
+    "title": "Getting Started with RStudio",
+    "section": "Additional Resources",
+    "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
   },
   {
     "objectID": "guides/getting-started.html",
@@ -49,25 +77,32 @@
     "text": "Connecting to Your Workspace\nOnce your workspace is created, you should be directed to the workspace dashboard. There are two main ways to interact with your new workspace: directly through the browser or by using software locally installed on your machine.\n\n\n\nWorkspace Dashboard with dotted red line around buttons for browser-based tools\n\n\nBrowser-based tools include:\n\nJupyterLab, or RStudio: These are optional IDEs for data analysis using R or Python.\nFile Browser: for navigating your workspace’s file system and transferring files.\nTerminal: a browser-based terminal that provides instant access to your workspace’s shell environment.\n\nTo use these, simply click the corresponding icon on your workspace’s dashboard page.\n\nConnecting with Locally Installed Software\nFor a more integrated development experience, you can connect your local tools to your Coder workspace. This typically requires installing the Coder CLI and the appropriate extensions for your IDE.\n\nConnecting via VS Code\nYou can develop in your Coder workspace remotely using the Visual Studio Code desktop client.\n\nEnsure you have the Visual Studio Code desktop application installed.\nInstall the Coder extension from the VS Code Marketplace.\nOnce the extension is installed, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and type Coder: Login.\nEnter your Coder deployment URL: https://coder.dreamlab.ucsb.edu .\nAfter logging in, you can browse your workspaces in the Coder view on the sidebar, or use the Command Palette (Coder: Open Workspace) to connect to your workspace and start coding.\n\n\n\nConnecting via Coder CLI\nThe Coder CLI can be used to authenticate and connect to your workspaces from the command line.\nInstalling the Coder CLI:\nOn Linux/macOS, the fastest way to install the CLI is using the install script:\ncurl -L https://coder.com/install.sh | sh\nFor Windows, download and run the installer program (coder_2.30.6_windows_amd64_installer.exe) from Coder’s GitHub Releases page. You may want to refer to the Coder CLI documentation.\nAuthenticate the CLI:\nOnce installed, log in to your Coder deployment using your terminal:\ncoder login https://coder.dreamlab.ucsb.edu\nFollow the prompts to complete authentication via your web browser.\nConnecting via SSH:\nYou can connect directly to your workspace using the Coder CLI:\ncoder ssh &lt;workspace-name&gt;"
   },
   {
-    "objectID": "guides/datasets.html",
-    "href": "guides/datasets.html",
-    "title": "Shared Datasets",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Coder Workspaces: Overview",
     "section": "",
-    "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
+    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
   },
   {
-    "objectID": "guides/ai-agents.html",
-    "href": "guides/ai-agents.html",
-    "title": "Using AI Coding Agents",
-    "section": "",
-    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like Claude Code, Gemini CLI, or Open AI’s Codex. These tools, which generate and also execute code, can be useful but they are also inherently dangerous. “Prompt injection” attacks can trick AI tools into running nefarious code on your system. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
+    "objectID": "index.html#hardware-and-software",
+    "href": "index.html#hardware-and-software",
+    "title": "Coder Workspaces: Overview",
+    "section": "Hardware and Software",
+    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n26.04 LTS\nOperating System\n\n\nDocker\n29.6.0\nContainer Runtime\n\n\nPixi\nv0.70.2\nPython package manager\n\n\nR\nv4.6.0\nR programming language\n\n\nGit\nv2.53.0\nVersion control software\n\n\ngh\nv2.46.0\nGithub CLI\n\n\njq\nv1.8.1\nCommand line JSON processor\n\n\nduckdb\nv1.5.4\nDuckDB command line tool\n\n\nuv / uvx\n0.11.23\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.05.0\nRun RStudio in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
   },
   {
-    "objectID": "guides/ai-agents.html#getting-started",
-    "href": "guides/ai-agents.html#getting-started",
-    "title": "Using AI Coding Agents",
-    "section": "Getting Started",
-    "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
+    "objectID": "index.html#workspace-lifecycle",
+    "href": "index.html#workspace-lifecycle",
+    "title": "Coder Workspaces: Overview",
+    "section": "Workspace Lifecycle",
+    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
+  },
+  {
+    "objectID": "index.html#policies",
+    "href": "index.html#policies",
+    "title": "Coder Workspaces: Overview",
+    "section": "Policies",
+    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
   },
   {
     "objectID": "guides/marimo.html",
@@ -166,40 +201,5 @@
     "title": "AI Gateway",
     "section": "LiteLLM API with Python",
     "text": "LiteLLM API with Python\nThis code is taken from the LiteLLM documentation.\nFirst, create a .env file in your project directory with your API key:\nLITELLM_PROXY_API_KEY=\"YOUR_API_KEY...\"\nThen use the following Python code to connect to the gateway:\nimport litellm\nfrom litellm import completion\nfrom dotenv import load_dotenv\n\n# load environment variables from .env file\nload_dotenv()\n\n# set custom api base to your proxy\nlitellm.api_base = \"https://litellm.dreamlab.ucsb.edu\"\n\nmessages = [{\"content\": \"Hello, how are you?\", \"role\": \"user\"}]\n\n# litellm proxy call\nresponse = completion(\n    model=\"litellm_proxy/gemini-3-flash-preview\",\n    messages=messages,\n)"
-  },
-  {
-    "objectID": "guides/rstudio.html",
-    "href": "guides/rstudio.html",
-    "title": "Getting Started with RStudio",
-    "section": "",
-    "text": "RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser."
-  },
-  {
-    "objectID": "guides/rstudio.html#setting-up-an-rstudio-project",
-    "href": "guides/rstudio.html#setting-up-an-rstudio-project",
-    "title": "Getting Started with RStudio",
-    "section": "Setting Up an RStudio Project",
-    "text": "Setting Up an RStudio Project\nRStudio Projects are used to organize your work and manage working directories. Here’s how to create a new project:\n\nIn RStudio, click File → New Project\nIn the New Project Wizard, choose “New Directory”, to create a new directory for your project\nFor the project type, select “New Project”\nEnter a name for the new directory: my-project. Leave “Create project as a subdirectory of” set to ~.\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
-  },
-  {
-    "objectID": "guides/rstudio.html#installing-r-packages",
-    "href": "guides/rstudio.html#installing-r-packages",
-    "title": "Getting Started with RStudio",
-    "section": "Installing R Packages",
-    "text": "Installing R Packages\nYou can install packages in your workspace just like a local RStudio installation:\n# Install from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(\"ggplot2\")\n\n# Install from GitHub\ninstall.packages(\"devtools\")\ndevtools::install_github(\"username/repository\")\n\n\n\n\n\n\nTip\n\n\n\nPackages installed in your workspace persist across sessions but are isolated from other workspaces. This ensures reproducibility and avoids package conflicts."
-  },
-  {
-    "objectID": "guides/rstudio.html#setting-up-git",
-    "href": "guides/rstudio.html#setting-up-git",
-    "title": "Getting Started with RStudio",
-    "section": "Setting Up Git",
-    "text": "Setting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\""
-  },
-  {
-    "objectID": "guides/rstudio.html#additional-resources",
-    "href": "guides/rstudio.html#additional-resources",
-    "title": "Getting Started with RStudio",
-    "section": "Additional Resources",
-    "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
   }
 ]

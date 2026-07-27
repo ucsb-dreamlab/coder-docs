@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/index.html</loc>
-    <lastmod>2026-07-23T23:41:00.681Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/getting-started.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-agents.html</loc>
+    <lastmod>2026-07-27T17:19:20.324Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/datasets.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-agents.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/marimo.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/file-transfer.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-gateway.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
+    <lastmod>2026-07-27T17:19:20.325Z</lastmod>
   </url>
   <url>
     <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/rstudio.html</loc>
-    <lastmod>2026-07-23T23:41:00.678Z</lastmod>
+    <lastmod>2026-07-27T17:19:20.325Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/getting-started.html</loc>
+    <lastmod>2026-07-27T17:19:20.325Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/index.html</loc>
+    <lastmod>2026-07-27T17:19:20.327Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/marimo.html</loc>
+    <lastmod>2026-07-27T17:19:20.325Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/file-transfer.html</loc>
+    <lastmod>2026-07-27T17:19:20.325Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucsb-dreamlab.github.io/coder-docs/guides/ai-gateway.html</loc>
+    <lastmod>2026-07-27T17:19:20.325Z</lastmod>
   </url>
 </urlset>
