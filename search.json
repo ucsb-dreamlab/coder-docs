@@ -14,95 +14,67 @@
     "text": "Getting Started\nMost AI coding agents run in the terminal and are distributed as NodeJS applications. We’ll use the terminal to install nodejs and the agent itself. You can use the default web-based terminal that is included with every workspace to run the shell commands below. (If you prefer to use VS Code’s built-in terminal, then you will need to enable VS Code when you create the workspace.)\n# use pixi to install nodejs and npm (package manager)\npixi global install nodejs\nNow we need to update the shell’s $PATH to include the “global” directory where the NodeJS package manager (npm) will install the agent:\n# update our current $PATH variable\necho \"export PATH=\\$PATH:\\$(npm prefix -g)/bin\" &gt;&gt; ~/.bashrc\n\n# re-run ~/.bashrc to activate our new $PATH settings\nsource ~/.bashrc\n\nCreate a project directory\nYou shouldn’t run the agent from the home directory (~). To start a new project, make a new directory and set it is as the working directory.\n# start a new project\nmkdir my-project\n\n# or `git clone` an existing one\n# git clone git@github.com:my-account/my-project.git\n \n# set the project as the working directory\ncd my-project\nWe’re ready to install and run the agent!\n\n\nInstalling the agent\nTo install the Gemini CLI:\n# install gemini as a global command\nnpm install -g @google/gemini-cli\n\n# run gemini (inside the project directory)\ngemini\n\n\nExample Prompt\nHere is an example prompt to generate a map based on COVID-19 fatality data using R.\nCalculate the Local Moran's I statistic for covid-19 fatality rates \nin US counties (contiguous 48 states only), then make a map of counties \nin the continental US showing outliers. A csv with covid fatality rates \nis available at this URL: \n\nhttps://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv\n\nMake an R script called 'map.R' to generate the map. The map should be \nsaved to 'map.png'. Use \"tidy\" R conventions. You are running in a headless \nenvironment, without a graphical display."
   },
   {
-    "objectID": "guides/datasets.html",
-    "href": "guides/datasets.html",
-    "title": "Shared Datasets",
+    "objectID": "guides/ucsb_ai_commons.html",
+    "href": "guides/ucsb_ai_commons.html",
+    "title": "Using the UCSB AI Commons API with OpenCode and Continue",
     "section": "",
-    "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
+    "text": "This guide explains how to configure the UCSB AI Commons OpenAI-compatible API for two popular AI coding assistants:"
   },
   {
-    "objectID": "guides/rstudio.html",
-    "href": "guides/rstudio.html",
-    "title": "Getting Started with RStudio",
+    "objectID": "guides/ucsb_ai_commons.html#prerequisites",
+    "href": "guides/ucsb_ai_commons.html#prerequisites",
+    "title": "Using the UCSB AI Commons API with OpenCode and Continue",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nBefore starting, obtain the following from AI Commons:\n\nAI Commons endpoint (Base URL)\nAPI key\nModel names\n\n\n\n\n\n\n\nImportant\n\n\n\nThe API is an add-on feature to the AI Commons that is not present by default. To request API Access, please submit your request here\n\n\nModel names: For the full model reference, see the AI Commons OpenAI-Compatible API Reference. In case AI Commons have models that are not updated in the document, run:\ncurl -s https://YOUR-AI-COMMONS-ENDPOINT/v1/models \\\n  -H \"Authorization: Bearer YOUR_AI_COMMONS_API_KEY\" \\\n  | python -c \"import sys, json; [print(m['id']) for m in json.load(sys.stdin)['data']]\"\nThis prints a clean list of model names, for example:\nclaude-v4.6-sonnet\nclaude-v4.6-opus\nclaude-v4.5-haiku\namazon-nova-pro"
+  },
+  {
+    "objectID": "guides/ucsb_ai_commons.html#opencode",
+    "href": "guides/ucsb_ai_commons.html#opencode",
+    "title": "Using the UCSB AI Commons API with OpenCode and Continue",
+    "section": "OpenCode",
+    "text": "OpenCode\nOpenCode is a terminal-based coding assistant that can be launched from Git Bash, VS Code, or Positron.\n\nStep 1. Install OpenCode\nFollow the installation instructions on the OpenCode website.\nVerify the installation:\nopencode --version\n\n\nStep 2. Configure OpenCode\nOpen the global configuration file:\n~/.config/opencode/opencode.json\nExample configuration:\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"my-custom-provider\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"AI Commons\",\n      \"options\": {\n        \"baseURL\": \"https://YOUR-AI-COMMONS-ENDPOINT/v1\",\n        \"apiKey\": \"YOUR_AI_COMMONS_API_KEY\"\n      },\n      \"models\": {\n        \"claude-v4.5-haiku\": {\n          \"name\": \"claude-v4.5-haiku\"\n        },\n        \"claude-v4.6-sonnet\": {\n          \"name\": \"claude-v4.6-sonnet\"\n        },\n        \"claude-v4.6-opus\": {\n          \"name\": \"claude-v4.6-opus\"\n        }\n      }\n    }\n  }\n}\nReplace:\n\nhttps://YOUR-AI-COMMONS-ENDPOINT/v1\nYOUR_AI_COMMONS_API_KEY\n\n\n\nStep 3. Start OpenCode\nLaunch OpenCode from your project directory:\nopencode\nInside OpenCode you can see available models:\n/models\nYou are all set. Start chatting with the model directly in your terminal."
+  },
+  {
+    "objectID": "guides/ucsb_ai_commons.html#continue-vs-code-and-positron",
+    "href": "guides/ucsb_ai_commons.html#continue-vs-code-and-positron",
+    "title": "Using the UCSB AI Commons API with OpenCode and Continue",
+    "section": "Continue (VS Code and Positron)",
+    "text": "Continue (VS Code and Positron)\nContinue is an IDE extension that provides chat and coding-agent capabilities for both VS Code and Positron.\n\nStep 1. Install Continue\nOpen the Extensions panel and search for the Continue extension published by Continue:\nContinue - open-source AI code Agent\n\n\n\n\n\n\nNote\n\n\n\nIn Positron, installation may fail with a version mismatch error. If this happens, follow the guidance shown in the Notification panel (bottom right corner) and install it manually via Ctrl+Shift+P → Extensions: Install from VSIX.\n\n\n\n\nStep 2. Configure AI Commons\nThe user configuration file is:\n~\\.continue\\config.yaml\nExample configuration:\nname: UCSB AI Commons\nversion: 1.0.0\nschema: v1\n\nmodels:\n  - name: Claude Sonnet 4.6\n    provider: openai\n    model: claude-v4.6-sonnet\n    apiBase: https://YOUR-AI-COMMONS-ENDPOINT/v1\n    apiKey: YOUR_AI_COMMONS_API_KEY\n\n  - name: Claude Opus 4.6\n    provider: openai\n    model: claude-v4.6-opus\n    apiBase: https://YOUR-AI-COMMONS-ENDPOINT/v1\n    apiKey: YOUR_AI_COMMONS_API_KEY\n\n  - name: Claude Haiku 4.5\n    provider: openai\n    model: claude-v4.5-haiku\n    apiBase: https://YOUR-AI-COMMONS-ENDPOINT/v1\n    apiKey: YOUR_AI_COMMONS_API_KEY\n\n    roles:\n      - chat\n      - edit\n\n    capabilities:\n      - tool_use\nReplace:\n\nhttps://YOUR-AI-COMMONS-ENDPOINT/v1\nYOUR_AI_COMMONS_API_KEY\n\nYou are all set. Open the Continue panel in your IDE and start chatting with your models."
+  },
+  {
+    "objectID": "guides/ucsb_ai_commons.html#authentication-problems",
+    "href": "guides/ucsb_ai_commons.html#authentication-problems",
+    "title": "Using the UCSB AI Commons API with OpenCode and Continue",
+    "section": "Authentication Problems",
+    "text": "Authentication Problems\nVerify:\n\nBase URL is correct.\n/v1 is not duplicated.\nAPI key is valid.\nNo extra spaces exist in the key."
+  },
+  {
+    "objectID": "guides/file-transfer.html",
+    "href": "guides/file-transfer.html",
+    "title": "Transferring files to/from your Workspace",
     "section": "",
-    "text": "RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser."
+    "text": "There are several ways to upload and download files to a Coder Workspace. Coder’s built-in File Browser is the most straightforward. Magic Wormhole is well suited for moving files between Workspaces. Rclone is a more sophisticated option that supports advanced features like connecting to Google Drive."
   },
   {
-    "objectID": "guides/rstudio.html#setting-up-an-rstudio-project",
-    "href": "guides/rstudio.html#setting-up-an-rstudio-project",
-    "title": "Getting Started with RStudio",
-    "section": "Setting Up an RStudio Project",
-    "text": "Setting Up an RStudio Project\nRStudio Projects are used to organize your work and manage working directories. Here’s how to create a new project:\n\nIn RStudio, click File → New Project\nIn the New Project Wizard, choose “New Directory”, to create a new directory for your project\nFor the project type, select “New Project”\nEnter a name for the new directory: my-project. Leave “Create project as a subdirectory of” set to ~.\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
+    "objectID": "guides/file-transfer.html#coder-file-browser",
+    "href": "guides/file-transfer.html#coder-file-browser",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Coder File Browser",
+    "text": "Coder File Browser\nThe most convenient way to transfer files to/from a Coder Workspace is to use the built-in File Browser, which you can access from Workspace’s dashboard.\n\n\n\nCoder Workspace Dashboard\n\n\nClicking the File Browser button from Workspace dashboard opens the File Browser in a new browser window. (You may need to enable popups in your browser settings).\n\n\n\nFile Browser UI"
   },
   {
-    "objectID": "guides/rstudio.html#installing-r-packages",
-    "href": "guides/rstudio.html#installing-r-packages",
-    "title": "Getting Started with RStudio",
-    "section": "Installing R Packages",
-    "text": "Installing R Packages\nYou can install packages in your workspace just like a local RStudio installation:\n# Install from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(\"ggplot2\")\n\n# Install from GitHub\ninstall.packages(\"devtools\")\ndevtools::install_github(\"username/repository\")\n\n\n\n\n\n\nTip\n\n\n\nPackages installed in your workspace persist across sessions but are isolated from other workspaces. This ensures reproducibility and avoids package conflicts."
+    "objectID": "guides/file-transfer.html#magic-wormhole",
+    "href": "guides/file-transfer.html#magic-wormhole",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Magic Wormhole",
+    "text": "Magic Wormhole\nMagic Wormhole is a command line utility that makes it easy to send files and directories directly between two machines using a short, one-time code. No accounts, servers, or SSH configuration required — just run a command on each side and the transfer happens over an end-to-end encrypted channel.\nYou can use Magic Wormhole without installing it by running it with uvx, which executes Python tools in temporary environments. uvx is part of uv and is installed on all Coder Workspaces by default\nSending a file or directory:\nuvx magic-wormhole send ./myfile.txt\n# or for a directory\nuvx magic-wormhole send ./my-project\nMagic Wormhole will print a short code like 7-guitarist-revenge. Use the code to download the files on the destination:\nReceiving a file or directory:\nuvx magic-wormhole receive 7-guitarist-revenge\nThe code is single-use and expires once the transfer completes or is cancelled.\nThis is a great way to migrate files and entire project directories between Coder workspaces!"
   },
   {
-    "objectID": "guides/rstudio.html#setting-up-git",
-    "href": "guides/rstudio.html#setting-up-git",
-    "title": "Getting Started with RStudio",
-    "section": "Setting Up Git",
-    "text": "Setting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\""
-  },
-  {
-    "objectID": "guides/rstudio.html#additional-resources",
-    "href": "guides/rstudio.html#additional-resources",
-    "title": "Getting Started with RStudio",
-    "section": "Additional Resources",
-    "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
-  },
-  {
-    "objectID": "guides/getting-started.html",
-    "href": "guides/getting-started.html",
-    "title": "Getting Started with Coder Workspaces",
-    "section": "",
-    "text": "Welcome to Coder! This guide will help you create your first workspace and connect to it using various tools."
-  },
-  {
-    "objectID": "guides/getting-started.html#creating-a-workspace",
-    "href": "guides/getting-started.html#creating-a-workspace",
-    "title": "Getting Started with Coder Workspaces",
-    "section": "Creating a Workspace",
-    "text": "Creating a Workspace\n\nVisit https://coder.dreamlab.ucsb.edu.\nClick “UCSB Login” and log in using UCSB SSO (via Google).\nClick the button to create a Dreamlab Workspace.\nOn the “Create Workspace” page:\n\nGive the workspace a name.\nCheck “I understand the usage policies”.\nSelect additional software to enable.\nClick “Create Workspace”.\nIt may take a few minutes for the workspace to boot."
-  },
-  {
-    "objectID": "guides/getting-started.html#connecting-to-your-workspace",
-    "href": "guides/getting-started.html#connecting-to-your-workspace",
-    "title": "Getting Started with Coder Workspaces",
-    "section": "Connecting to Your Workspace",
-    "text": "Connecting to Your Workspace\nOnce your workspace is created, you should be directed to the workspace dashboard. There are two main ways to interact with your new workspace: directly through the browser or by using software locally installed on your machine.\n\n\n\nWorkspace Dashboard with dotted red line around buttons for browser-based tools\n\n\nBrowser-based tools include:\n\nJupyterLab, or RStudio: These are optional IDEs for data analysis using R or Python.\nFile Browser: for navigating your workspace’s file system and transferring files.\nTerminal: a browser-based terminal that provides instant access to your workspace’s shell environment.\n\nTo use these, simply click the corresponding icon on your workspace’s dashboard page.\n\nConnecting with Locally Installed Software\nFor a more integrated development experience, you can connect your local tools to your Coder workspace. This typically requires installing the Coder CLI and the appropriate extensions for your IDE.\n\nConnecting via VS Code\nYou can develop in your Coder workspace remotely using the Visual Studio Code desktop client.\n\nEnsure you have the Visual Studio Code desktop application installed.\nInstall the Coder extension from the VS Code Marketplace.\nOnce the extension is installed, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and type Coder: Login.\nEnter your Coder deployment URL: https://coder.dreamlab.ucsb.edu .\nAfter logging in, you can browse your workspaces in the Coder view on the sidebar, or use the Command Palette (Coder: Open Workspace) to connect to your workspace and start coding.\n\n\n\nConnecting via Coder CLI\nThe Coder CLI can be used to authenticate and connect to your workspaces from the command line.\nInstalling the Coder CLI:\nOn Linux/macOS, the fastest way to install the CLI is using the install script:\ncurl -L https://coder.com/install.sh | sh\nFor Windows, download and run the installer program (coder_2.30.6_windows_amd64_installer.exe) from Coder’s GitHub Releases page. You may want to refer to the Coder CLI documentation.\nAuthenticate the CLI:\nOnce installed, log in to your Coder deployment using your terminal:\ncoder login https://coder.dreamlab.ucsb.edu\nFollow the prompts to complete authentication via your web browser.\nConnecting via SSH:\nYou can connect directly to your workspace using the Coder CLI:\ncoder ssh &lt;workspace-name&gt;"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Coder Workspaces: Overview",
-    "section": "",
-    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
-  },
-  {
-    "objectID": "index.html#hardware-and-software",
-    "href": "index.html#hardware-and-software",
-    "title": "Coder Workspaces: Overview",
-    "section": "Hardware and Software",
-    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n26.04 LTS\nOperating System\n\n\nDocker\n29.6.0\nContainer Runtime\n\n\nPixi\nv0.70.2\nPython package manager\n\n\nR\nv4.6.0\nR programming language\n\n\nGit\nv2.53.0\nVersion control software\n\n\ngh\nv2.46.0\nGithub CLI\n\n\njq\nv1.8.1\nCommand line JSON processor\n\n\nduckdb\nv1.5.4\nDuckDB command line tool\n\n\nuv / uvx\n0.11.23\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.05.0\nRun RStudio in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
-  },
-  {
-    "objectID": "index.html#workspace-lifecycle",
-    "href": "index.html#workspace-lifecycle",
-    "title": "Coder Workspaces: Overview",
-    "section": "Workspace Lifecycle",
-    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
-  },
-  {
-    "objectID": "index.html#policies",
-    "href": "index.html#policies",
-    "title": "Coder Workspaces: Overview",
-    "section": "Policies",
-    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+    "objectID": "guides/file-transfer.html#rclone-connecting-to-google-drive",
+    "href": "guides/file-transfer.html#rclone-connecting-to-google-drive",
+    "title": "Transferring files to/from your Workspace",
+    "section": "Rclone: Connecting to Google Drive",
+    "text": "Rclone: Connecting to Google Drive\nRclone is a powerful file transfer tool that is installed on all Coder Workspaces by default. You can use it to connect to your Google Drive.\n\n\n\n\n\n\nNote\n\n\n\nThese instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving Rclone permissions to access Google Drive. Once you’ve completed that step, you don’t need to use VS Code.\n\n\nRclone can map a folder in your Workspace (e.g., ~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.\nInstall Rclone (if necessary)\nRclone should be installed on your workspace by default. If it isn’t, you can use this command to instal it”\nsudo apt update && sudo apt install rclone\nGive Rclone read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See Rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant Rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your Drive using the folder.\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
   },
   {
     "objectID": "guides/marimo.html",
@@ -147,32 +119,95 @@
     "text": "Configuring Chat and Agents\nMarimo has integrated AI chat and agent tools, which you can access through Chat and Agents icon on the notebook menu. The AI features are configured through the AI panel in the User Settings window. To open User Settings, click the gear icon in the top-right corner and then click User settings.\nThe AI integration has two parts: a panel on the left side with a chat interface and a Generate with AI button in the main notebook area that lets you enter a prompt to generate code for a new cell.\nYou can configure your Marimo notebook to use AI models through the DREAM Lab AI gateway. For this to work, you need to:\n\nRequest a personal API key for the AI gateway.\nConfigure the notebook using the steps below.\n\n\n1. Install AI Dependencies\nFrom the Optional Dependencies panel in the user settings, make sure AI features are installed. If not, click the Install with uv button.\n\n\n2. Add a Custom AI Provider\nFrom the AI panel in the user settings, go to the AI Providers tab and click Add Provider. Fill in the following:\n\nProvider name: litellm_proxy\nBase URL: https://litellm.dreamlab.ucsb.edu\nAPI key: your personal API key\n\n\n\n3. Add a Model\nGo to the AI Models tab and click + Add Model at the bottom of the dialog. Select litellm_proxy as the provider and enter the model name. We recommend gemini-3-flash-preview. Click Add.\n\n\n\nAdding a model in the AI Models tab\n\n\n\n\n4. Configure AI Features to Use the Model\nGo to the AI Features tab. Under Code Completion, set the Provider to custom and select your model from the Autocomplete Model dropdown. Under AI Assistant, set the Chat Model and Edit Model to your model as well.\n\n\n\nAI Features configuration\n\n\n\n\n5. Confirm Settings\nClose User settings, and open the Chat and Agents UI from the notebook menu. You should see a chat interface.\n\n\n\nMarimo chat panel"
   },
   {
-    "objectID": "guides/file-transfer.html",
-    "href": "guides/file-transfer.html",
-    "title": "Transferring files to/from your Workspace",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Coder Workspaces: Overview",
     "section": "",
-    "text": "There are several ways to upload and download files to a Coder Workspace. Coder’s built-in File Browser is the most straightforward. Magic Wormhole is well suited for moving files between Workspaces. Rclone is a more sophisticated option that supports advanced features like connecting to Google Drive."
+    "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
   },
   {
-    "objectID": "guides/file-transfer.html#coder-file-browser",
-    "href": "guides/file-transfer.html#coder-file-browser",
-    "title": "Transferring files to/from your Workspace",
-    "section": "Coder File Browser",
-    "text": "Coder File Browser\nThe most convenient way to transfer files to/from a Coder Workspace is to use the built-in File Browser, which you can access from Workspace’s dashboard.\n\n\n\nCoder Workspace Dashboard\n\n\nClicking the File Browser button from Workspace dashboard opens the File Browser in a new browser window. (You may need to enable popups in your browser settings).\n\n\n\nFile Browser UI"
+    "objectID": "index.html#hardware-and-software",
+    "href": "index.html#hardware-and-software",
+    "title": "Coder Workspaces: Overview",
+    "section": "Hardware and Software",
+    "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n26.04 LTS\nOperating System\n\n\nDocker\n29.6.0\nContainer Runtime\n\n\nPixi\nv0.70.2\nPython package manager\n\n\nR\nv4.6.0\nR programming language\n\n\nGit\nv2.53.0\nVersion control software\n\n\ngh\nv2.46.0\nGithub CLI\n\n\njq\nv1.8.1\nCommand line JSON processor\n\n\nduckdb\nv1.5.4\nDuckDB command line tool\n\n\nuv / uvx\n0.11.23\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.05.0\nRun RStudio in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
   },
   {
-    "objectID": "guides/file-transfer.html#magic-wormhole",
-    "href": "guides/file-transfer.html#magic-wormhole",
-    "title": "Transferring files to/from your Workspace",
-    "section": "Magic Wormhole",
-    "text": "Magic Wormhole\nMagic Wormhole is a command line utility that makes it easy to send files and directories directly between two machines using a short, one-time code. No accounts, servers, or SSH configuration required — just run a command on each side and the transfer happens over an end-to-end encrypted channel.\nYou can use Magic Wormhole without installing it by running it with uvx, which executes Python tools in temporary environments. uvx is part of uv and is installed on all Coder Workspaces by default\nSending a file or directory:\nuvx magic-wormhole send ./myfile.txt\n# or for a directory\nuvx magic-wormhole send ./my-project\nMagic Wormhole will print a short code like 7-guitarist-revenge. Use the code to download the files on the destination:\nReceiving a file or directory:\nuvx magic-wormhole receive 7-guitarist-revenge\nThe code is single-use and expires once the transfer completes or is cancelled.\nThis is a great way to migrate files and entire project directories between Coder workspaces!"
+    "objectID": "index.html#workspace-lifecycle",
+    "href": "index.html#workspace-lifecycle",
+    "title": "Coder Workspaces: Overview",
+    "section": "Workspace Lifecycle",
+    "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
   },
   {
-    "objectID": "guides/file-transfer.html#rclone-connecting-to-google-drive",
-    "href": "guides/file-transfer.html#rclone-connecting-to-google-drive",
-    "title": "Transferring files to/from your Workspace",
-    "section": "Rclone: Connecting to Google Drive",
-    "text": "Rclone: Connecting to Google Drive\nRclone is a powerful file transfer tool that is installed on all Coder Workspaces by default. You can use it to connect to your Google Drive.\n\n\n\n\n\n\nNote\n\n\n\nThese instructions require connecting to your Workspace using the VS Code Desktop application. This is required only for giving Rclone permissions to access Google Drive. Once you’ve completed that step, you don’t need to use VS Code.\n\n\nRclone can map a folder in your Workspace (e.g., ~/gdrive) to your Google Drive. To avoid deleting anything in your Drive, use read-only permissions (as shown).\n\nConnect to your Workspace using VS Code. Click the VS Code Desktop icon from the Workspace dashboard.\nIn VS Code, open a Terminal window: View → Terminal (or Ctrl + `). The rest of these instructions are shell commands you’ll enter in the Terminal.\nInstall Rclone (if necessary)\nRclone should be installed on your workspace by default. If it isn’t, you can use this command to instal it”\nsudo apt update && sudo apt install rclone\nGive Rclone read-only access to your Google Drive. (For full read and write permissions, remove scopes drive.readonly. See Rclone’s complete documentation for Google Drive scopes).\nrclone config create gdrive drive scopes drive.readonly\nA web browser should open. In the browser, grant Rclone permission to access your Google Drive. (This access is limited to the Workspace itself). Once completed, you should see a message: “Success! All done. Please go back to rclone.” Close the browser window and go back to the VS Code Terminal window.\nCreate a folder to map to your Google Drive\nmkdir ~/gdrive\n“mount” your Google Drive to the folder\nrclone mount gdrive: ~/gdrive --daemon\nConfirm that you can list files in your Drive using the folder.\nls ~/gdrive\n\nYou can now access files in your Google Drive using the ~/gdrive folder. To disconnect the folder from your Drive, use the command: umount ~/gdrive\nIf umount doesn’t work, it’s often because you have a file open or your terminal is running in a subdirectory of ~/gdrive."
+    "objectID": "index.html#policies",
+    "href": "index.html#policies",
+    "title": "Coder Workspaces: Overview",
+    "section": "Policies",
+    "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
+  },
+  {
+    "objectID": "guides/getting-started.html",
+    "href": "guides/getting-started.html",
+    "title": "Getting Started with Coder Workspaces",
+    "section": "",
+    "text": "Welcome to Coder! This guide will help you create your first workspace and connect to it using various tools."
+  },
+  {
+    "objectID": "guides/getting-started.html#creating-a-workspace",
+    "href": "guides/getting-started.html#creating-a-workspace",
+    "title": "Getting Started with Coder Workspaces",
+    "section": "Creating a Workspace",
+    "text": "Creating a Workspace\n\nVisit https://coder.dreamlab.ucsb.edu.\nClick “UCSB Login” and log in using UCSB SSO (via Google).\nClick the button to create a Dreamlab Workspace.\nOn the “Create Workspace” page:\n\nGive the workspace a name.\nCheck “I understand the usage policies”.\nSelect additional software to enable.\nClick “Create Workspace”.\nIt may take a few minutes for the workspace to boot."
+  },
+  {
+    "objectID": "guides/getting-started.html#connecting-to-your-workspace",
+    "href": "guides/getting-started.html#connecting-to-your-workspace",
+    "title": "Getting Started with Coder Workspaces",
+    "section": "Connecting to Your Workspace",
+    "text": "Connecting to Your Workspace\nOnce your workspace is created, you should be directed to the workspace dashboard. There are two main ways to interact with your new workspace: directly through the browser or by using software locally installed on your machine.\n\n\n\nWorkspace Dashboard with dotted red line around buttons for browser-based tools\n\n\nBrowser-based tools include:\n\nJupyterLab, or RStudio: These are optional IDEs for data analysis using R or Python.\nFile Browser: for navigating your workspace’s file system and transferring files.\nTerminal: a browser-based terminal that provides instant access to your workspace’s shell environment.\n\nTo use these, simply click the corresponding icon on your workspace’s dashboard page.\n\nConnecting with Locally Installed Software\nFor a more integrated development experience, you can connect your local tools to your Coder workspace. This typically requires installing the Coder CLI and the appropriate extensions for your IDE.\n\nConnecting via VS Code\nYou can develop in your Coder workspace remotely using the Visual Studio Code desktop client.\n\nEnsure you have the Visual Studio Code desktop application installed.\nInstall the Coder extension from the VS Code Marketplace.\nOnce the extension is installed, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and type Coder: Login.\nEnter your Coder deployment URL: https://coder.dreamlab.ucsb.edu .\nAfter logging in, you can browse your workspaces in the Coder view on the sidebar, or use the Command Palette (Coder: Open Workspace) to connect to your workspace and start coding.\n\n\n\nConnecting via Coder CLI\nThe Coder CLI can be used to authenticate and connect to your workspaces from the command line.\nInstalling the Coder CLI:\nOn Linux/macOS, the fastest way to install the CLI is using the install script:\ncurl -L https://coder.com/install.sh | sh\nFor Windows, download and run the installer program (coder_2.30.6_windows_amd64_installer.exe) from Coder’s GitHub Releases page. You may want to refer to the Coder CLI documentation.\nAuthenticate the CLI:\nOnce installed, log in to your Coder deployment using your terminal:\ncoder login https://coder.dreamlab.ucsb.edu\nFollow the prompts to complete authentication via your web browser.\nConnecting via SSH:\nYou can connect directly to your workspace using the Coder CLI:\ncoder ssh &lt;workspace-name&gt;"
+  },
+  {
+    "objectID": "guides/rstudio.html",
+    "href": "guides/rstudio.html",
+    "title": "Getting Started with RStudio",
+    "section": "",
+    "text": "RStudio is a powerful integrated development environment (IDE) for R programming. Coder workspaces allow you to run RStudio Server, which provides the full RStudio interface accessible through your web browser."
+  },
+  {
+    "objectID": "guides/rstudio.html#setting-up-an-rstudio-project",
+    "href": "guides/rstudio.html#setting-up-an-rstudio-project",
+    "title": "Getting Started with RStudio",
+    "section": "Setting Up an RStudio Project",
+    "text": "Setting Up an RStudio Project\nRStudio Projects are used to organize your work and manage working directories. Here’s how to create a new project:\n\nIn RStudio, click File → New Project\nIn the New Project Wizard, choose “New Directory”, to create a new directory for your project\nFor the project type, select “New Project”\nEnter a name for the new directory: my-project. Leave “Create project as a subdirectory of” set to ~.\nClick Create Project\n\nRStudio will create a .Rproj file in your project directory. This file stores project-specific settings and makes it easy to return to your work."
+  },
+  {
+    "objectID": "guides/rstudio.html#installing-r-packages",
+    "href": "guides/rstudio.html#installing-r-packages",
+    "title": "Getting Started with RStudio",
+    "section": "Installing R Packages",
+    "text": "Installing R Packages\nYou can install packages in your workspace just like a local RStudio installation:\n# Install from CRAN\ninstall.packages(\"tidyverse\")\ninstall.packages(\"ggplot2\")\n\n# Install from GitHub\ninstall.packages(\"devtools\")\ndevtools::install_github(\"username/repository\")\n\n\n\n\n\n\nTip\n\n\n\nPackages installed in your workspace persist across sessions but are isolated from other workspaces. This ensures reproducibility and avoids package conflicts."
+  },
+  {
+    "objectID": "guides/rstudio.html#setting-up-git",
+    "href": "guides/rstudio.html#setting-up-git",
+    "title": "Getting Started with RStudio",
+    "section": "Setting Up Git",
+    "text": "Setting Up Git\nIf you plan to use version control:\n\nOpen the Terminal in RStudio (Tools → Terminal → New Terminal)\nConfigure your Git identity:\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your.email@example.com\""
+  },
+  {
+    "objectID": "guides/rstudio.html#additional-resources",
+    "href": "guides/rstudio.html#additional-resources",
+    "title": "Getting Started with RStudio",
+    "section": "Additional Resources",
+    "text": "Additional Resources\nHere are some helpful resources to get the most out of RStudio:\n\nRStudio User Guide - Comprehensive documentation\nRStudio Cheat Sheets - Quick reference guides\nR for Data Science - Learn R programming with RStudio\nPosit Community - Get help and share knowledge"
+  },
+  {
+    "objectID": "guides/datasets.html",
+    "href": "guides/datasets.html",
+    "title": "Shared Datasets",
+    "section": "",
+    "text": "sudo apt install nfs-common\nsudo mkdir /mnt/datasets\nsudo mount 10.2.17.91:/mnt/datasets /mnt/datasets"
   },
   {
     "objectID": "guides/ai-gateway.html",
