@@ -3,90 +3,81 @@ title: "Using AI Coding Agents"
 ---
 
 Coder workspaces provide a relatively safe way to experiment with AI coding
-agents, like Claude Code, Gemini CLI, or Open AI's Codex. These tools, which
-generate and also *execute* code, can be useful but they are also inherently
-dangerous. "[Prompt injection](https://simonwillison.net/tags/prompt-injection/)" 
-attacks can trick AI tools into running nefarious code on your system. Because
-Coder workspaces are isolated virtual machines, the potential damage a rogue AI
-agent running in a workspace can cause is reduced (but not eliminated).
+agents, like OpenCode, Claude Code, or OpenAI's Codex. These tools, which
+generate and also *execute* code, can be useful, but they are also [inherently
+dangerous](https://simonwillison.net/tags/prompt-injection/). Because Coder
+workspaces are isolated virtual machines, the potential damage a rogue AI agent
+running in a workspace can cause is reduced (but not eliminated).
 
+## OpenCode
 
-::: {.callout-note}
+[OpenCode](https://opencode.ai) is an open source coding agent that works with
+multiple AI services. OpenCode can be configured to use API-compatible model
+providers, including [College IT's AI Gateway](https://docs.cloud.college.ucsb.edu/AI-LLM)
+and [UCSB's AI Commons](https://app.aicommons.ucsb.edu/).
 
-To use an AI coding agent, you typically need an account from a model
-provider like Google, OpenAI, or Anthropic. UCSB faculty and staff can use
-their UCSB email to authenticate Google's Gemini CLI. Unfortunately, UCSB students
-cannot access Gemini using their UCSB accounts at this time.
+OpenCode is pre-installed on all Coder workspaces. To start it, run `opencode`
+from the command line.
+
+### College IT (CIT) AI Gateway
+
+On Coder workspaces, OpenCode is preconfigured with access to [CIT's AI
+gateway](https://docs.cloud.college.ucsb.edu/AI-LLM). To use CIT models,
+use OpenCode's `/models` command, then filter the model list using "CIT".
+
+Available CIT models include:
+
+- **gemma-4-31b**: General chat, writing, summarization
+- **qwen3-coder-next**: Code generation, debugging, review
+- **gpt-oss-120b**: General use, strong language comprehension, fast
+
+CIT's documentation: [https://docs.cloud.college.ucsb.edu/AI-LLM](https://docs.cloud.college.ucsb.edu/AI-LLM)
+
+### UCSB AI Commons Gateway
+
+:::{.callout-note}
+
+The UCSB AI Commons gateway will be preconfigured in Coder workspaces starting
+**October 2026**. Until then, you will need to configure it manually.
 
 :::
 
-## Getting Started
+To use UCSB's AI Commons gateway, edit OpenCode's configuration file
+`~/.config/opencode/opencode.json`, and add a new `provider` entry called
+`ucsb-ai-commons`:
 
-Most AI coding agents run in the terminal and are distributed as NodeJS
-applications. We'll use the terminal to install `nodejs` and the agent itself.
-You can use the  default web-based terminal that is included with every 
-workspace to run the shell commands below. (If you prefer to use VS Code's
-built-in terminal, then you will need to enable VS Code when you create the 
-workspace.)
-
-```sh
-# use pixi to install nodejs and npm (package manager)
-pixi global install nodejs
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ucsb-ai-commons": {
+      "name": "UCSB AI Commons",
+      "options": {
+        "baseURL": "https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1"
+      },
+      "models": {
+        "claude-v4.5-haiku": {
+          "name": "Claude 4.5 Haiku"
+        },
+        "claude-v4.6-opus": {
+          "name": "Claude 4.6 Opus"
+        },
+        "claude-v4.6-sonnet": {
+          "name": "Claude 4.6 Sonnet"
+        },
+        "amazon-nova-pro": {
+          "name": "Amazon Nova Pro"
+        },
+        "qwen3-32b": {
+          "name": "Qwen3 32b"
+        }
+      }
+    }
+  }
+}
 ```
 
-Now we need to update the shell's `$PATH` to include the "global" directory where the 
-NodeJS package manager (`npm`) will install the agent:
-
-```sh
-# update our current $PATH variable
-echo "export PATH=\$PATH:\$(npm prefix -g)/bin" >> ~/.bashrc
-
-# re-run ~/.bashrc to activate our new $PATH settings
-source ~/.bashrc
-```
-
-### Create a project directory
-
-You shouldn't run the agent from the home directory (`~`). To start a new project, 
-make a new directory and set it is as the working directory.
-
-```sh
-# start a new project
-mkdir my-project
-
-# or `git clone` an existing one
-# git clone git@github.com:my-account/my-project.git
- 
-# set the project as the working directory
-cd my-project
-```
-We're ready to install and run the agent!
-
-### Installing the agent
-
-To install the [Gemini CLI](https://github.com/google-gemini/gemini-cli): 
-
-```sh
-# install gemini as a global command
-npm install -g @google/gemini-cli
-
-# run gemini (inside the project directory)
-gemini
-```
-
-### Example Prompt
-
-Here is an example prompt to generate a map based on COVID-19 fatality data using R.
-
-```md
-Calculate the Local Moran's I statistic for covid-19 fatality rates 
-in US counties (contiguous 48 states only), then make a map of counties 
-in the continental US showing outliers. A csv with covid fatality rates 
-is available at this URL: 
-
-https://dreamlab-public.s3.us-west-2.amazonaws.com/ocfl/model-tasks/v1/content/data/USCounties_cases.csv
-
-Make an R script called 'map.R' to generate the map. The map should be 
-saved to 'map.png'. Use "tidy" R conventions. You are running in a headless 
-environment, without a graphical display.
-```
+After saving `opencode.json`, you will need to restart any running OpenCode
+sessions for the new provider configuration to take effect. Use OpenCode's
+`/connect` to configure the new provider with the API you key received from the
+UCSB AI Commons dashboard.

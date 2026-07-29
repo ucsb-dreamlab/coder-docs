@@ -58,8 +58,8 @@
       }
     },
 
-		"ai-commons": {
-      "name": "AI Commons",
+		"ucsb-ai-commons": {
+      "name": "UCSB AI Commons",
       "options": {
         "baseURL": "https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1",
         "apiKey": "{env:UCSB_AICOMMONS_KEY}"

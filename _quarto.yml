@@ -16,8 +16,7 @@ website:
           href: guides/rstudio.qmd
         - text: Using Marimo Notebooks
           href: guides/marimo.qmd
-        - text: AI Gateway
-          href: guides/ai-gateway.qmd
+          
 format:
   html:
     theme: cosmo
