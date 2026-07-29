@@ -3,20 +3,27 @@ project:
   output-dir: build
 
 website:
-  title: "DREAM Lab Coder Workspaces"
+  title: "DREAM Lab Services"
   navbar:
     left:
-      - text: Guides
+      - text: Coder Workspaces
         menu:
+        - text: Overview
+          href: coder.qmd
+        - text: "---"
         - text: Getting Started
           href: guides/getting-started.qmd
         - text: Transferring Files
           href: guides/file-transfer.qmd
-        - text: Getting Started with RStudio
+        - text: "---"
+        - text: RStudio
           href: guides/rstudio.qmd
-        - text: Using Marimo Notebooks
+        - text: Marimo Notebooks
           href: guides/marimo.qmd
-          
+        - text: Using AI Coding Agents
+          href: guides/ai-agents.qmd
+
+
 format:
   html:
     theme: cosmo

@@ -1,0 +1,72 @@
+---
+title: "Coder Workspaces: Overview"
+---
+
+Coder Workspaces are on-demand virtual machines with commonly used data
+science tools pre-installed. Anyone with a UCSB Net ID can create a
+workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the [Library DREAM Lab](https://www.library.ucsb.edu/dreamlab) and uses computing resources provided by the [College of Letters and Science IT](https://www.lsit.ucsb.edu)
+
+See our [**Getting Started Guide**](guides/getting-started.qmd) for an introduction to using Coder Workspaces.
+
+### Getting Help
+
+For questions or support:
+
+* Email: <dreamlab@library.ucsb.edu>
+* Join the [UCSB Carpentry Slack](https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ)
+
+## Hardware and Software
+
+Each workspace is a virtual machine (running Ubuntu linux) with the following hardware:
+
+| Resources      | Description |
+| :------------- | :---------- |
+| CPU            | 4 vCPUs     |
+| Memory         | 16 GiB      |
+| User Data Disk | 64 GB       |
+| OS Disk        | 15 GB       |
+
+#### Default Software
+
+All workspaces include the following software:
+
+| Name                                           | Version     | Description                 |
+| :--------------------------------------------- | :---------- | :-------------------------- |
+| [Ubuntu Linux](https://ubuntu.com/)            | 26.04 LTS   | Operating System            |
+| [Docker](https://docs.docker.com/get-started/) | 29.6.0      | Container Runtime           |
+| [Pixi](https://pixi.sh/latest/)                | v0.70.2     | Python package manager      |
+| [R](https://www.r-project.org/)                | v4.6.0      | R programming language      |
+| Git                                            | v2.53.0     | Version control software    |
+| `gh`                                           | v2.46.0     | Github CLI                  |
+| `jq`                                           | v1.8.1      | Command line JSON processor |
+| `duckdb`                                       | v1.5.4      | DuckDB command line tool    |
+| `uv` / `uvx`                                   | 0.11.23     | Python package installer/runner |
+
+Additional software may be installed using [`apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/) or [`pixi`](https://pixi.sh).
+
+#### Optional Software
+Services can be enabled when the workspace is created:
+
+| Service                                                                             | Version    | Description                            |
+| :---------------------------------------------------------------------------------- | :--------- | :------------------------------------- |
+| RStudio Server                                                                      | v2026.05.0 | Run RStudio in the browser             |
+| [VS Code Web](https://github.com/coder/code-server)                                 | -          | Run VS Code in the browser             |
+| [VS Code Desktop (Server)](https://code.visualstudio.com/docs/remote/vscode-server) | -          | Connect to the workspace using VS Code |
+
+## Workspace Lifecycle
+
+* Workspaces shut down (stop) after __four hours__ of inactivity.
+* You can manually __stop__ a workspace by clicking the "stop" button.
+* To __start__ a stopped workspace, click the workspace's "Start" button. It may take a few minutes to resume.
+* Deleting a workspace deletes all files on the workspace!
+* All workspaces will be deleted at the end of each academic quarter.
+
+## Policies
+
+* **Backup your data:** Data is not backed up; users are responsible for their own backups.
+* **Deletion:** All workspaces are automatically deleted at the end of each quarter.
+* **Limits:** Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.
+* **Maintenance:** Workspaces may be inaccessible during scheduled maintenance windows (announced via email).
+* **Inactivity:** Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the "start" button.
+* **Software Installation:** Users may install additional software.
+* **Access by Staff:** Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored.
