@@ -1,5 +1,5 @@
 ---
-pagetitle: "DREAM Lab Service Portal"
+pagetitle: "DREAM Lab Cloud Services"
 page-layout: full
 toc: false
 anchor-sections: false
@@ -9,7 +9,7 @@ anchor-sections: false
 
 ![](images/dreamlab_hex.png){.hero-logo fig-alt="DREAM Lab hex logo — UC Santa Barbara Library"}
 
-# DREAM Lab Service Portal {.hero-title}
+# DREAM Lab Cloud Services {.hero-title}
 
 Cloud computing services for research and teaching at UC Santa Barbara. The
 services here are managed by the

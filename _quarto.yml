@@ -3,7 +3,7 @@ project:
   output-dir: build
 
 website:
-  title: "DREAM Lab Services"
+  title: "DREAM Lab Cloud Services"
   navbar:
     left:
       - text: Coder Workspaces
