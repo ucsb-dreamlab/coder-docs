@@ -1,1 +1,140 @@
 /* css styles */
+
+/* --- Landing page hero --------------------------------------------------- */
+
+.hero {
+  max-width: 46rem;
+  margin-inline: auto;
+  padding: 2.5rem 1rem 1rem;
+  text-align: center;
+}
+
+/* Quarto wraps images in <p> (or <figure> when captioned); center either. */
+.hero p:has(> .hero-logo),
+.hero figure:has(.hero-logo) {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.hero .hero-logo {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* The class also lands on Quarto's wrapping <section>, so scope to the
+   heading itself — otherwise font-size/weight inherit into the paragraph. */
+.hero h1.hero-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border-bottom: none;
+  font-size: clamp(1.9rem, 1.2rem + 2.2vw, 2.75rem);
+  font-weight: 600;
+}
+
+.hero p {
+  font-size: 1.075rem;
+  line-height: 1.6;
+  color: var(--bs-secondary-color);
+  text-wrap: pretty;
+}
+
+.hero h1.hero-title,
+.portal-help h2.portal-help-title {
+  text-wrap: balance;
+}
+
+/* --- Quick link cards ---------------------------------------------------- */
+
+.quick-links {
+  max-width: 60rem;
+  margin-inline: auto;
+  padding: 1.5rem 1rem 0;
+}
+
+/* Pandoc wraps the bare <a> in a <p>; make that wrapper fill the grid cell so
+   the cards below stay equal height regardless of text length. */
+.quick-links [class*="g-col"] > p {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.link-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-lg);
+  color: var(--bs-body-color);
+  text-decoration: none;
+  background-color: var(--bs-body-bg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.link-card:hover,
+.link-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--bs-primary);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  color: var(--bs-body-color);
+  text-decoration: none;
+}
+
+.link-card:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.link-card .bi {
+  margin-bottom: 0.75rem;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--bs-primary);
+}
+
+.link-card-title {
+  margin-bottom: 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.link-card-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--bs-secondary-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-card {
+    transition: none;
+  }
+
+  .link-card:hover,
+  .link-card:focus-visible {
+    transform: none;
+  }
+}
+
+/* --- Getting help -------------------------------------------------------- */
+
+.portal-help {
+  max-width: 46rem;
+  margin-inline: auto;
+  padding: 2.5rem 1rem 1rem;
+  text-align: center;
+}
+
+.portal-help h2.portal-help-title {
+  margin-top: 0;
+  border-bottom: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.portal-help p {
+  color: var(--bs-secondary-color);
+}

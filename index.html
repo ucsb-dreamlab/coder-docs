@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Coder Workspaces: Overview – DREAM Lab Coder Workspaces</title>
+<title>DREAM Lab Service Portal – DREAM Lab Services</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -40,7 +40,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -86,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">DREAM Lab Coder Workspaces</span>
+    <span class="navbar-title">DREAM Lab Services</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -96,10 +95,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-guides" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Guides</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-coder-workspaces" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Coder Workspaces</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-guides">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-coder-workspaces">    
+        <li>
+    <a class="dropdown-item" href="./coder.html">
+ <span class="dropdown-text">Overview</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
         <li>
     <a class="dropdown-item" href="./guides/getting-started.html">
  <span class="dropdown-text">Getting Started</span></a>
@@ -108,13 +112,18 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./guides/file-transfer.html">
  <span class="dropdown-text">Transferring Files</span></a>
   </li>  
+        <li><hr class="dropdown-divider"></li>
         <li>
     <a class="dropdown-item" href="./guides/rstudio.html">
- <span class="dropdown-text">Getting Started with RStudio</span></a>
+ <span class="dropdown-text">RStudio</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./guides/marimo.html">
- <span class="dropdown-text">Using Marimo Notebooks</span></a>
+ <span class="dropdown-text">Marimo Notebooks</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./guides/ai-agents.html">
+ <span class="dropdown-text">Using AI Coding Agents</span></a>
   </li>  
     </ul>
   </li>
@@ -126,209 +135,44 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#getting-help" id="toc-getting-help" class="nav-link active" data-scroll-target="#getting-help">Getting Help</a></li>
-  <li><a href="#hardware-and-software" id="toc-hardware-and-software" class="nav-link" data-scroll-target="#hardware-and-software">Hardware and Software</a></li>
-  <li><a href="#workspace-lifecycle" id="toc-workspace-lifecycle" class="nav-link" data-scroll-target="#workspace-lifecycle">Workspace Lifecycle</a></li>
-  <li><a href="#policies" id="toc-policies" class="nav-link" data-scroll-target="#policies">Policies</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Coder Workspaces: Overview</h1>
+
+
+
+<div class="hero">
+<p><img src="images/dreamlab_hex.png" class="hero-logo img-fluid" alt="DREAM Lab hex logo — UC Santa Barbara Library"></p>
+<section id="dream-lab-service-portal" class="level1 hero-title">
+<h1 class="hero-title">DREAM Lab Service Portal</h1>
+<p>Cloud computing services for research and teaching at UC Santa Barbara. The services here are managed by the <a href="https://www.library.ucsb.edu/dreamlab">UCSB Library DREAM Lab</a> and use computing resources provided by the <a href="https://www.lsit.ucsb.edu">College of Letters and Science IT</a>.</p>
+</section>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the <a href="https://www.library.ucsb.edu/dreamlab">Library DREAM Lab</a> and uses computing resources provided by the <a href="https://www.lsit.ucsb.edu">College of Letters and Science IT</a></p>
-<p>See our <a href="./guides/getting-started.html"><strong>Getting Started Guide</strong></a> for an introduction to using Coder Workspaces.</p>
-<section id="getting-help" class="level3">
-<h3 class="anchored" data-anchor-id="getting-help">Getting Help</h3>
-<p>For questions or support:</p>
-<ul>
-<li>Email: <a href="mailto:dreamlab@library.ucsb.edu" class="email">dreamlab@library.ucsb.edu</a></li>
-<li>Join the <a href="https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ">UCSB Carpentry Slack</a></li>
-</ul>
+<div class="grid quick-links">
+<div class="g-col-12 g-col-md-4">
+<p><a class="link-card" href="https://coder.dreamlab.ucsb.edu" target="_blank" rel="noopener"> <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> <span class="link-card-title">Launch a Coder Workspace<span class="visually-hidden"> (opens in a new tab)</span></span> <span class="link-card-text">Log in with your UCSB NetID at coder.dreamlab.ucsb.edu</span> </a></p>
+</div>
+<div class="g-col-12 g-col-md-4">
+<p><a class="link-card" href="./coder.html"> <i class="bi bi-book" aria-hidden="true"></i> <span class="link-card-title">Coder Workspace Documentation</span> <span class="link-card-text">Hardware, software, policies, and how-to guides</span> </a></p>
+</div>
+<div class="g-col-12 g-col-md-4">
+<p><a class="link-card" href="https://www.library.ucsb.edu/dreamlab" target="_blank" rel="noopener"> <i class="bi bi-info-circle" aria-hidden="true"></i> <span class="link-card-title">About the DREAM Lab<span class="visually-hidden"> (opens in a new tab)</span></span> <span class="link-card-text">Workshops, consultations, and the lab’s other services</span> </a></p>
+</div>
+</div>
+<section id="getting-help" class="level2 portal-help-title portal-help">
+<h2 class="portal-help-title" data-anchor-id="getting-help">Getting Help</h2>
+<p>Email <a href="mailto:dreamlab@library.ucsb.edu" class="email">dreamlab@library.ucsb.edu</a> or join the <a href="https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ">UCSB Carpentry Slack</a>.</p>
 </section>
-<section id="hardware-and-software" class="level2">
-<h2 class="anchored" data-anchor-id="hardware-and-software">Hardware and Software</h2>
-<p>Each workspace is a virtual machine (running Ubuntu linux) with the following hardware:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Resources</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">CPU</td>
-<td style="text-align: left;">4 vCPUs</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Memory</td>
-<td style="text-align: left;">16 GiB</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">User Data Disk</td>
-<td style="text-align: left;">64 GB</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">OS Disk</td>
-<td style="text-align: left;">15 GB</td>
-</tr>
-</tbody>
-</table>
-<section id="default-software" class="level4">
-<h4 class="anchored" data-anchor-id="default-software">Default Software</h4>
-<p>All workspaces include the following software:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Version</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><a href="https://ubuntu.com/">Ubuntu Linux</a></td>
-<td style="text-align: left;">26.04 LTS</td>
-<td style="text-align: left;">Operating System</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><a href="https://docs.docker.com/get-started/">Docker</a></td>
-<td style="text-align: left;">29.6.0</td>
-<td style="text-align: left;">Container Runtime</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><a href="https://pixi.sh/latest/">Pixi</a></td>
-<td style="text-align: left;">v0.70.2</td>
-<td style="text-align: left;">Python package manager</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><a href="https://www.r-project.org/">R</a></td>
-<td style="text-align: left;">v4.6.0</td>
-<td style="text-align: left;">R programming language</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Git</td>
-<td style="text-align: left;">v2.53.0</td>
-<td style="text-align: left;">Version control software</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>gh</code></td>
-<td style="text-align: left;">v2.46.0</td>
-<td style="text-align: left;">Github CLI</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>jq</code></td>
-<td style="text-align: left;">v1.8.1</td>
-<td style="text-align: left;">Command line JSON processor</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>duckdb</code></td>
-<td style="text-align: left;">v1.5.4</td>
-<td style="text-align: left;">DuckDB command line tool</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>uv</code> / <code>uvx</code></td>
-<td style="text-align: left;">0.11.23</td>
-<td style="text-align: left;">Python package installer/runner</td>
-</tr>
-</tbody>
-</table>
-<p>Additional software may be installed using <a href="https://documentation.ubuntu.com/server/how-to/software/package-management/"><code>apt</code></a> or <a href="https://pixi.sh"><code>pixi</code></a>.</p>
-</section>
-<section id="optional-software" class="level4">
-<h4 class="anchored" data-anchor-id="optional-software">Optional Software</h4>
-<p>Services can be enabled when the workspace is created:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Service</th>
-<th style="text-align: left;">Version</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">RStudio Server</td>
-<td style="text-align: left;">v2026.05.0</td>
-<td style="text-align: left;">Run RStudio in the browser</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><a href="https://github.com/coder/code-server">VS Code Web</a></td>
-<td style="text-align: left;">-</td>
-<td style="text-align: left;">Run VS Code in the browser</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><a href="https://code.visualstudio.com/docs/remote/vscode-server">VS Code Desktop (Server)</a></td>
-<td style="text-align: left;">-</td>
-<td style="text-align: left;">Connect to the workspace using VS Code</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="workspace-lifecycle" class="level2">
-<h2 class="anchored" data-anchor-id="workspace-lifecycle">Workspace Lifecycle</h2>
-<ul>
-<li>Workspaces shut down (stop) after <strong>four hours</strong> of inactivity.</li>
-<li>You can manually <strong>stop</strong> a workspace by clicking the “stop” button.</li>
-<li>To <strong>start</strong> a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.</li>
-<li>Deleting a workspace deletes all files on the workspace!</li>
-<li>All workspaces will be deleted at the end of each academic quarter.</li>
-</ul>
-</section>
-<section id="policies" class="level2">
-<h2 class="anchored" data-anchor-id="policies">Policies</h2>
-<ul>
-<li><strong>Backup your data:</strong> Data is not backed up; users are responsible for their own backups.</li>
-<li><strong>Deletion:</strong> All workspaces are automatically deleted at the end of each quarter.</li>
-<li><strong>Limits:</strong> Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.</li>
-<li><strong>Maintenance:</strong> Workspaces may be inaccessible during scheduled maintenance windows (announced via email).</li>
-<li><strong>Inactivity:</strong> Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.</li>
-<li><strong>Software Installation:</strong> Users may install additional software.</li>
-<li><strong>Access by Staff:</strong> Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored.</li>
-</ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

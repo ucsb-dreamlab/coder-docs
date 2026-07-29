@@ -4,14 +4,14 @@
     "href": "guides/ai-agents.html",
     "title": "Using AI Coding Agents",
     "section": "",
-    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like OpenCode, Claude Code, or OpenAI’s Codex. These tools, which generate and also execute code, can be useful, but they are also inherently dangerous. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
+    "text": "Coder workspaces provide a relatively safe way to experiment with AI coding agents, like OpenCode, Claude Code, or OpenAI’s Codex. These tools, which generate and also execute code, are very useful, but they come with significant risks. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated)."
   },
   {
     "objectID": "guides/ai-agents.html#opencode",
     "href": "guides/ai-agents.html#opencode",
     "title": "Using AI Coding Agents",
     "section": "OpenCode",
-    "text": "OpenCode\nOpenCode is an open source coding agent that works with multiple AI services. OpenCode can be configured to use API-compatible model providers, including College IT’s AI Gateway and UCSB’s AI Commons.\nOpenCode is pre-installed on all Coder workspaces. To start it, run opencode from the command line.\n\nCollege IT (CIT) AI Gateway\nOn Coder workspaces, OpenCode is preconfigured with access to CIT’s AI gateway. To use CIT models, use OpenCode’s /models command, then filter the model list using “CIT”.\nAvailable CIT models include:\n\ngemma-4-31b: General chat, writing, summarization\nqwen3-coder-next: Code generation, debugging, review\ngpt-oss-120b: General use, strong language comprehension, fast\n\nCIT’s documentation: https://docs.cloud.college.ucsb.edu/AI-LLM\n\n\nUCSB AI Commons Gateway\n\n\n\n\n\n\nNote\n\n\n\nThe UCSB AI Commons gateway will be preconfigured in Coder workspaces starting October 2026. Until then, you will need to configure it manually.\n\n\nTo use UCSB’s AI Commons gateway, edit OpenCode’s configuration file ~/.config/opencode/opencode.json, and add a new provider entry called ucsb-ai-commons:\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"ucsb-ai-commons\": {\n      \"name\": \"UCSB AI Commons\",\n      \"options\": {\n        \"baseURL\": \"https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1\"\n      },\n      \"models\": {\n        \"claude-v4.5-haiku\": {\n          \"name\": \"Claude 4.5 Haiku\"\n        },\n        \"claude-v4.6-opus\": {\n          \"name\": \"Claude 4.6 Opus\"\n        },\n        \"claude-v4.6-sonnet\": {\n          \"name\": \"Claude 4.6 Sonnet\"\n        },\n        \"amazon-nova-pro\": {\n          \"name\": \"Amazon Nova Pro\"\n        },\n        \"qwen3-32b\": {\n          \"name\": \"Qwen3 32b\"\n        }\n      }\n    }\n  }\n}\nAfter saving opencode.json, you will need to restart any running OpenCode sessions for the new provider configuration to take effect. Use OpenCode’s /connect to configure the new provider with the API you key received from the UCSB AI Commons dashboard."
+    "text": "OpenCode\nOpenCode is an open source coding agent that works with multiple AI services. OpenCode can be configured to use API-compatible model providers, including College IT’s AI Gateway and UCSB’s AI Commons.\nOpenCode is pre-installed on all Coder workspaces. To start it, run opencode from the command line.\n\nCollege IT (CIT) AI Gateway\nOn Coder workspaces, OpenCode is preconfigured with access to CIT’s AI gateway. To use CIT models, use OpenCode’s /models command, then filter the model list using “CIT”.\nAvailable CIT models include:\n\ngemma-4-31b: General chat, writing, summarization\nqwen3-coder-next: Code generation, debugging, review\ngpt-oss-120b: General use, strong language comprehension, fast\n\nCIT’s documentation: https://docs.cloud.college.ucsb.edu/AI-LLM\n\n\nUCSB AI Commons Gateway\n\n\n\n\n\n\nTip\n\n\n\nThe UCSB AI Commons gateway will be preconfigured in Coder workspaces starting October 2026. Until then, you will need to configure it manually.\n\n\nTo use UCSB’s AI Commons gateway, edit OpenCode’s configuration file ~/.config/opencode/opencode.json, and add a new provider entry called ucsb-ai-commons:\n{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"ucsb-ai-commons\": {\n      \"name\": \"UCSB AI Commons\",\n      \"options\": {\n        \"baseURL\": \"https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1\"\n      },\n      \"models\": {\n        \"claude-v4.5-haiku\": {\n          \"name\": \"Claude 4.5 Haiku\"\n        },\n        \"claude-v4.6-opus\": {\n          \"name\": \"Claude 4.6 Opus\"\n        },\n        \"claude-v4.6-sonnet\": {\n          \"name\": \"Claude 4.6 Sonnet\"\n        },\n        \"amazon-nova-pro\": {\n          \"name\": \"Amazon Nova Pro\"\n        },\n        \"qwen3-32b\": {\n          \"name\": \"Qwen3 32b\"\n        }\n      }\n    }\n  }\n}\nAfter saving opencode.json, you will need to restart any running OpenCode sessions for the new provider configuration to take effect. Use OpenCode’s /connect to configure the new provider with the API you key received from the UCSB AI Commons dashboard."
   },
   {
     "objectID": "guides/ucsb_ai_commons.html",
@@ -121,27 +121,41 @@
   {
     "objectID": "index.html",
     "href": "index.html",
+    "title": "DREAM Lab Service Portal",
+    "section": "",
+    "text": "Cloud computing services for research and teaching at UC Santa Barbara. The services here are managed by the UCSB Library DREAM Lab and use computing resources provided by the College of Letters and Science IT."
+  },
+  {
+    "objectID": "index.html#getting-help",
+    "href": "index.html#getting-help",
+    "title": "DREAM Lab Service Portal",
+    "section": "Getting Help",
+    "text": "Getting Help\nEmail dreamlab@library.ucsb.edu or join the UCSB Carpentry Slack."
+  },
+  {
+    "objectID": "coder.html",
+    "href": "coder.html",
     "title": "Coder Workspaces: Overview",
     "section": "",
     "text": "Coder Workspaces are on-demand virtual machines with commonly used data science tools pre-installed. Anyone with a UCSB Net ID can create a workspace to use for the duration of the academic quarter. Workspaces are deleted at the end of each quarter. The service is managed by the Library DREAM Lab and uses computing resources provided by the College of Letters and Science IT\nSee our Getting Started Guide for an introduction to using Coder Workspaces."
   },
   {
-    "objectID": "index.html#hardware-and-software",
-    "href": "index.html#hardware-and-software",
+    "objectID": "coder.html#hardware-and-software",
+    "href": "coder.html#hardware-and-software",
     "title": "Coder Workspaces: Overview",
     "section": "Hardware and Software",
     "text": "Hardware and Software\nEach workspace is a virtual machine (running Ubuntu linux) with the following hardware:\n\n\n\nResources\nDescription\n\n\n\n\nCPU\n4 vCPUs\n\n\nMemory\n16 GiB\n\n\nUser Data Disk\n64 GB\n\n\nOS Disk\n15 GB\n\n\n\n\nDefault Software\nAll workspaces include the following software:\n\n\n\nName\nVersion\nDescription\n\n\n\n\nUbuntu Linux\n26.04 LTS\nOperating System\n\n\nDocker\n29.6.0\nContainer Runtime\n\n\nPixi\nv0.70.2\nPython package manager\n\n\nR\nv4.6.0\nR programming language\n\n\nGit\nv2.53.0\nVersion control software\n\n\ngh\nv2.46.0\nGithub CLI\n\n\njq\nv1.8.1\nCommand line JSON processor\n\n\nduckdb\nv1.5.4\nDuckDB command line tool\n\n\nuv / uvx\n0.11.23\nPython package installer/runner\n\n\n\nAdditional software may be installed using apt or pixi.\n\n\nOptional Software\nServices can be enabled when the workspace is created:\n\n\n\nService\nVersion\nDescription\n\n\n\n\nRStudio Server\nv2026.05.0\nRun RStudio in the browser\n\n\nVS Code Web\n-\nRun VS Code in the browser\n\n\nVS Code Desktop (Server)\n-\nConnect to the workspace using VS Code"
   },
   {
-    "objectID": "index.html#workspace-lifecycle",
-    "href": "index.html#workspace-lifecycle",
+    "objectID": "coder.html#workspace-lifecycle",
+    "href": "coder.html#workspace-lifecycle",
     "title": "Coder Workspaces: Overview",
     "section": "Workspace Lifecycle",
     "text": "Workspace Lifecycle\n\nWorkspaces shut down (stop) after four hours of inactivity.\nYou can manually stop a workspace by clicking the “stop” button.\nTo start a stopped workspace, click the workspace’s “Start” button. It may take a few minutes to resume.\nDeleting a workspace deletes all files on the workspace!\nAll workspaces will be deleted at the end of each academic quarter."
   },
   {
-    "objectID": "index.html#policies",
-    "href": "index.html#policies",
+    "objectID": "coder.html#policies",
+    "href": "coder.html#policies",
     "title": "Coder Workspaces: Overview",
     "section": "Policies",
     "text": "Policies\n\nBackup your data: Data is not backed up; users are responsible for their own backups.\nDeletion: All workspaces are automatically deleted at the end of each quarter.\nLimits: Users may create and use only one workspace at a time. Multiple active workspaces may be deleted without notice.\nMaintenance: Workspaces may be inaccessible during scheduled maintenance windows (announced via email).\nInactivity: Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the “start” button.\nSoftware Installation: Users may install additional software.\nAccess by Staff: Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored."
