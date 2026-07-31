@@ -243,6 +243,20 @@ Important
 <p>The API is an add-on feature to the AI Commons that is not present by default. To request API Access, please <a href="https://ucsb.service-now.com/it?id=sc_cat_item&amp;sys_id=05a9143feba583101cfffdf2dad0cdec">submit your request here</a></p>
 </div>
 </div>
+<p>If you have successfully gained API access from ITS, you should see <strong>API Key</strong> as one of the options in your <strong>My Menu</strong> list on the AI Commons portal:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/AI_commons.png" class="img-fluid figure-img"></p>
+<figcaption>AI Commons My Menu with API Key option</figcaption>
+</figure>
+</div>
+<p>From there, the API interface will look like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/AI_commons_api.png" class="img-fluid figure-img"></p>
+<figcaption>AI Commons API Interface</figcaption>
+</figure>
+</div>
 <p><strong>Model names:</strong> For the full model reference, see the <a href="https://aicommons.readme.io/docs/openai#model-resolution">AI Commons OpenAI-Compatible API Reference</a>. In case AI Commons have models that are not updated in the document, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> https://YOUR-AI-COMMONS-ENDPOINT/v1/models <span class="dt">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Authorization: Bearer YOUR_AI_COMMONS_API_KEY"</span> <span class="dt">\</span></span>
@@ -299,7 +313,7 @@ amazon-nova-pro</code></pre>
 </section>
 <section id="step-3.-start-opencode" class="level3">
 <h3 class="anchored" data-anchor-id="step-3.-start-opencode">Step 3. Start OpenCode</h3>
-<p>Launch OpenCode from your project directory:</p>
+<p>Launch OpenCode from your project directory by running the following command in any terminal — the integrated terminal in VS Code or Positron, or a standalone terminal all work:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opencode</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Inside OpenCode you can see available models:</p>
 <pre class="text"><code>/models</code></pre>
@@ -329,8 +343,16 @@ Note
 </section>
 <section id="step-2.-configure-ai-commons" class="level3">
 <h3 class="anchored" data-anchor-id="step-2.-configure-ai-commons">Step 2. Configure AI Commons</h3>
-<p>The user configuration file is:</p>
+<p>The user configuration file is located at:</p>
 <pre class="text"><code>~\.continue\config.yaml</code></pre>
+<p>Alternatively, you can open it directly from within the IDE:</p>
+<ol type="1">
+<li>Click the <strong>Continue</strong> extension icon in the sidebar to open the Continue panel.</li>
+<li>Click the <strong>settings icon</strong> (top right corner of the Continue panel).</li>
+<li>Select <strong>Configs</strong> on the left side of the settings panel.</li>
+<li>Click <strong>Main Config</strong> to open the configuration file.</li>
+</ol>
+<p>Paste the following into your config:</p>
 <p>Example configuration:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> UCSB AI Commons</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.0.0</span></span>
