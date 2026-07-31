@@ -20,6 +20,14 @@ The API is an add-on feature to the AI Commons that is not present by default. T
 
 :::
 
+If you have successfully gained API access from ITS, you should see **API Key** as one of the options in your **My Menu** list on the AI Commons portal:
+
+![AI Commons My Menu with API Key option](../images/AI_commons.png)
+
+From there, the API interface will look like this:
+
+![AI Commons API Interface](../images/AI_commons_api.png)
+
 **Model names:** For the full model reference, see the [AI Commons OpenAI-Compatible API Reference](https://aicommons.readme.io/docs/openai#model-resolution). In case AI Commons have models that are not updated in the document, run:
 
 ```bash
@@ -96,7 +104,7 @@ Replace:
 
 ### Step 3. Start OpenCode
 
-Launch OpenCode from your project directory:
+Launch OpenCode from your project directory by running the following command in any terminal — the integrated terminal in VS Code or Positron, or a standalone terminal all work:
 
 ```bash
 opencode
@@ -132,11 +140,20 @@ In Positron, installation may fail with a version mismatch error. If this happen
 
 ### Step 2. Configure AI Commons
 
-The user configuration file is:
+The user configuration file is located at:
 
 ```text
 ~\.continue\config.yaml
 ```
+
+Alternatively, you can open it directly from within the IDE:
+
+1. Click the **Continue** extension icon in the sidebar to open the Continue panel.
+2. Click the **settings icon** (top right corner of the Continue panel).
+3. Select **Configs** on the left side of the settings panel.
+4. Click **Main Config** to open the configuration file.
+
+Paste the following into your config:
 
 Example configuration:
 
