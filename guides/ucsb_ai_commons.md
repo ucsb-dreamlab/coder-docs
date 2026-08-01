@@ -146,12 +146,14 @@ The user configuration file is located at:
 ~\.continue\config.yaml
 ```
 
-Alternatively, you can open it directly from within the IDE:
+You can open it directly from within the IDE:
 
 1. Click the **Continue** extension icon in the sidebar to open the Continue panel.
 2. Click the **settings icon** (top right corner of the Continue panel).
 3. Select **Configs** on the left side of the settings panel.
 4. Click **Main Config** to open the configuration file.
+
+![Continue IDE settings panel showing config location](../images/continue.png)
 
 Paste the following into your config:
 
