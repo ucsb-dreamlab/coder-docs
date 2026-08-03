@@ -170,23 +170,31 @@ models:
     model: claude-v4.6-sonnet
     apiBase: https://YOUR-AI-COMMONS-ENDPOINT/v1
     apiKey: YOUR_AI_COMMONS_API_KEY
+    roles:
+      - chat
+      - edit
+    capabilities:
+      - tool_use
 
   - name: Claude Opus 4.6
     provider: openai
     model: claude-v4.6-opus
     apiBase: https://YOUR-AI-COMMONS-ENDPOINT/v1
     apiKey: YOUR_AI_COMMONS_API_KEY
+    roles:
+      - chat
+      - edit
+    capabilities:
+      - tool_use
 
   - name: Claude Haiku 4.5
     provider: openai
     model: claude-v4.5-haiku
     apiBase: https://YOUR-AI-COMMONS-ENDPOINT/v1
     apiKey: YOUR_AI_COMMONS_API_KEY
-
     roles:
       - chat
       - edit
-
     capabilities:
       - tool_use
 ```
