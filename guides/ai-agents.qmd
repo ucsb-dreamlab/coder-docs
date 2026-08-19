@@ -81,3 +81,5 @@ After saving `opencode.json`, you will need to restart any running OpenCode
 sessions for the new provider configuration to take effect. Use OpenCode's
 `/connect` to configure the new provider with the API you key received from the
 UCSB AI Commons dashboard.
+
+[More on the AI Commons](https://dreamlab.ucsb.edu/guides/ucsb_ai_commons.html)
