@@ -4,7 +4,8 @@ title: DREAM Lab AI Gateway
 
 ::: {.callout-important}
 
-This is an experimental service. We cannot guarantee its continue availability.
+This is an experimental service. Users may experience occasional interruptions,
+and we cannot guarantee its long-term availability.
 
 :::
 
@@ -14,7 +15,7 @@ conjunction with a coding agent or to build custom AI workflows. It does not
 provide a "chat" interface. The service is primarily oriented toward DREAM Lab
 workshop attendees, researchers learning AI-assisted coding, and Library staff. 
 
-The OpenAI compatible API endpoint for the Gateway service is:
+The OpenAI-compatible API endpoint for the gateway service is:
 
 - `https://litellm.dreamlab.ucsb.edu/v1`
 
@@ -36,7 +37,7 @@ manager](https://litellm.dreamlab.ucsb.edu/dreamlab-keys). Please note the follo
 - Your key has a set budget that resets weekly or monthly. Use the key manager
   to see your available budget.
 - The "spend" associated with your API key reflects the real cost of your API
-  requests. Requests to more expensive models will will use more of your quota
+  requests. Requests to more expensive models will use more of your quota
   than requests to cheaper models.
 
 ## Data Privacy
@@ -44,8 +45,8 @@ manager](https://litellm.dreamlab.ucsb.edu/dreamlab-keys). Please note the follo
 The AI Gateway service **IS NOT** approved for use with data classified as
 **P3** or **P4** under the [UC data protection
 levels](https://it.ucsb.edu/security/compliance/uc-protection-levels). The
-service uses models through Google's Gemini Enterprise Agent Plaftorm: Google
-will not use data to train or fine-tune any AI/ML models, however they may
+service uses models through Google's Gemini Enterprise Agent Platform: Google
+will not use data to train or fine-tune any AI/ML models; however, they may
 retain some data for limited periods of time for specific conditions, as
 described in "[Gemini Enterprise Agent Platform and zero data
 retention](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention)".
