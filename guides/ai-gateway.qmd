@@ -27,12 +27,12 @@ The Gateway supports access to the following Google models:
 
 ## Creating an API Key
 
-To use the AI Gateway, you first need to generate a personal API Key. Anyone
+To use the AI gateway, you first need to generate a personal API Key. Anyone
 with a UCSB Net ID can create a key through the [API key
 manager](https://litellm.dreamlab.ucsb.edu/dreamlab-keys). Please note the following restrictions:
 
-- You may only have one active key at a time. If you "regenerate" a new key,
-  your previous key is automatically disabled.
+- You may only have one active key at a time. 
+- If you "regenerate" a new key, your previous key is automatically disabled.
 - Keys expire automatically after **three months**.
 - Your key has a set budget that resets weekly or monthly. Use the key manager
   to see your available budget.
@@ -40,16 +40,71 @@ manager](https://litellm.dreamlab.ucsb.edu/dreamlab-keys). Please note the follo
   requests. Requests to more expensive models will use more of your quota
   than requests to cheaper models.
 
-## Data Privacy
+## Using the AI Gateway
 
-The AI Gateway service **IS NOT** approved for use with data classified as
+The easiest way to use the AI gateway is by creating a [DREAM Lab Coder
+Workspace](../coder.qmd). The workspace configuration page includes a form field
+for entering your AI gateway API key; when you start the workspace, the API key
+is available through the `DREAMLAB_LLM_KEY` environment variable. OpenCode is
+also pre-configured with `DREAMLAB_LLM_KEY` to connect to models using the "DREAM
+Lab AI Gateway" model provider.
+
+### Python Example
+
+Because the gateway exposes an OpenAI-compatible API, you can query models
+using standard libraries such as `openai`.
+
+Create a project directory, set up a virtual environment, and install `openai` using [`uv`](https://docs.astral.sh/uv/):
+
+```sh
+mkdir llm-example
+cd llm-example
+uv venv
+source .venv/bin/activate
+uv pip install openai
+```
+
+Then create a Python script (e.g., `main.py`) pointing to the gateway's `base_url`:
+
+```python
+import os
+from openai import OpenAI
+
+# In a Coder Workspace with a configured key, DREAMLAB_LLM_KEY is set automatically
+api_key = os.environ.get("DREAMLAB_LLM_KEY", "your-api-key-here")
+
+client = OpenAI(
+    api_key=api_key,
+    base_url="https://litellm.dreamlab.ucsb.edu/v1"
+)
+
+response = client.chat.completions.create(
+    model="gemini-3.5-flash-lite",
+    messages=[
+        {"role": "user", "content": "Explain the difference between a list and a tuple in Python."}
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+Run the script:
+
+```sh
+python main.py
+```
+
+
+## Data Privacy & Security
+
+The DREAM Lab AI gateway **IS NOT** approved for use with data classified as
 **P3** or **P4** under the [UC data protection
 levels](https://it.ucsb.edu/security/compliance/uc-protection-levels). The
 service uses models through Google's Gemini Enterprise Agent Platform: Google
 will not use data to train or fine-tune any AI/ML models; however, they may
-retain some data for limited periods of time for specific conditions, as
-described in "[Gemini Enterprise Agent Platform and zero data
-retention](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention)".
+retain some data for limited periods of time for specific conditions (see
+"[Gemini Enterprise Agent Platform and zero data
+retention](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention)").
 
 ## Responsible Use
 
@@ -59,6 +114,8 @@ legal, or financial advice. Do not use it to produce content or take actions
 that would violate law or University policy. As noted by the [UC AI
 Council](https://ai.universityofcalifornia.edu/governance-transparency/), **if
 an action wasn't permissible before AI, it isn't permissible with AI**.
+
+Additional resources:
 
 - [UC Responsible AI Principles](https://ai.universityofcalifornia.edu/governance-transparency/)
 - [UCSB's Guidelines for AI Use](https://cio.ucsb.edu/artificial-intelligence/ai-use-guidelines)
