@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dreamlab.ucsb.edu/guides/datasets.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/guides/ai-agents.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/guides/rstudio.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/guides/marimo.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/index.html</loc>
-    <lastmod>2026-08-19T21:16:35.303Z</lastmod>
-  </url>
-  <url>
     <loc>https://dreamlab.ucsb.edu/coder.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/guides/ai-gateway.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/guides/getting-started.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dreamlab.ucsb.edu/guides/file-transfer.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
+    <lastmod>2026-09-28T20:37:04.137Z</lastmod>
   </url>
   <url>
     <loc>https://dreamlab.ucsb.edu/guides/ucsb_ai_commons.html</loc>
-    <lastmod>2026-08-19T21:16:35.298Z</lastmod>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/ai-agents.html</loc>
+    <lastmod>2026-09-28T20:37:04.137Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/marimo.html</loc>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/ai-gateway.html</loc>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/index.html</loc>
+    <lastmod>2026-09-28T20:37:04.144Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/rstudio.html</loc>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/file-transfer.html</loc>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/getting-started.html</loc>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dreamlab.ucsb.edu/guides/datasets.html</loc>
+    <lastmod>2026-09-28T20:37:04.138Z</lastmod>
   </url>
 </urlset>
