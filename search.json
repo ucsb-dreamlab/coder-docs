@@ -123,21 +123,21 @@
     "href": "guides/ai-gateway.html",
     "title": "DREAM Lab AI Gateway",
     "section": "",
-    "text": "Important\n\n\n\nThis is an experimental service. We cannot guarantee its continue availability.\nDREAM Lab’s AI gateway service provides API access to Large Language Models (LLMs) hosted by campus cloud providers (currently, Google). It can be used in conjunction with a coding agent or to build custom AI workflows. It does not provide a “chat” interface. The service is primarily oriented toward DREAM Lab workshop attendees, researchers learning AI-assisted coding, and Library staff.\nThe OpenAI compatible API endpoint for the Gateway service is:\nThe Gateway supports access to the following Google models:"
+    "text": "Important\n\n\n\nThis is an experimental service. Users may experience occasional interruptions, and we cannot guarantee its long-term availability.\nDREAM Lab’s AI gateway service provides API access to Large Language Models (LLMs) hosted by campus cloud providers (currently, Google). It can be used in conjunction with a coding agent or to build custom AI workflows. It does not provide a “chat” interface. The service is primarily oriented toward DREAM Lab workshop attendees, researchers learning AI-assisted coding, and Library staff.\nThe OpenAI-compatible API endpoint for the gateway service is:\nThe Gateway supports access to the following Google models:"
   },
   {
     "objectID": "guides/ai-gateway.html#creating-an-api-key",
     "href": "guides/ai-gateway.html#creating-an-api-key",
     "title": "DREAM Lab AI Gateway",
     "section": "Creating an API Key",
-    "text": "Creating an API Key\nTo use the AI Gateway, you first need to generate a personal API Key. Anyone with a UCSB Net ID can create a key through the API key manager. Please note the following restrictions:\n\nYou may only have one active key at a time. If you “regenerate” a new key, your previous key is automatically disabled.\nKeys expire automatically after three months.\nYour key has a set budget that resets weekly or monthly. Use the key manager to see your available budget.\nThe “spend” associated with your API key reflects the real cost of your API requests. Requests to more expensive models will will use more of your quota than requests to cheaper models."
+    "text": "Creating an API Key\nTo use the AI Gateway, you first need to generate a personal API Key. Anyone with a UCSB Net ID can create a key through the API key manager. Please note the following restrictions:\n\nYou may only have one active key at a time. If you “regenerate” a new key, your previous key is automatically disabled.\nKeys expire automatically after three months.\nYour key has a set budget that resets weekly or monthly. Use the key manager to see your available budget.\nThe “spend” associated with your API key reflects the real cost of your API requests. Requests to more expensive models will use more of your quota than requests to cheaper models."
   },
   {
     "objectID": "guides/ai-gateway.html#data-privacy",
     "href": "guides/ai-gateway.html#data-privacy",
     "title": "DREAM Lab AI Gateway",
     "section": "Data Privacy",
-    "text": "Data Privacy\nThe AI Gateway service IS NOT approved for use with data classified as P3 or P4 under the UC data protection levels. The service uses models through Google’s Gemini Enterprise Agent Plaftorm: Google will not use data to train or fine-tune any AI/ML models, however they may retain some data for limited periods of time for specific conditions, as described in “Gemini Enterprise Agent Platform and zero data retention”."
+    "text": "Data Privacy\nThe AI Gateway service IS NOT approved for use with data classified as P3 or P4 under the UC data protection levels. The service uses models through Google’s Gemini Enterprise Agent Platform: Google will not use data to train or fine-tune any AI/ML models; however, they may retain some data for limited periods of time for specific conditions, as described in “Gemini Enterprise Agent Platform and zero data retention”."
   },
   {
     "objectID": "guides/ai-gateway.html#responsible-use",
