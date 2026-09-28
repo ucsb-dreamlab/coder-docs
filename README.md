@@ -2,4 +2,4 @@
 
 Documentation for UCSB DREAM Lab Coder Workspaces.
 
-View the documentation at: <https://ucsb-dreamlab.github.io/coder-docs/>
+View the documentation at: <https://dreamlab.ucsb.edu>
