@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#opencode" id="toc-opencode" class="nav-link active" data-scroll-target="#opencode">OpenCode</a>
   <ul class="collapse">
   <li><a href="#college-it-cit-ai-gateway" id="toc-college-it-cit-ai-gateway" class="nav-link" data-scroll-target="#college-it-cit-ai-gateway">College IT (CIT) AI Gateway</a></li>
-  <li><a href="#ucsb-ai-commons-gateway" id="toc-ucsb-ai-commons-gateway" class="nav-link" data-scroll-target="#ucsb-ai-commons-gateway">UCSB AI Commons Gateway</a></li>
+  <li><a href="#dream-lab-ai-gateway" id="toc-dream-lab-ai-gateway" class="nav-link" data-scroll-target="#dream-lab-ai-gateway">DREAM Lab AI Gateway</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -209,24 +209,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like OpenCode, Claude Code, or OpenAI’s Codex. These tools, which generate and also <em>execute</em> code, are very useful, but they come with <a href="https://simonwillison.net/tags/prompt-injection/">significant risks</a>. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
+<p>Coder workspaces provide a relatively safe way to experiment with AI coding agents, like OpenCode, Pi, Claude Code, or OpenAI’s Codex. These tools, which generate and also <em>execute</em> code, are very useful, but they come with <a href="https://simonwillison.net/tags/prompt-injection/">significant risks</a>. Because Coder workspaces are isolated virtual machines, the potential damage a rogue AI agent running in a workspace can cause is reduced (but not eliminated).</p>
 <section id="opencode" class="level2">
 <h2 class="anchored" data-anchor-id="opencode">OpenCode</h2>
-<p><a href="https://opencode.ai">OpenCode</a> is an open source coding agent that works with multiple AI services. OpenCode can be configured to use API-compatible model providers, including <a href="https://docs.cloud.college.ucsb.edu/AI-LLM">College IT’s AI Gateway</a> and <a href="https://app.aicommons.ucsb.edu/">UCSB’s AI Commons</a>.</p>
-<p>OpenCode is pre-installed on all Coder workspaces. To start it, run <code>opencode</code> from the command line.</p>
-<section id="college-it-cit-ai-gateway" class="level3">
-<h3 class="anchored" data-anchor-id="college-it-cit-ai-gateway">College IT (CIT) AI Gateway</h3>
-<p>On Coder workspaces, OpenCode is preconfigured with access to <a href="https://docs.cloud.college.ucsb.edu/AI-LLM">CIT’s AI gateway</a>. To use CIT models, use OpenCode’s <code>/models</code> command, then filter the model list using “CIT”.</p>
-<p>Available CIT models include:</p>
-<ul>
-<li><strong>gemma-4-31b</strong>: General chat, writing, summarization</li>
-<li><strong>qwen3-coder-next</strong>: Code generation, debugging, review</li>
-<li><strong>gpt-oss-120b</strong>: General use, strong language comprehension, fast</li>
-</ul>
-<p>CIT’s documentation: <a href="https://docs.cloud.college.ucsb.edu/AI-LLM">https://docs.cloud.college.ucsb.edu/AI-LLM</a></p>
-</section>
-<section id="ucsb-ai-commons-gateway" class="level3">
-<h3 class="anchored" data-anchor-id="ucsb-ai-commons-gateway">UCSB AI Commons Gateway</h3>
+<p><a href="https://opencode.ai">OpenCode</a> is an open source coding agent that works with a wide range of AI services and model providers. It is preinstalled on Coder Workspaces. Refer to <a href="https://opencode.ai/v2/docs">OpenCode’s documentation</a> for a comprehensive overview of its features.</p>
+<p>To start OpenCode, run <code>opencode</code> from the command line in a workspace.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/opencode.png" class="img-fluid figure-img"></p>
+<figcaption>OpenCode terminal interface</figcaption>
+</figure>
+</div>
+<p>By default, OpenCode uses models from its own model services (“Zen” or OpenCode Go). We don’t recommend using them due to data privacy concerns. Instead, we recommend using models through the <a href="../guides/ai-gateway.html">DREAM Lab AI Gateway</a> or <a href="https://docs.cloud.college.ucsb.edu/AI-LLM">College IT’s AI Gateway</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -237,40 +231,32 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The UCSB AI Commons gateway will be preconfigured in Coder workspaces starting <strong>October 2026</strong>. Until then, you will need to configure it manually.</p>
+<p>Use the <code>/models</code> command in OpenCode to select a model from your preferred model provider.</p>
 </div>
 </div>
-<p>To use UCSB’s AI Commons gateway, edit OpenCode’s configuration file <code>~/.config/opencode/opencode.json</code>, and add a new <code>provider</code> entry called <code>ucsb-ai-commons</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"$schema"</span><span class="fu">:</span> <span class="st">"https://opencode.ai/config.json"</span><span class="fu">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"provider"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"ucsb-ai-commons"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"UCSB AI Commons"</span><span class="fu">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"options"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"baseURL"</span><span class="fu">:</span> <span class="st">"https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"models"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"claude-v4.5-haiku"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Claude 4.5 Haiku"</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"claude-v4.6-opus"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Claude 4.6 Opus"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"claude-v4.6-sonnet"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Claude 4.6 Sonnet"</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"amazon-nova-pro"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Amazon Nova Pro"</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"qwen3-32b"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Qwen3 32b"</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>After saving <code>opencode.json</code>, you will need to restart any running OpenCode sessions for the new provider configuration to take effect. Use OpenCode’s <code>/connect</code> to configure the new provider with the API you key received from the UCSB AI Commons dashboard.</p>
-<p><a href="https://dreamlab.ucsb.edu/guides/ucsb_ai_commons.html">More on the AI Commons</a></p>
+<section id="college-it-cit-ai-gateway" class="level3">
+<h3 class="anchored" data-anchor-id="college-it-cit-ai-gateway">College IT (CIT) AI Gateway</h3>
+<p><a href="https://docs.cloud.college.ucsb.edu/AI-LLM">CIT’s AI gateway</a> provides on-premises large language model access for UCSB staff and faculty; incidental student use is supported. All inference runs on CIT-owned hardware, and your prompts stay on campus unless you enable tools such as web search that call external services.</p>
+<p>To use CIT models, use OpenCode’s <code>/models</code> command, then filter the model list using “CIT.”</p>
+</section>
+<section id="dream-lab-ai-gateway" class="level3">
+<h3 class="anchored" data-anchor-id="dream-lab-ai-gateway">DREAM Lab AI Gateway</h3>
+<p><a href="../guides/ai-gateway.html">DREAM Lab’s AI Gateway</a> provides limited access to cloud-hosted LLMs through an OpenAI-compatible endpoint. OpenCode is preconfigured with access to the gateway, but an API key is required to use it. Use the gateway’s <a href="https://litellm.dreamlab.ucsb.edu/dreamlab-keys">API Key manager</a> to generate a new key (requires login with your UCSB NetID).</p>
+<p>There are a few different ways to configure OpenCode to use the API Key:</p>
+<ul>
+<li>Set the <strong>DREAM Lab LLM API Key</strong> option when you create your workspace, or set it in the workspace settings/parameters (you will need to restart the workspace).</li>
+<li>Set it manually using the <code>DREAMLAB_LLM_KEY</code> environment variable, before starting OpenCode:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set your api key and start opencode.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DREAMLAB_LLM_KEY</span><span class="op">=</span>sk-....</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">opencode</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To use models through the DREAM Lab AI gateway, use OpenCode’s <code>/models</code> command and then filter the model list using “DREAM Lab”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/opencode-dreamlab.png" class="img-fluid figure-img"></p>
+<figcaption>OpenCode terminal interface</figcaption>
+</figure>
+</div>
 
 
 </section>
