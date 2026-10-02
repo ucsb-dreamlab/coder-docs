@@ -3,7 +3,7 @@ title: "Using AI Coding Agents"
 ---
 
 Coder workspaces provide a relatively safe way to experiment with AI coding
-agents, like OpenCode, Claude Code, or OpenAI's Codex. These tools, which
+agents, like OpenCode, Pi, Claude Code, or OpenAI's Codex. These tools, which
 generate and also *execute* code, are very useful, but they come with
 [significant risks](https://simonwillison.net/tags/prompt-injection/). Because
 Coder workspaces are isolated virtual machines, the potential damage a rogue AI
@@ -11,75 +11,60 @@ agent running in a workspace can cause is reduced (but not eliminated).
 
 ## OpenCode
 
-[OpenCode](https://opencode.ai) is an open source coding agent that works with
-multiple AI services. OpenCode can be configured to use API-compatible model
-providers, including [College IT's AI Gateway](https://docs.cloud.college.ucsb.edu/AI-LLM)
-and [UCSB's AI Commons](https://app.aicommons.ucsb.edu/).
+[OpenCode](https://opencode.ai) is an open source coding agent that works with a
+wide range of AI services and model providers. It is preinstalled on Coder
+Workspaces. Refer to [OpenCode's documentation](https://opencode.ai/v2/docs) for
+a comprehensive overview of its features. 
 
-OpenCode is pre-installed on all Coder workspaces. To start it, run `opencode`
-from the command line.
+To start OpenCode, run `opencode` from the command line in a workspace.
 
-### College IT (CIT) AI Gateway
+![OpenCode terminal interface](../images/opencode.png)
 
-On Coder workspaces, OpenCode is preconfigured with access to [CIT's AI
-gateway](https://docs.cloud.college.ucsb.edu/AI-LLM). To use CIT models,
-use OpenCode's `/models` command, then filter the model list using "CIT".
-
-Available CIT models include:
-
-- **gemma-4-31b**: General chat, writing, summarization
-- **qwen3-coder-next**: Code generation, debugging, review
-- **gpt-oss-120b**: General use, strong language comprehension, fast
-
-CIT's documentation: [https://docs.cloud.college.ucsb.edu/AI-LLM](https://docs.cloud.college.ucsb.edu/AI-LLM)
-
-### UCSB AI Commons Gateway
+By default, OpenCode uses models from its own model services ("Zen" or OpenCode
+Go). We don't recommend using them due to data privacy concerns. Instead, we
+recommend using models through the [DREAM Lab AI Gateway](ai-gateway.qmd) or
+[College IT's AI Gateway](https://docs.cloud.college.ucsb.edu/AI-LLM). 
 
 :::{.callout-tip}
 
-The UCSB AI Commons gateway will be preconfigured in Coder workspaces starting
-**October 2026**. Until then, you will need to configure it manually.
+Use the `/models` command in OpenCode to select a model from your preferred
+model provider.
 
 :::
 
-To use UCSB's AI Commons gateway, edit OpenCode's configuration file
-`~/.config/opencode/opencode.json`, and add a new `provider` entry called
-`ucsb-ai-commons`:
+### College IT (CIT) AI Gateway
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "ucsb-ai-commons": {
-      "name": "UCSB AI Commons",
-      "options": {
-        "baseURL": "https://zkh52rh785.execute-api.us-east-1.amazonaws.com/v1"
-      },
-      "models": {
-        "claude-v4.5-haiku": {
-          "name": "Claude 4.5 Haiku"
-        },
-        "claude-v4.6-opus": {
-          "name": "Claude 4.6 Opus"
-        },
-        "claude-v4.6-sonnet": {
-          "name": "Claude 4.6 Sonnet"
-        },
-        "amazon-nova-pro": {
-          "name": "Amazon Nova Pro"
-        },
-        "qwen3-32b": {
-          "name": "Qwen3 32b"
-        }
-      }
-    }
-  }
-}
+[CIT's AI gateway](https://docs.cloud.college.ucsb.edu/AI-LLM) provides
+on-premises large language model access for UCSB staff and faculty; incidental
+student use is supported. All inference runs on CIT-owned hardware, and your
+prompts stay on campus unless you enable tools such as web search that call
+external services.
+
+To use CIT models, use OpenCode's `/models` command, then filter the model list
+using "CIT."
+
+### DREAM Lab AI Gateway
+
+[DREAM Lab's AI Gateway](ai-gateway.qmd) provides limited access to cloud-hosted
+LLMs through an OpenAI-compatible endpoint. OpenCode is preconfigured with
+access to the gateway, but an API key is required to use it. Use the gateway's
+[API Key manager](https://litellm.dreamlab.ucsb.edu/dreamlab-keys) to generate a
+new key (requires login with your UCSB NetID).
+
+There are a few different ways to configure OpenCode to use the API Key:
+
+- Set the **DREAM Lab LLM API Key** option when you create your workspace, or
+  set it in the workspace settings/parameters (you will need to restart the
+  workspace).
+- Set it manually using the `DREAMLAB_LLM_KEY` environment variable, before starting OpenCode:
+
+```sh
+# set your api key and start opencode.
+export DREAMLAB_LLM_KEY=sk-....
+opencode
 ```
 
-After saving `opencode.json`, you will need to restart any running OpenCode
-sessions for the new provider configuration to take effect. Use OpenCode's
-`/connect` to configure the new provider with the API you key received from the
-UCSB AI Commons dashboard.
+To use models through the DREAM Lab AI gateway, use OpenCode's `/models` command
+and then filter the model list using "DREAM Lab".
 
-[More on the AI Commons](https://dreamlab.ucsb.edu/guides/ucsb_ai_commons.html)
+![OpenCode terminal interface](../images/opencode-dreamlab.png)
