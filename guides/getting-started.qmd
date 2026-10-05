@@ -7,15 +7,36 @@ Welcome to Coder! This guide will help you create your first workspace and conne
 ## Creating a Workspace
 
 1. Visit <https://coder.dreamlab.ucsb.edu>.
-2. Click "UCSB Login" and log in using UCSB SSO (via Google).
-3. Click the button to create a Dreamlab Workspace.
-4. On the "Create Workspace" page:
-    *  Give the workspace a name.
-    *  Check "I understand the usage policies".
-    *  Select additional software to enable.
-    *  Click "Create Workspace".
+2. Click **UCSB Login** and log in using UCSB SSO (via Google).
+3. Click the **New Workspace** button.
+4. On the **New Workspace** page:
+    *  Give the workspace a **name** (required).
+    *  Check **I understand the usage policies** (required).
+    *  Select additional software and workspace options to enable (see below).
+    *  Click **Create Workspace**.
     *  It may take a few minutes for the workspace to boot.
 
+### New Workspace Options
+
+When creating a workspace, you can configure the following options:
+
+- **RStudio**: Enables the RStudio Server system service on port `8787`.
+- **JupyterLab**: Installs JupyterLab and commonly used packages (`pip`,
+  `numpy`, `pandas`, `matplotlib`, `ipython`, and `jupyter-ai`) into a global
+  Pixi environment (`coder-jupyter`). JupyterLab runs in the background on port
+  `19999` using `~/workspace` as the working directory.
+- **Visual Studio Code (Desktop)**: Configures the Coder agent to enable
+  desktop VS Code support. This surfaces convenient connection buttons in the
+  Coder dashboard to launch a remote session directly into the workspace from
+  your local [Visual Studio Code](https://code.visualstudio.com/) application
+  via the Coder extension.
+- **Visual Studio Code (Web)**: Deploys the browser-based `vscode-web`
+  service inside your workspace. It runs a web-accessible VS Code instance
+  rooted at `/home/coder/workspace`.
+- **DREAM Lab LLM API Key**: Injects your [DREAM Lab AI
+  Gateway](./ai-gateway.qmd) key into the workspace as `$DREAMLAB_LLM_KEY`. If
+  set, the key is automatically used by OpenCode to authenticate requests to
+  models provided through the gateway.
 
 ## Connecting to Your Workspace
 
