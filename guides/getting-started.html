@@ -179,7 +179,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#creating-a-workspace" id="toc-creating-a-workspace" class="nav-link active" data-scroll-target="#creating-a-workspace">Creating a Workspace</a></li>
+  <li><a href="#creating-a-workspace" id="toc-creating-a-workspace" class="nav-link active" data-scroll-target="#creating-a-workspace">Creating a Workspace</a>
+  <ul class="collapse">
+  <li><a href="#new-workspace-options" id="toc-new-workspace-options" class="nav-link" data-scroll-target="#new-workspace-options">New Workspace Options</a></li>
+  </ul></li>
   <li><a href="#connecting-to-your-workspace" id="toc-connecting-to-your-workspace" class="nav-link" data-scroll-target="#connecting-to-your-workspace">Connecting to Your Workspace</a>
   <ul class="collapse">
   <li><a href="#connecting-with-locally-installed-software" id="toc-connecting-with-locally-installed-software" class="nav-link" data-scroll-target="#connecting-with-locally-installed-software">Connecting with Locally Installed Software</a></li>
@@ -214,17 +217,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="creating-a-workspace">Creating a Workspace</h2>
 <ol type="1">
 <li>Visit <a href="https://coder.dreamlab.ucsb.edu" class="uri">https://coder.dreamlab.ucsb.edu</a>.</li>
-<li>Click “UCSB Login” and log in using UCSB SSO (via Google).</li>
-<li>Click the button to create a Dreamlab Workspace.</li>
-<li>On the “Create Workspace” page:
+<li>Click <strong>UCSB Login</strong> and log in using UCSB SSO (via Google).</li>
+<li>Click the <strong>New Workspace</strong> button.</li>
+<li>On the <strong>New Workspace</strong> page:
 <ul>
-<li>Give the workspace a name.</li>
-<li>Check “I understand the usage policies”.</li>
-<li>Select additional software to enable.</li>
-<li>Click “Create Workspace”.</li>
+<li>Give the workspace a <strong>name</strong> (required).</li>
+<li>Check <strong>I understand the usage policies</strong> (required).</li>
+<li>Select additional software and workspace options to enable (see below).</li>
+<li>Click <strong>Create Workspace</strong>.</li>
 <li>It may take a few minutes for the workspace to boot.</li>
 </ul></li>
 </ol>
+<section id="new-workspace-options" class="level3">
+<h3 class="anchored" data-anchor-id="new-workspace-options">New Workspace Options</h3>
+<p>When creating a workspace, you can configure the following options:</p>
+<ul>
+<li><strong>RStudio</strong>: Enables the RStudio Server system service on port <code>8787</code>.</li>
+<li><strong>JupyterLab</strong>: Installs JupyterLab and commonly used packages (<code>pip</code>, <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>ipython</code>, and <code>jupyter-ai</code>) into a global Pixi environment (<code>coder-jupyter</code>). JupyterLab runs in the background on port <code>19999</code> using <code>~/workspace</code> as the working directory.</li>
+<li><strong>Visual Studio Code (Desktop)</strong>: Configures the Coder agent to enable desktop VS Code support. This surfaces convenient connection buttons in the Coder dashboard to launch a remote session directly into the workspace from your local <a href="https://code.visualstudio.com/">Visual Studio Code</a> application via the Coder extension.</li>
+<li><strong>Visual Studio Code (Web)</strong>: Deploys the browser-based <code>vscode-web</code> service inside your workspace. It runs a web-accessible VS Code instance rooted at <code>/home/coder/workspace</code>.</li>
+<li><strong>DREAM Lab LLM API Key</strong>: Injects your <a href="../guides/ai-gateway.html">DREAM Lab AI Gateway</a> key into the workspace as <code>$DREAMLAB_LLM_KEY</code>. If set, the key is automatically used by OpenCode to authenticate requests to models provided through the gateway.</li>
+</ul>
+</section>
 </section>
 <section id="connecting-to-your-workspace" class="level2">
 <h2 class="anchored" data-anchor-id="connecting-to-your-workspace">Connecting to Your Workspace</h2>
