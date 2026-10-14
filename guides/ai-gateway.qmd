@@ -21,6 +21,7 @@ The OpenAI-compatible API endpoint for the gateway service is:
 
 The Gateway supports access to the following Google models:
 
+- [`gemini-4-argon`](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-argon): frontier model for complex reasoning and coding
 - [`gemini-3.8-flash`](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash): best for agentic coding
 - [`gemini-3.5-flash-lite`](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite): best for low-cost inference tasks
 - [`gemini-embedding-2`](https://ai.google.dev/gemini-api/docs/models/gemini-embedding-2): multimodal embedding model
