@@ -1,0 +1,207 @@
+---
+pagetitle: "Guides – DREAM Lab Cloud Services"
+page-layout: custom
+toc: false
+anchor-sections: false
+---
+
+```{=html}
+<main id="quarto-document-content" class="guides-hub-page">
+  <div class="doc-hero">
+    <div class="site-grid">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="../index.html">Cloud Services</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Guides</span>
+      </nav>
+
+      <div class="doc-hero__heading">
+        <div>
+          <p class="eyebrow">Guides</p>
+          <h1>Guides &amp; Walkthroughs</h1>
+          <p class="doc-hero__subtitle">
+            Step-by-step guides for getting the most out of DREAM Lab Cloud
+            Services, Coder Workspaces, and AI tools.
+          </p>
+        </div>
+        <span class="hexagon-motif" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <section class="home-section">
+    <div class="site-grid">
+      <div class="offer-grid">
+        <article class="offer-card offer-card--workspace">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <rect x="5" y="8" width="38" height="31" rx="2"></rect>
+              <path d="M5 16h38M12 12h1M17 12h1"></path>
+              <path d="m16 25 5 4-5 4M25 33h8"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="guide-category-label">Essentials</span>
+            <h2><a class="card-heading-link" href="getting-started.html">Getting Started with Coder Workspaces</a></h2>
+            <p>
+              Create your first workspace, configure optional tools like RStudio
+              and JupyterLab, and connect via your browser, VS Code Desktop, or SSH.
+            </p>
+            <a class="home-link" href="getting-started.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--workspace">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <rect x="5" y="8" width="38" height="31" rx="2"></rect>
+              <path d="M5 16h38M12 12h1M17 12h1"></path>
+              <path d="M18 28h12M24 22v12"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="guide-category-label">Essentials</span>
+            <h2><a class="card-heading-link" href="file-transfer.html">Transferring Files</a></h2>
+            <p>
+              Upload and download files using Coder's built-in File Browser,
+              transfer between machines with Magic Wormhole, or mount Google Drive with Rclone.
+            </p>
+            <a class="home-link" href="file-transfer.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--workspace">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <rect x="5" y="8" width="38" height="31" rx="2"></rect>
+              <path d="M5 16h38M12 12h1M17 12h1"></path>
+              <path d="m16 25 5 4-5 4M25 33h8"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="guide-category-label">IDEs &amp; Notebooks</span>
+            <h2><a class="card-heading-link" href="rstudio.html">Getting Started with RStudio</a></h2>
+            <p>
+              Run R and RStudio Server in a cloud workspace for statistics, data
+              analysis, package management, and visualization.
+            </p>
+            <a class="home-link" href="rstudio.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--workspace">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <rect x="5" y="8" width="38" height="31" rx="2"></rect>
+              <path d="M5 16h38M12 12h1M17 12h1"></path>
+              <path d="m16 25 5 4-5 4M25 33h8"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="guide-category-label">IDEs &amp; Notebooks</span>
+            <h2><a class="card-heading-link" href="marimo.html">Marimo Notebooks</a></h2>
+            <p>
+              Build reactive Python notebooks stored as plain Python files, and
+              configure integrated AI chat and agent features.
+            </p>
+            <a class="home-link" href="marimo.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--gateway">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path d="M24 12v9M13 31l8-5M35 31l-8-5"></path>
+              <path d="m24 5 6 3.5v7L24 19l-6-3.5v-7L24 5ZM13 25l6 3.5v7L13 39l-6-3.5v-7l6-3.5ZM35 25l6 3.5v7L35 39l-6-3.5v-7l6-3.5Z"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="experimental-label">AI &amp; Agents</span>
+            <h2><a class="card-heading-link" href="ai-agents.html">Using AI Coding Agents</a></h2>
+            <p>
+              Experiment safely with AI coding assistants like OpenCode inside
+              isolated Coder workspaces using campus AI gateways.
+            </p>
+            <a class="home-link" href="ai-agents.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--gateway">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path d="M24 12v9M13 31l8-5M35 31l-8-5"></path>
+              <path d="m24 5 6 3.5v7L24 19l-6-3.5v-7L24 5ZM13 25l6 3.5v7L13 39l-6-3.5v-7l6-3.5ZM35 25l6 3.5v7L35 39l-6-3.5v-7l6-3.5Z"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="experimental-label">Experimental</span>
+            <h2><a class="card-heading-link" href="ai-gateway.html">DREAM Lab AI Gateway</a></h2>
+            <p>
+              Create an API key and query OpenAI-compatible LLM endpoints hosted
+              by campus cloud providers from Python or coding agents.
+            </p>
+            <a class="home-link" href="ai-gateway.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--gateway">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path d="M24 12v9M13 31l8-5M35 31l-8-5"></path>
+              <path d="m24 5 6 3.5v7L24 19l-6-3.5v-7L24 5ZM13 25l6 3.5v7L13 39l-6-3.5v-7l6-3.5ZM35 25l6 3.5v7L35 39l-6-3.5v-7l6-3.5Z"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="experimental-label">AI &amp; Agents</span>
+            <h2><a class="card-heading-link" href="ucsb_ai_commons.html">UCSB AI Commons API with OpenCode &amp; Continue</a></h2>
+            <p>
+              Configure the UCSB AI Commons OpenAI-compatible API for OpenCode
+              in the terminal and Continue in VS Code or Positron.
+            </p>
+            <a class="home-link" href="ucsb_ai_commons.html">
+              Read guide <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--workspace">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <rect x="5" y="8" width="38" height="31" rx="2"></rect>
+              <path d="M5 16h38M12 12h1M17 12h1"></path>
+              <path d="m16 25 5 4-5 4M25 33h8"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="guide-category-label">Reference</span>
+            <h2><a class="card-heading-link" href="../coder.html">Coder Workspaces: Overview &amp; Policies</a></h2>
+            <p>
+              Hardware specifications (4 vCPUs, 16 GiB RAM, 64 GB storage),
+              default software versions, workspace lifecycle, and usage policies.
+            </p>
+            <a class="home-link" href="../coder.html">
+              View overview <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+```
