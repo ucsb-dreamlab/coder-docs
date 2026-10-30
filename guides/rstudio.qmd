@@ -6,7 +6,7 @@ RStudio is a powerful integrated development environment (IDE) for R
 programming. Coder workspaces allow you to run RStudio Server, which
 provides the full RStudio interface accessible through your web browser.
 
-### Creating a Workspace with RStudio
+## Creating a Workspace with RStudio
 
 When creating a new workspace, you need to enable the RStudio service to
 make it available.

@@ -1,0 +1,44 @@
+<a class="skip-link" href="#quarto-document-content">Skip to main content</a>
+<header class="site-header" id="ucsb-site-header">
+  <div class="campus-bar">
+    <div class="site-grid campus-bar__inner">
+      <a href="https://www.ucsb.edu/">
+        University of California, Santa Barbara
+      </a>
+      <a class="launch-button" href="https://coder.dreamlab.ucsb.edu" target="_blank" rel="noopener">
+        Launch Coder<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+  </div>
+  <div class="site-grid lockup-row">
+    <a href="/" class="lockup-link" aria-label="UC Santa Barbara Library — DREAM Lab Cloud Services Home">
+      <span class="ucsb-library-logo" role="img" aria-hidden="true"></span>
+    </a>
+    <div class="header-search-slot" id="ucsb-search-slot"></div>
+  </div>
+  <nav class="primary-navigation" aria-label="Primary navigation">
+    <div class="site-grid primary-navigation__inner">
+      <a class="primary-navigation__link" data-nav="home" href="/index.html">Home</a>
+      <a class="primary-navigation__link" data-nav="getting-started" href="/guides/getting-started.html">Getting Started</a>
+      <a class="primary-navigation__link" data-nav="guides" href="/guides/index.html">Guides</a>
+      <a class="primary-navigation__link" data-nav="coder" href="/coder.html">Coder Workspaces</a>
+      <a class="primary-navigation__link" data-nav="ai-gateway" href="/guides/ai-gateway.html">AI Gateway</a>
+      <a class="primary-navigation__link" data-nav="faq" href="/faq.html">FAQ</a>
+      <a class="primary-navigation__link" data-nav="about" href="https://www.library.ucsb.edu/dreamlab" target="_blank" rel="noopener">About the DREAM Lab<span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
+  </nav>
+</header>
+<script>
+// Immediately hoist skip-link and ucsb-site-header to top of <body> before paint
+(function () {
+  var skip = document.querySelector('.skip-link');
+  var hdr = document.getElementById('ucsb-site-header');
+  if (hdr && hdr.parentNode !== document.body) {
+    document.body.insertBefore(hdr, document.body.firstChild);
+  }
+  if (skip && skip.parentNode !== document.body) {
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+})();
+</script>
+
