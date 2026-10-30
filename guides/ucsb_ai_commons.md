@@ -22,11 +22,11 @@ The API is an add-on feature to the AI Commons that is not present by default. T
 
 If you have successfully gained API access from ITS, you should see **API Key** as one of the options in your **My Menu** list on the AI Commons portal:
 
-![AI Commons My Menu with API Key option](../images/AI_commons.png)
+![AI Commons My Menu with API Key option](../images/AI_commons.png){fig-alt="AI Commons portal menu highlighting the API Key option"}
 
 From there, the API interface will look like this:
 
-![AI Commons API Interface](../images/AI_commons_api.png)
+![AI Commons API Interface](../images/AI_commons_api.png){fig-alt="AI Commons API interface showing endpoint URL and key generation"}
 
 **Model names:** For the full model reference, see the [AI Commons OpenAI-Compatible API Reference](https://aicommons.readme.io/docs/openai#model-resolution). In case AI Commons have models that are not updated in the document, run:
 
@@ -153,7 +153,7 @@ You can open it directly from within the IDE:
 3. Select **Configs** on the left side of the settings panel.
 4. Click **Main Config** to open the configuration file.
 
-![Continue IDE settings panel showing config location](../images/continue.png)
+![Continue IDE settings panel showing config location](../images/continue.png){fig-alt="Continue IDE extension settings panel showing the Main Config button"}
 
 Paste the following into your config:
 

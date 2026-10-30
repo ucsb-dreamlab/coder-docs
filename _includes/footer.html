@@ -1,0 +1,303 @@
+<footer class="site-footer" id="ucsb-site-footer">
+  <div class="site-grid site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="brand" aria-label="DREAM Lab Cloud Services">
+        <span class="brand__word">DREAM</span>
+        <span class="brand__descriptor">Lab Cloud Services</span>
+      </div>
+      <p>Digital Research, Exploration, and Making in the UCSB Library</p>
+      <span class="hexagon-motif hexagon-motif--light" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+    </div>
+    <div class="site-footer__contact">
+      <p class="footer-heading">Contact</p>
+      <address>
+        UCSB Library<br>
+        University of California<br>
+        Santa Barbara, CA 93106-9010
+      </address>
+      <a href="mailto:dreamlab@library.ucsb.edu">dreamlab@library.ucsb.edu</a>
+    </div>
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <p class="footer-heading">Explore</p>
+      <a href="https://www.library.ucsb.edu/">UCSB Library</a>
+      <a href="https://www.library.ucsb.edu/dreamlab">About the DREAM Lab</a>
+      <a href="https://www.lsit.ucsb.edu/">College of Letters &amp; Science IT</a>
+      <a href="https://www.ucsb.edu/terms-of-use">Accessibility &amp; Terms</a>
+    </nav>
+  </div>
+  <div class="site-grid site-footer__legal">
+    <p>© 2026 The Regents of the University of California. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Immediately hoist ucsb-site-footer to direct child of <body> after #quarto-content
+(function () {
+  var ftr = document.getElementById('ucsb-site-footer');
+  var qc = document.getElementById('quarto-content');
+  if (ftr && qc && qc.parentNode === document.body) {
+    qc.insertAdjacentElement('afterend', ftr);
+  } else if (ftr && ftr.parentNode !== document.body) {
+    document.body.appendChild(ftr);
+  }
+})();
+(function () {
+  function getOffset() {
+    var meta = document.querySelector('meta[name="quarto:offset"]');
+    return meta ? meta.getAttribute('content') || './' : './';
+  }
+
+  function resolveHref(relPath) {
+    var offset = getOffset();
+    if (offset.slice(-1) !== '/') offset += '/';
+    return offset + relPath.replace(/^\//, '');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var offset = getOffset();
+    // Fix logo mask path and home link
+    var logoEl = document.querySelector('.ucsb-library-logo');
+    if (logoEl) {
+      var logoUrl = resolveHref('images/ucsb-library-logo.png');
+      logoEl.style.webkitMaskImage = 'url("' + logoUrl + '")';
+      logoEl.style.maskImage = 'url("' + logoUrl + '")';
+    }
+    var lockupLink = document.querySelector('.lockup-link');
+    if (lockupLink) {
+      lockupLink.setAttribute('href', resolveHref('index.html'));
+    }
+
+    // Move Quarto search button into UCSB header lockup row
+    var quartoSearch = document.getElementById('quarto-search');
+    var searchSlot = document.getElementById('ucsb-search-slot');
+    if (quartoSearch && searchSlot) {
+      searchSlot.appendChild(quartoSearch);
+    }
+
+    // Rewrite internal nav links with quarto:offset and highlight active link
+    var path = window.location.pathname;
+    var navLinks = document.querySelectorAll('.primary-navigation__link');
+    var activeNav = 'home';
+
+    if (path.indexOf('/faq') !== -1) {
+      activeNav = 'faq';
+    } else if (path.indexOf('/coder') !== -1) {
+      activeNav = 'coder';
+    } else if (path.indexOf('/guides/getting-started') !== -1) {
+      activeNav = 'getting-started';
+    } else if (path.indexOf('/guides/ai-gateway') !== -1) {
+      activeNav = 'ai-gateway';
+    } else if (path.indexOf('/guides/') !== -1) {
+      activeNav = 'guides';
+    } else {
+      activeNav = 'home';
+    }
+
+    navLinks.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (href && href.charAt(0) === '/') {
+        link.setAttribute('href', resolveHref(href));
+      }
+      var key = link.getAttribute('data-nav');
+      if (key === activeNav) {
+        link.classList.add('is-current');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+
+    // Inject Documentation Hero Banner & 3-column layout for doc pages
+    var isFullPage = document.body.classList.contains('full-page-custom') ||
+      document.querySelector('.home-intro, .faq-page, .guides-hub-page');
+    var titleBlock = document.getElementById('title-block-header');
+    var quartoContent = document.getElementById('quarto-content');
+
+    if (!isFullPage && titleBlock && quartoContent) {
+      document.body.classList.add('is-doc-page');
+      var h1 = titleBlock.querySelector('h1.title');
+      var pageTitle = h1 ? h1.textContent.trim() : document.title;
+      var subtitleEl = titleBlock.querySelector('.subtitle, p.subtitle');
+      var pageSubtitle = subtitleEl ? subtitleEl.textContent.trim() : '';
+
+      // Determine category eyebrow & breadcrumb parent
+      var eyebrowText = 'Documentation';
+      var parentCrumbHtml = '';
+      if (activeNav === 'getting-started') {
+        eyebrowText = 'Getting Started';
+        parentCrumbHtml = '<a href="' + resolveHref('guides/index.html') + '">Guides</a><span aria-hidden="true">/</span>';
+      } else if (activeNav === 'ai-gateway') {
+        eyebrowText = 'AI Services';
+      } else if (activeNav === 'coder') {
+        eyebrowText = 'Coder Workspaces';
+      } else if (activeNav === 'guides') {
+        eyebrowText = 'Guides';
+        parentCrumbHtml = '<a href="' + resolveHref('guides/index.html') + '">Guides</a><span aria-hidden="true">/</span>';
+      }
+
+      var heroBanner = document.createElement('div');
+      heroBanner.className = 'doc-hero';
+      heroBanner.innerHTML =
+        '<div class="site-grid">' +
+          '<nav class="breadcrumbs" aria-label="Breadcrumb">' +
+            '<a href="' + resolveHref('index.html') + '">Cloud Services</a>' +
+            '<span aria-hidden="true">/</span>' +
+            parentCrumbHtml +
+            '<span aria-current="page">' + pageTitle + '</span>' +
+          '</nav>' +
+          '<div class="doc-hero__heading">' +
+            '<div>' +
+              '<p class="eyebrow">' + eyebrowText + '</p>' +
+              '<h1>' + pageTitle + '</h1>' +
+              (pageSubtitle ? '<p class="doc-hero__subtitle">' + pageSubtitle + '</p>' : '') +
+            '</div>' +
+            '<span class="hexagon-motif" aria-hidden="true"><i></i><i></i><i></i></span>' +
+          '</div>' +
+        '</div>';
+
+      quartoContent.parentNode.insertBefore(heroBanner, quartoContent);
+      // Remove redundant default title block header since h1 is in doc-hero
+      titleBlock.remove();
+
+      // Move #quarto-margin-sidebar after main#quarto-document-content in DOM order
+      // so screen readers and heading order encounter main H1 before TOC H2
+      var marginSidebar = document.getElementById('quarto-margin-sidebar');
+      if (marginSidebar) {
+        quartoContent.appendChild(marginSidebar);
+      }
+      // Remove Quarto's duplicate mobile toggle TOC if created
+      document.querySelectorAll('.quarto-sidebar-toggle-contents, .quarto- alternate-notebooks').forEach(function (el) {
+        el.remove();
+      });
+
+      // Build left sidebar ("In this section" + "Need a hand?") matching UCSBCloudServices
+      var guideItems = [
+        { title: 'Overview', href: 'coder.html' },
+        { title: 'Getting Started', href: 'guides/getting-started.html' },
+        { title: 'Transferring Files', href: 'guides/file-transfer.html' },
+        { title: 'RStudio', href: 'guides/rstudio.html' },
+        { title: 'Marimo Notebooks', href: 'guides/marimo.html' },
+        { title: 'Using AI Coding Agents', href: 'guides/ai-agents.html' },
+        { title: 'DREAM Lab AI Gateway', href: 'guides/ai-gateway.html' },
+        { title: 'UCSB AI Commons API', href: 'guides/ucsb_ai_commons.html' }
+      ];
+
+      var sidebarAside = document.createElement('aside');
+      sidebarAside.className = 'docs-sidebar';
+      var navHtml = '<nav aria-label="Documentation pages"><p class="docs-sidebar__title">Documentation</p>';
+      var currentIdx = -1;
+
+      guideItems.forEach(function (item, idx) {
+        var resolved = resolveHref(item.href);
+        var isCurrent = path.slice(-item.href.length) === item.href ||
+          (path.indexOf(item.href.replace('.html', '')) !== -1);
+        if (isCurrent) currentIdx = idx;
+        var num = String(idx + 1).padStart(2, '0');
+        navHtml += '<a class="' + (isCurrent ? 'is-current' : '') + '" href="' + resolved + '"' +
+          (isCurrent ? ' aria-current="page"' : '') + '>' +
+          '<span>' + num + '</span>' + item.title + '</a>';
+      });
+      navHtml += '</nav>';
+      navHtml +=
+        '<div class="sidebar-help">' +
+          '<strong>Need a hand?</strong>' +
+          '<p>DREAM Lab staff can help you configure your workspace or workflow.</p>' +
+          '<a href="mailto:dreamlab@library.ucsb.edu">Contact support</a>' +
+        '</div>';
+      sidebarAside.innerHTML = navHtml;
+
+      quartoContent.insertBefore(sidebarAside, quartoContent.firstChild);
+
+      // Add Prev / Next pagination at bottom of main content
+      var mainEl = document.getElementById('quarto-document-content');
+      if (mainEl && currentIdx !== -1) {
+        var prevItem = currentIdx > 0 ? guideItems[currentIdx - 1] : { title: 'Cloud Services Home', href: 'index.html' };
+        var nextItem = currentIdx < guideItems.length - 1 ? guideItems[currentIdx + 1] : { title: 'Frequently Asked Questions', href: 'faq.html' };
+        var pagNav = document.createElement('nav');
+        pagNav.className = 'doc-pagination';
+        pagNav.setAttribute('aria-label', 'Guide pagination');
+        pagNav.innerHTML =
+          '<a href="' + resolveHref(prevItem.href) + '">' +
+            '<span>Previous</span>' +
+            '<strong>' + prevItem.title + '</strong>' +
+          '</a>' +
+          '<a href="' + resolveHref(nextItem.href) + '" class="doc-pagination__next">' +
+            '<span>Next</span>' +
+            '<strong>' + nextItem.title + '</strong>' +
+          '</a>';
+        mainEl.appendChild(pagNav);
+      }
+    }
+
+    // Enhance code blocks with terminal/language header bar matching UCSBCloudServices
+    var codeScaffolds = document.querySelectorAll('.code-copy-outer-scaffold, div.sourceCode');
+    var processedScaffolds = new Set();
+    codeScaffolds.forEach(function (el) {
+      var container = el.classList.contains('code-copy-outer-scaffold') ? el : (el.closest('.code-copy-outer-scaffold') || el);
+      if (processedScaffolds.has(container)) return;
+      processedScaffolds.add(container);
+
+      var codeEl = container.querySelector('code');
+      var lang = 'Terminal';
+      if (codeEl) {
+        var classes = (codeEl.className || '').split(/\s+/);
+        for (var i = 0; i < classes.length; i++) {
+          var c = classes[i];
+          if (c && c !== 'sourceCode') {
+            if (c === 'sh' || c === 'bash' || c === 'zsh') lang = 'Terminal';
+            else if (c === 'python' || c === 'py') lang = 'Python';
+            else if (c === 'r') lang = 'R';
+            else if (c === 'json') lang = 'JSON';
+            else if (c === 'yaml' || c === 'yml') lang = 'YAML';
+            else if (c === 'text' || c === 'txt') lang = 'Config';
+            else lang = c.toUpperCase();
+            break;
+          }
+        }
+      }
+
+      container.classList.add('ucsb-code-block');
+      var headerBar = document.createElement('div');
+      headerBar.className = 'code-block__header';
+      var langSpan = document.createElement('span');
+      langSpan.textContent = lang;
+      headerBar.appendChild(langSpan);
+
+      var copyBtn = container.querySelector('.code-copy-button');
+      if (copyBtn) {
+        copyBtn.innerHTML = '<span class="copy-icon" aria-hidden="true"></span><span class="copy-label">Copy</span>';
+        copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
+        copyBtn.addEventListener('click', function () {
+          var lbl = copyBtn.querySelector('.copy-label');
+          if (lbl) {
+            lbl.textContent = 'Copied';
+            setTimeout(function () { lbl.textContent = 'Copy'; }, 1800);
+          }
+        });
+        headerBar.appendChild(copyBtn);
+      }
+      container.insertBefore(headerBar, container.firstChild);
+    });
+
+    // Frame documentation figures with the UCSB browser bar style
+    var figures = document.querySelectorAll('#quarto-document-content figure.figure');
+    figures.forEach(function (fig) {
+      var img = fig.querySelector('img');
+      if (!img || fig.closest('.no-browser-frame')) return;
+      fig.classList.add('screenshot');
+      var canvas = document.createElement('div');
+      canvas.className = 'screenshot__canvas';
+      var browserBar = document.createElement('div');
+      browserBar.className = 'screenshot__browser';
+      browserBar.setAttribute('aria-hidden', 'true');
+      browserBar.innerHTML = '<i></i><i></i><i></i><span>coder.dreamlab.ucsb.edu</span>';
+      canvas.appendChild(browserBar);
+      var imgWrapper = img.parentElement.tagName === 'P' ? img.parentElement : img;
+      canvas.appendChild(imgWrapper);
+      fig.insertBefore(canvas, fig.firstChild);
+    });
+  });
+})();
+</script>

@@ -18,7 +18,7 @@ a comprehensive overview of its features.
 
 To start OpenCode, run `opencode` from the command line in a workspace.
 
-![OpenCode terminal interface](../images/opencode.png)
+![OpenCode terminal interface](../images/opencode.png){fig-alt="OpenCode terminal interface showing available commands"}
 
 By default, OpenCode uses models from its own model services ("Zen" or OpenCode
 Go). We don't recommend using them due to data privacy concerns. Instead, we
@@ -67,4 +67,4 @@ opencode
 To use models through the DREAM Lab AI gateway, use OpenCode's `/models` command
 and then filter the model list using "DREAM Lab".
 
-![OpenCode terminal interface](../images/opencode-dreamlab.png)
+![OpenCode terminal interface](../images/opencode-dreamlab.png){fig-alt="OpenCode terminal interface filtered to DREAM Lab AI Gateway models"}

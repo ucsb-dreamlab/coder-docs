@@ -1,0 +1,390 @@
+---
+pagetitle: "Frequently Asked Questions – DREAM Lab Cloud Services"
+page-layout: custom
+toc: false
+anchor-sections: false
+---
+
+```{=html}
+<main id="quarto-document-content" class="faq-page">
+  <section class="faq-hero">
+    <div class="site-grid">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Cloud Services</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">FAQ</span>
+      </nav>
+      <div class="faq-hero__heading">
+        <div>
+          <p class="home-eyebrow">
+            <span aria-hidden="true"></span>
+            Help center
+          </p>
+          <h1>Frequently asked questions</h1>
+          <p>
+            Find quick answers about access, Coder cloud workspaces, the AI
+            Gateway, and common technical questions.
+          </p>
+        </div>
+        <span class="hexagon-motif" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+      </div>
+      <div class="faq-search">
+        <span class="faq-search__icon" aria-hidden="true"></span>
+        <label class="sr-only" for="faq-search-input">
+          Search frequently asked questions
+        </label>
+        <input
+          id="faq-search-input"
+          type="search"
+          placeholder="Search questions, topics, or keywords"
+          autocomplete="off"
+        />
+        <button
+          type="button"
+          id="faq-search-clear"
+          aria-label="Clear search"
+          hidden
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-grid faq-content" id="faq-topics-container" aria-live="polite">
+    <p class="faq-results" id="faq-results-summary" hidden></p>
+
+    <section class="faq-topic faq-topic--coral" data-topic="Accounts">
+      <div class="faq-topic__heading">
+        <div>
+          <p>Topic</p>
+          <h2>Accounts</h2>
+        </div>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item is-open">
+          <h3>
+            <button type="button" aria-expanded="true" aria-controls="faq-accounts-0">
+              <span>Who can use DREAM Lab Cloud Services?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-accounts-0">
+            <p>
+              Anyone with an active UCSB NetID (students, faculty, and staff) can
+              sign in at <a href="https://coder.dreamlab.ucsb.edu">coder.dreamlab.ucsb.edu</a>
+              and create a Coder workspace for the duration of the academic quarter.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-accounts-1">
+              <span>How do I sign in to Coder?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-accounts-1" hidden>
+            <p>
+              Visit <a href="https://coder.dreamlab.ucsb.edu">coder.dreamlab.ucsb.edu</a>,
+              click <strong>UCSB Login</strong>, and authenticate using UCSB Single
+              Sign-On (via Google) with your UCSB NetID.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-accounts-2">
+              <span>How many workspaces can I create?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-accounts-2" hidden>
+            <p>
+              Users may create and use only one workspace at a time. Multiple
+              active workspaces may be deleted without notice to conserve shared
+              computing resources.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="faq-topic faq-topic--gold" data-topic="Workspaces">
+      <div class="faq-topic__heading">
+        <div>
+          <p>Topic</p>
+          <h2>Workspaces</h2>
+        </div>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-workspaces-0">
+              <span>What hardware and software are included in a Coder workspace?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-workspaces-0" hidden>
+            <p>
+              Each workspace is an Ubuntu Linux virtual machine with 4 vCPUs,
+              16 GiB RAM, and a 64 GB user data disk. It includes Docker, Pixi,
+              R, Python (<code>uv</code>/<code>uvx</code>), Git, and GitHub CLI,
+              plus optional RStudio Server, JupyterLab, and VS Code Web/Desktop.
+              See the <a href="coder.html">Coder Overview</a> for full specifications.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-workspaces-1">
+              <span>Will my files remain after I stop a workspace?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-workspaces-1" hidden>
+            <p>
+              Yes. Stopping a workspace releases active compute resources while
+              preserving files in your persistent home directory during the
+              quarter. However, <strong>deleting</strong> a workspace permanently
+              removes all files, and <strong>all workspaces are automatically deleted at the end of each academic quarter</strong>. Always back up your data.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-workspaces-2">
+              <span>How long can I leave a workspace running?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-workspaces-2" hidden>
+            <p>
+              Workspaces automatically shut down (stop) after <strong>four hours</strong>
+              of inactivity to conserve shared resources. You can restart a
+              stopped workspace at any time by clicking the <strong>Start</strong> button.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="faq-topic faq-topic--green" data-topic="AI Gateway">
+      <div class="faq-topic__heading">
+        <div>
+          <p>Topic</p>
+          <h2>AI Gateway</h2>
+        </div>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-gateway-0">
+              <span>What is the DREAM Lab AI Gateway?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-gateway-0" hidden>
+            <p>
+              The <a href="guides/ai-gateway.html">DREAM Lab AI Gateway</a> is an
+              experimental service providing OpenAI-compatible API access
+              (<code>https://litellm.dreamlab.ucsb.edu/v1</code>) to LLMs hosted
+              by campus cloud providers. Anyone with a UCSB NetID can generate a
+              personal API key via the <a href="https://litellm.dreamlab.ucsb.edu/dreamlab-keys">API key manager</a>.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-gateway-1">
+              <span>Can I send sensitive research data to a model or store it in a workspace?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-gateway-1" hidden>
+            <p>
+              No. Neither Coder Workspaces nor the DREAM Lab AI Gateway are
+              approved for confidential, sensitive, or restricted data classified
+              as <strong>P3</strong> or <strong>P4</strong> under UC data
+              protection levels.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-gateway-2">
+              <span>Which AI coding agents are supported?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-gateway-2" hidden>
+            <p>
+              OpenCode is pre-installed and pre-configured on Coder Workspaces to
+              work with both the DREAM Lab AI Gateway and College IT's AI Gateway.
+              See <a href="guides/ai-agents.html">Using AI Coding Agents</a> and
+              <a href="guides/ucsb_ai_commons.html">UCSB AI Commons API</a> for
+              setup instructions.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="faq-topic faq-topic--aqua" data-topic="Troubleshooting">
+      <div class="faq-topic__heading">
+        <div>
+          <p>Topic</p>
+          <h2>Troubleshooting</h2>
+        </div>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-trouble-0">
+              <span>How do I enable RStudio if I already created a workspace?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-trouble-0" hidden>
+            <p>
+              RStudio Server must be enabled when the workspace is first created;
+              it cannot be added to an existing workspace. Back up any files you
+              need, delete the workspace, and create a new workspace with
+              <strong>Include RStudio</strong> set to <strong>Yes</strong>.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-trouble-1">
+              <span>How do I transfer files in and out of my workspace?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-trouble-1" hidden>
+            <p>
+              You can use the built-in <strong>File Browser</strong> from the
+              workspace dashboard, send files between machines with
+              <code>uvx magic-wormhole</code>, or connect to Google Drive with
+              <code>rclone</code>. See our <a href="guides/file-transfer.html">Transferring Files guide</a>.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <h3>
+            <button type="button" aria-expanded="false" aria-controls="faq-trouble-2">
+              <span>Where can I get help with a technical issue?</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </h3>
+          <div class="faq-item__answer" id="faq-trouble-2" hidden>
+            <p>
+              Email the DREAM Lab team at <a href="mailto:dreamlab@library.ucsb.edu">dreamlab@library.ucsb.edu</a>
+              or join the <a href="https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ">UCSB Carpentry Slack</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="faq-empty" id="faq-empty-state" hidden>
+      <h2>No matching questions</h2>
+      <p>Try a broader search, or reach out to the DREAM Lab team at <a href="mailto:dreamlab@library.ucsb.edu">dreamlab@library.ucsb.edu</a>.</p>
+      <button type="button" id="faq-empty-reset">Clear search</button>
+    </div>
+  </section>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var items = document.querySelectorAll('.faq-item');
+  items.forEach(function (item) {
+    var btn = item.querySelector('h3 button');
+    var answer = item.querySelector('.faq-item__answer');
+    if (!btn || !answer) return;
+    btn.addEventListener('click', function () {
+      var isOpen = item.classList.contains('is-open');
+      if (isOpen) {
+        item.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        answer.hidden = true;
+      } else {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        answer.hidden = false;
+      }
+    });
+  });
+
+  var searchInput = document.getElementById('faq-search-input');
+  var clearBtn = document.getElementById('faq-search-clear');
+  var emptyResetBtn = document.getElementById('faq-empty-reset');
+  var summaryEl = document.getElementById('faq-results-summary');
+  var emptyEl = document.getElementById('faq-empty-state');
+  var topics = document.querySelectorAll('.faq-topic');
+
+  function filterFaq() {
+    var q = (searchInput.value || '').trim().toLowerCase();
+    clearBtn.hidden = !q;
+    var totalMatches = 0;
+
+    topics.forEach(function (topicSection) {
+      var topicName = (topicSection.getAttribute('data-topic') || '').toLowerCase();
+      var topicItems = topicSection.querySelectorAll('.faq-item');
+      var visibleInTopic = 0;
+
+      topicItems.forEach(function (item) {
+        var text = item.textContent.toLowerCase();
+        var match = !q || text.indexOf(q) !== -1 || topicName.indexOf(q) !== -1;
+        item.hidden = !match;
+        if (match) {
+          visibleInTopic++;
+          totalMatches++;
+          if (q) {
+            item.classList.add('is-open');
+            var btn = item.querySelector('h3 button');
+            var ans = item.querySelector('.faq-item__answer');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+            if (ans) ans.hidden = false;
+          }
+        }
+      });
+
+      topicSection.hidden = visibleInTopic === 0;
+    });
+
+    if (q) {
+      summaryEl.hidden = false;
+      summaryEl.innerHTML = totalMatches + ' result' + (totalMatches === 1 ? '' : 's') + ' for <strong>“' +
+        searchInput.value.replace(/</g, '&lt;') + '”</strong>';
+    } else {
+      summaryEl.hidden = true;
+    }
+
+    emptyEl.hidden = totalMatches > 0;
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', filterFaq);
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function () {
+      searchInput.value = '';
+      filterFaq();
+      searchInput.focus();
+    });
+  }
+  if (emptyResetBtn) {
+    emptyResetBtn.addEventListener('click', function () {
+      searchInput.value = '';
+      filterFaq();
+      searchInput.focus();
+    });
+  }
+});
+</script>
+```

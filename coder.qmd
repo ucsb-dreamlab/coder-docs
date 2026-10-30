@@ -8,7 +8,7 @@ workspace to use for the duration of the academic quarter. Workspaces are delete
 
 See our [**Getting Started Guide**](guides/getting-started.qmd) for an introduction to using Coder Workspaces.
 
-### Getting Help
+## Getting Help
 
 For questions or support:
 
@@ -26,7 +26,8 @@ Each workspace is a virtual machine (running Ubuntu linux) with the following ha
 | User Data Disk | 64 GB       |
 | OS Disk        | 15 GB       |
 
-#### Default Software
+### Default Software
+
 
 All workspaces include the following software:
 
@@ -43,7 +44,7 @@ All workspaces include the following software:
 
 Additional software may be installed using [`apt`](https://documentation.ubuntu.com/server/how-to/software/package-management/) or [`pixi`](https://pixi.sh).
 
-#### Optional Software
+### Optional Software
 Services can be enabled when the workspace is created:
 
 | Service                                                                             | Version      | Description                            |
