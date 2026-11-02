@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authorization Complete — DREAM Lab Cloud Services</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --success-text: #065f46;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --error-text: #991b1b;
+      --code-bg: #f1f5f9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 640px;
+      width: 100%;
+      padding: 2.25rem;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .badge.success {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+    }
+
+    .badge.error {
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      color: var(--error-text);
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin: 0 0 1.25rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .url-box {
+      position: relative;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85rem;
+      word-break: break-all;
+      color: var(--text);
+      margin-bottom: 1rem;
+      max-height: 130px;
+      overflow-y: auto;
+      user-select: all;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    button.copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    button.copy-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    button.copy-btn:active {
+      transform: translateY(1px);
+    }
+
+    .copy-status {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--success-text);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .copy-status.visible {
+      opacity: 1;
+    }
+
+    .details {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .details h2 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 0 0 0.6rem;
+    }
+
+    .scope-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .scope-pill {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+
+    .steps {
+      margin: 0 0 1.25rem;
+      padding-left: 1.25rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .steps li {
+      margin-bottom: 0.35rem;
+    }
+
+    .footer {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" id="app">
+    <div id="status-badge" class="badge success">✓ Google Authorization Received</div>
+    <h1 id="title">Paste This URL Back Into Your Agent</h1>
+    <p id="subtitle">
+      Your Google authorization succeeded. To finish connecting your DREAM Lab Coder workspace, copy the callback URL below and paste it into your AI agent chat (or terminal).
+    </p>
+
+    <div id="success-content">
+      <ol class="steps">
+        <li>Click <strong>Copy Callback URL</strong> below.</li>
+        <li>Return to your <strong>Coder Workspace / Shelley Agent</strong> tab.</li>
+        <li>Paste the URL into the chat and send it.</li>
+      </ol>
+
+      <div class="url-box" id="callback-url" tabindex="0" aria-label="OAuth callback URL"></div>
+
+      <div class="actions">
+        <button type="button" class="copy-btn" id="copy-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+          </svg>
+          Copy Callback URL
+        </button>
+        <span class="copy-status" id="copy-status" role="status" aria-live="polite">Copied to clipboard!</span>
+      </div>
+
+      <div class="details" id="scopes-section" style="display: none;">
+        <h2>Granted Scopes</h2>
+        <ul class="scope-list" id="scope-list"></ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Processed locally in your browser — no credentials are sent to this server.</span>
+      <a href="/">DREAM Lab Docs</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const fullUrl = window.location.href;
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const error = params.get("error");
+      const scopeParam = params.get("scope");
+
+      const badge = document.getElementById("status-badge");
+      const title = document.getElementById("title");
+      const subtitle = document.getElementById("subtitle");
+      const urlBox = document.getElementById("callback-url");
+      const copyBtn = document.getElementById("copy-btn");
+      const copyStatus = document.getElementById("copy-status");
+      const scopesSection = document.getElementById("scopes-section");
+      const scopeList = document.getElementById("scope-list");
+
+      urlBox.textContent = fullUrl;
+
+      if (error) {
+        badge.className = "badge error";
+        badge.textContent = "✕ Authorization Declined or Failed";
+        title.textContent = "Google OAuth Returned an Error";
+        subtitle.textContent = "Google returned error: \"" + error + "\". You can still copy the URL below to share with your agent or retry the authorization link.";
+      } else if (!code) {
+        badge.className = "badge error";
+        badge.textContent = "⚠ No Authorization Code Found";
+        title.textContent = "Waiting for OAuth Redirect";
+        subtitle.textContent = "This page is the OAuth 2.0 callback landing page for DREAM Lab Coder Workspaces. Start the login flow from your workspace to be redirected here with an authorization code.";
+      }
+
+      if (scopeParam) {
+        const scopes = scopeParam.trim().split(/\s+/).filter(Boolean);
+        if (scopes.length > 0) {
+          scopesSection.style.display = "block";
+          scopes.forEach(function (s) {
+            const li = document.createElement("li");
+            li.className = "scope-pill";
+            li.textContent = s.replace("https://www.googleapis.com/auth/", "");
+            li.title = s;
+            scopeList.appendChild(li);
+          });
+        }
+      }
+
+      copyBtn.addEventListener("click", async function () {
+        try {
+          await navigator.clipboard.writeText(fullUrl);
+          copyStatus.textContent = "Copied to clipboard!";
+          copyStatus.classList.add("visible");
+          setTimeout(function () {
+            copyStatus.classList.remove("visible");
+          }, 2500);
+        } catch (err) {
+          // Fallback selection if clipboard API is restricted
+          const range = document.createRange();
+          range.selectNodeContents(urlBox);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          copyStatus.textContent = "Selected! Press Ctrl+C / Cmd+C to copy.";
+          copyStatus.classList.add("visible");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
