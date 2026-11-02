@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: build
+  resources:
+    - images/*.svg
 
 website:
   title: "DREAM Lab Cloud Services"

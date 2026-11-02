@@ -1,0 +1,4 @@
+<svg width="256" height="256" viewBox="-140 -22 480 484" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="100,0 200,70 200,170 150,220 200,270 200,370 100,440 0,370 0,270 50,220 0,170 0,70" fill="#ffffff"/>
+  <path fill="none" stroke="#1d3fd8" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" d="M0 70V170M100 70V170M200 70V170M0 270V370M100 270V370M200 270V370M0 170L100 270M100 170L200 270M200 170L150 220M0 270L50 220M0 70L100 0L200 70M0 370L100 440L200 370"/>
+</svg>
