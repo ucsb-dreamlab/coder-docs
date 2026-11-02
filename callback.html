@@ -219,8 +219,8 @@
     <div id="success-content">
       <ol class="steps">
         <li>Click <strong>Copy Callback URL</strong> below.</li>
-        <li>Return to your <strong>Coder Workspace / Shelley Agent</strong> tab.</li>
-        <li>Paste the URL into the chat and send it.</li>
+        <li>Return to your <strong>Coder Workspace / Shelley Agent</strong> tab and paste the URL into the chat.</li>
+        <li>Once you've pasted the link, you can safely <strong>close this page</strong>.</li>
       </ol>
 
       <div class="url-box" id="callback-url" tabindex="0" aria-label="OAuth callback URL"></div>
@@ -296,11 +296,8 @@
       copyBtn.addEventListener("click", async function () {
         try {
           await navigator.clipboard.writeText(fullUrl);
-          copyStatus.textContent = "Copied to clipboard!";
+          copyStatus.textContent = "Copied! Paste it into your agent window, then you can close this tab.";
           copyStatus.classList.add("visible");
-          setTimeout(function () {
-            copyStatus.classList.remove("visible");
-          }, 2500);
         } catch (err) {
           // Fallback selection if clipboard API is restricted
           const range = document.createRange();
