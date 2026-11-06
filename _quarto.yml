@@ -4,6 +4,7 @@ project:
   resources:
     - images/*.svg
     - callback.html
+    - transcribe.html
 
 website:
   title: "DREAM Lab Cloud Services"
