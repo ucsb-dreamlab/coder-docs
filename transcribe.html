@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DREAM Lab Audio Transcription (gemini-3.5-transcribe)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --panel-alt: #0f172a;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 64px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1020px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 1.45rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-weight: 600;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 680px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .key-row {
+      display: flex;
+      gap: 8px;
+    }
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      background: rgba(15, 23, 42, 0.5);
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.06);
+    }
+    .dropzone input[type="file"] {
+      display: none;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--panel-alt);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover:not(:disabled) {
+      border-color: var(--accent);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+    }
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .file-item {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .file-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .file-title {
+      font-weight: 700;
+      font-size: 1rem;
+      word-break: break-all;
+    }
+    .file-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--panel-alt);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.2s ease;
+    }
+    .tabs {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+      margin-top: 12px;
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--panel-alt);
+      color: var(--accent);
+      border-color: var(--border);
+    }
+    .output-box {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 10px;
+      max-height: 360px;
+      overflow-y: auto;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .status-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--mono);
+    }
+    .status-queued { background: rgba(148,163,184,0.15); color: var(--muted); }
+    .status-working { background: rgba(245,158,11,0.18); color: var(--warn); }
+    .status-done { background: rgba(34,197,94,0.18); color: var(--success); }
+    .status-error { background: rgba(239,68,68,0.18); color: var(--danger); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        DREAM Lab Audio Transcription
+        <span class="badge">gemini-3.5-transcribe</span>
+      </h1>
+      <p>Browser-native Web Audio API overlapping chunker + native word timestamps &amp; speaker diarization via LiteLLM.</p>
+    </header>
+
+    <!-- Primary Controls -->
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <label for="apiKey">LiteLLM API Key (DREAMLAB_LLM_KEY)</label>
+          <div class="key-row">
+            <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off" />
+            <button type="button" class="btn" id="toggleKeyBtn">Show</button>
+            <button type="button" class="btn" id="testKeyBtn" title="Send a tiny ping to verify API key &amp; CORS">Test Key</button>
+          </div>
+          <div id="keyStatus" style="font-size: 0.78rem; margin-top: 4px; display: none;"></div>
+          <div style="margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap;">
+            <label class="checkbox-row">
+              <input type="checkbox" id="rememberKey" />
+              Remember key in browser
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" id="includeSpeakers" checked />
+              Include speaker labels (spk:0)
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label>Select Local Audio File(s)</label>
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" multiple accept="audio/*,video/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.opus,.webm,.mp4" />
+            <div style="font-weight: 600; margin-bottom: 4px;">Click to browse or drag &amp; drop audio files</div>
+            <div style="font-size: 0.78rem; color: var(--muted);">Supports MP3, WAV, M4A, FLAC, OGG, AAC, WebM (auto-chunked in browser)</div>
+          </div>
+        </div>
+      </div>
+
+      <details style="margin-top: 14px;">
+        <summary>Advanced Chunking &amp; Transcription Settings</summary>
+        <div class="grid-4" style="margin-top: 8px;">
+          <div>
+            <label for="baseUrl">Gateway Base URL</label>
+            <input type="text" id="baseUrl" value="https://litellm.dreamlab.ucsb.edu" />
+          </div>
+          <div>
+            <label for="modelName">Model</label>
+            <input type="text" id="modelName" value="gemini-3.5-transcribe" />
+          </div>
+          <div>
+            <label for="chunkDuration">Chunk Duration (s, max 895)</label>
+            <input type="number" id="chunkDuration" value="240" min="5" max="895" step="30" />
+          </div>
+          <div>
+            <label for="overlapDuration">Overlap (s)</label>
+            <input type="number" id="overlapDuration" value="30" min="0" max="180" step="5" />
+          </div>
+          <div>
+            <label for="segmentInterval">Paragraph Interval (s)</label>
+            <input type="number" id="segmentInterval" value="30" min="5" max="300" step="5" />
+          </div>
+          <div>
+            <label for="sampleRate">Chunk WAV Sample Rate</label>
+            <select id="sampleRate">
+              <option value="16000" selected>16,000 Hz (Mono 16-bit PCM)</option>
+              <option value="12000">12,000 Hz (Smaller payload)</option>
+              <option value="8000">8,000 Hz (Smallest payload)</option>
+            </select>
+          </div>
+          <div>
+            <label for="concurrency">Concurrent Requests</label>
+            <input type="number" id="concurrency" value="2" min="1" max="6" />
+          </div>
+          <div>
+            <label for="diarization">Speaker Diarization</label>
+            <select id="diarization">
+              <option value="true" selected>Enabled (VERBATIM)</option>
+              <option value="false">Disabled</option>
+            </select>
+          </div>
+          <div>
+            <label for="languageCodes">Language Hints (BCP-47, comma-sep)</label>
+            <input type="text" id="languageCodes" placeholder="e.g. en-US, es-US" />
+          </div>
+          <div>
+            <label for="customVocab">Custom Vocabulary (comma-sep)</label>
+            <input type="text" id="customVocab" placeholder="e.g. AI4LAM, DREAM Lab" />
+          </div>
+        </div>
+      </details>
+
+      <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div id="queueSummary" style="font-size: 0.85rem; color: var(--muted);">No audio files queued.</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn" id="clearBtn" disabled>Clear Queue</button>
+          <button type="button" class="btn" id="downloadAllMdBtn" style="display: none;">Download All (.md)</button>
+          <button type="button" class="btn" id="downloadAllTxtBtn" style="display: none;">Download All (.txt)</button>
+          <button type="button" class="btn" id="downloadAllJsonBtn" style="display: none;">Download All (.json)</button>
+          <button type="button" class="btn btn-primary" id="startBtn" disabled>Transcribe All</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Queue & Results List -->
+    <div id="fileList"></div>
+  </div>
+
+  <script id="appScript">
+    const AUDIO_INPUT_COST_PER_TOKEN = 0.000002;
+    const OUTPUT_COST_PER_TOKEN = 0.000012;
+
+    function formatTs(seconds) {
+      const sec = Math.max(0, Math.round(seconds));
+      const h = Math.floor(sec / 3600);
+      const rem = sec % 3600;
+      const m = Math.floor(rem / 60);
+      const s = rem % 60;
+      const pad = (n) => String(n).padStart(2, "0");
+      return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+    }
+
+    function parseOffset(offsetStr) {
+      if (!offsetStr) return 0.0;
+      let s = String(offsetStr).trim();
+      if (s.endsWith("s")) s = s.slice(0, -1);
+      const val = parseFloat(s);
+      return Number.isFinite(val) ? val : 0.0;
+    }
+
+    function buildSpecs(totalDuration, chunkDur, overlap, minTail = null) {
+      const effectiveMinTail = minTail !== null ? minTail : Math.min(15.0, chunkDur * 0.25);
+      const step = Math.max(2, chunkDur - overlap);
+      const specs = [];
+      let idx = 0;
+      let start = 0.0;
+      while (start < totalDuration) {
+        let dur = Math.min(chunkDur, totalDuration - start);
+        if (dur < effectiveMinTail && specs.length > 0) {
+          const prev = specs[specs.length - 1];
+          if ((totalDuration - prev.start) <= 895.0) {
+            specs[specs.length - 1] = {
+              idx: prev.idx,
+              start: prev.start,
+              dur: totalDuration - prev.start,
+            };
+            break;
+          }
+        }
+        specs.push({ idx, start, dur });
+        if (start + dur >= totalDuration) break;
+        start += step;
+        idx += 1;
+      }
+      return specs;
+    }
+
+    async function decodeAudioFile(file) {
+      const arrayBuf = await file.arrayBuffer();
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new AudioCtx();
+      try {
+        return await ctx.decodeAudioData(arrayBuf);
+      } finally {
+        if (ctx.close) await ctx.close().catch(() => {});
+      }
+    }
+
+    async function sliceAndEncodeWavBase64(audioBuffer, startSec, durSec, targetSampleRate) {
+      const srcRate = audioBuffer.sampleRate;
+      const startSample = Math.max(0, Math.floor(startSec * srcRate));
+      const endSample = Math.min(audioBuffer.length, Math.ceil((startSec + durSec) * srcRate));
+      const frameCount = Math.max(1, endSample - startSample);
+      const actualDur = frameCount / srcRate;
+      const outFrames = Math.max(1, Math.ceil(actualDur * targetSampleRate));
+
+      const OfflineCtx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      const offline = new OfflineCtx(1, outFrames, targetSampleRate);
+      const sliceBuffer = offline.createBuffer(1, frameCount, srcRate);
+      const monoOut = sliceBuffer.getChannelData(0);
+
+      const numChannels = audioBuffer.numberOfChannels;
+      const scale = 1 / numChannels;
+      for (let ch = 0; ch < numChannels; ch++) {
+        const chData = audioBuffer.getChannelData(ch);
+        for (let i = 0; i < frameCount; i++) {
+          monoOut[i] += chData[startSample + i] * scale;
+        }
+      }
+
+      const source = offline.createBufferSource();
+      source.buffer = sliceBuffer;
+      source.connect(offline.destination);
+      source.start(0);
+      const rendered = await offline.startRendering();
+      const samples = rendered.getChannelData(0);
+
+      const wavBytes = encodePcm16Wav(samples, targetSampleRate);
+      return uint8ToBase64(wavBytes);
+    }
+
+    function encodePcm16Wav(samples, sampleRate) {
+      const numSamples = samples.length;
+      const buffer = new ArrayBuffer(44 + numSamples * 2);
+      const view = new DataView(buffer);
+
+      const writeStr = (offset, str) => {
+        for (let i = 0; i < str.length; i++) {
+          view.setUint8(offset + i, str.charCodeAt(i));
+        }
+      };
+
+      writeStr(0, "RIFF");
+      view.setUint32(4, 36 + numSamples * 2, true);
+      writeStr(8, "WAVE");
+      writeStr(12, "fmt ");
+      view.setUint32(16, 16, true); // PCM chunk size
+      view.setUint16(20, 1, true);  // PCM format
+      view.setUint16(22, 1, true);  // Mono (1 channel)
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true); // byte rate
+      view.setUint16(32, 2, true);  // block align
+      view.setUint16(34, 16, true); // 16-bit
+      writeStr(36, "data");
+      view.setUint32(40, numSamples * 2, true);
+
+      let offset = 44;
+      for (let i = 0; i < numSamples; i++) {
+        const s = Math.max(-1, Math.min(1, samples[i]));
+        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+        offset += 2;
+      }
+      return new Uint8Array(buffer);
+    }
+
+    function uint8ToBase64(bytes) {
+      const chunkSize = 0x8000;
+      const parts = [];
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        parts.push(String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize)));
+      }
+      return btoa(parts.join(""));
+    }
+
+    function sanitizeApiKey(raw) {
+      let s = String(raw || "").trim();
+      if (s.includes("DREAMLAB_LLM_KEY=")) {
+        s = s.split("DREAMLAB_LLM_KEY=").pop().trim();
+      }
+      if (s.toLowerCase().startsWith("bearer ")) {
+        s = s.slice(7).trim();
+      }
+      s = s.replace(/^['"\u201C\u201D\u2018\u2019]+|['"\u201C\u201D\u2018\u2019]+$/g, "").trim();
+      return s.replace(/[^\x20-\x7E]/g, "");
+    }
+
+    async function transcribeChunkRequest({
+      base64Wav,
+      apiKey,
+      baseUrl,
+      model,
+      diarization,
+      languageCodes,
+      customVocabulary,
+      onRetry,
+    }) {
+      const cleanBase = baseUrl.replace(/\/+$/, "");
+      const url = `${cleanBase}/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+      const cleanKey = sanitizeApiKey(apiKey);
+
+      const audioTranscriptionConfig = {
+        wordTimestamp: true,
+        diarization: Boolean(diarization),
+        mode: "VERBATIM",
+      };
+      if (languageCodes && languageCodes.length > 0) {
+        audioTranscriptionConfig.languageCodes = languageCodes;
+      }
+      if (customVocabulary && customVocabulary.length > 0) {
+        audioTranscriptionConfig.customVocabulary = customVocabulary;
+      }
+
+      const bodyStr = JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [
+              {
+                inlineData: {
+                  mimeType: "audio/wav",
+                  data: base64Wav,
+                },
+              },
+            ],
+          },
+        ],
+        generationConfig: {
+          audioTranscriptionConfig,
+        },
+      });
+
+      const bodyMb = (bodyStr.length / (1024 * 1024)).toFixed(2);
+      const maxAttempts = 3;
+
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        const t0 = performance.now();
+        try {
+          const resp = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cleanKey}`,
+            },
+            body: bodyStr,
+          });
+
+          if (!resp.ok) {
+            const errText = await resp.text().catch(() => "");
+            const isRetryable = [429, 500, 502, 503, 504].includes(resp.status);
+            if (isRetryable && attempt < maxAttempts) {
+              const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
+              if (onRetry) {
+                onRetry(`HTTP ${resp.status} after ${elapsed}s (${bodyMb} MB request) — retrying (${attempt + 1}/${maxAttempts})...`);
+              }
+              await new Promise((r) => setTimeout(r, 1500 * attempt));
+              continue;
+            }
+            throw new Error(`HTTP ${resp.status} (${ ((performance.now() - t0) / 1000).toFixed(1) }s): ${errText.slice(0, 300) || resp.statusText}`);
+          }
+
+          const raw = await resp.json();
+          return parseGeminiTranscriptionResponse(raw);
+        } catch (err) {
+          const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
+          const msg = err && err.message ? err.message : String(err);
+          const isNetworkFetchErr = msg.includes("Failed to fetch") || msg.includes("Load failed") || msg.includes("NetworkError");
+          if (isNetworkFetchErr && attempt < maxAttempts) {
+            if (onRetry) {
+              onRetry(`Network/gateway disconnect ("${msg}") after ${elapsed}s (${bodyMb} MB payload) — retrying (${attempt + 1}/${maxAttempts})...`);
+            }
+            await new Promise((r) => setTimeout(r, 2000 * attempt));
+            continue;
+          }
+          if (isNetworkFetchErr) {
+            throw new Error(
+              `${msg} after ${elapsed}s (${bodyMb} MB payload to ${cleanBase}). ` +
+              `Common causes: gateway 60s timeout on long/large WAV chunks (try Chunk Duration = 180–240s or 12,000 Hz sample rate), or blocked connection.`
+            );
+          }
+          throw err;
+        }
+      }
+    }
+
+    function parseGeminiTranscriptionResponse(resp) {
+      const partsData = [];
+      const fullTextParts = [];
+      const candidates = resp.candidates || [];
+      if (candidates.length > 0 && candidates[0].content && Array.isArray(candidates[0].content.parts)) {
+        for (const p of candidates[0].content.parts) {
+          const at = p.audioTranscription || p.audio_transcription;
+          if (at) {
+            const rawWords = at.words || [];
+            const words = [];
+            for (const w of rawWords) {
+              if (w && w.word) {
+                words.push({
+                  word: w.word,
+                  start_offset: w.startOffset ?? w.start_offset ?? null,
+                  end_offset: w.endOffset ?? w.end_offset ?? null,
+                });
+              }
+            }
+            const text = String(at.text || p.text || "").trim();
+            partsData.push({
+              text,
+              speaker_label: at.speakerLabel ?? at.speaker_label ?? null,
+              start_offset: at.startOffset ?? at.start_offset ?? null,
+              end_offset: at.endOffset ?? at.end_offset ?? null,
+              words,
+            });
+            if (text) fullTextParts.push(text);
+          } else if (p.text) {
+            const text = String(p.text).trim();
+            partsData.push({
+              text,
+              speaker_label: null,
+              start_offset: null,
+              end_offset: null,
+              words: [],
+            });
+            if (text) fullTextParts.push(text);
+          }
+        }
+      }
+
+      const usageMeta = resp.usageMetadata || resp.usage_metadata || {};
+      let audioTokens = 0;
+      let textPromptTokens = 0;
+      const details = usageMeta.promptTokensDetails || usageMeta.prompt_tokens_details;
+      if (Array.isArray(details)) {
+        for (const d of details) {
+          const mod = String(d.modality || "").toUpperCase();
+          const count = Number(d.tokenCount ?? d.token_count ?? 0);
+          if (mod.includes("AUDIO")) audioTokens += count;
+          else textPromptTokens += count;
+        }
+      } else {
+        audioTokens = Number(usageMeta.promptTokenCount ?? usageMeta.prompt_token_count ?? 0);
+      }
+      const outputTokens = Number(usageMeta.candidatesTokenCount ?? usageMeta.candidates_token_count ?? 0);
+      const totalTokens = Number(usageMeta.totalTokenCount ?? usageMeta.total_token_count ?? 0);
+
+      return {
+        text: fullTextParts.join(" "),
+        parts: partsData,
+        usage: {
+          audio_input_tokens: audioTokens,
+          text_prompt_tokens: textPromptTokens,
+          output_tokens: outputTokens,
+          total_tokens: totalTokens,
+        },
+      };
+    }
+
+    function extractTimedWords(chunkData, chunkStart) {
+      const timedWords = [];
+      for (const part of chunkData.parts || []) {
+        const speaker = part.speaker_label || null;
+        const words = part.words || [];
+        if (words.length > 0) {
+          for (const w of words) {
+            timedWords.push({
+              word: w.word,
+              start: Math.round((chunkStart + parseOffset(w.start_offset)) * 1000) / 1000,
+              end: Math.round((chunkStart + parseOffset(w.end_offset)) * 1000) / 1000,
+              speaker,
+            });
+          }
+        } else if (part.text) {
+          const rawWords = part.text.trim().split(/\s+/).filter(Boolean);
+          const pStart = chunkStart + parseOffset(part.start_offset);
+          const pEnd = chunkStart + parseOffset(part.end_offset);
+          const dur = Math.max(0.0, pEnd - pStart);
+          const n = Math.max(1, rawWords.length);
+          rawWords.forEach((rw, i) => {
+            timedWords.push({
+              word: rw,
+              start: Math.round((pStart + (i / n) * dur) * 1000) / 1000,
+              end: Math.round((pStart + ((i + 1) / n) * dur) * 1000) / 1000,
+              speaker,
+            });
+          });
+        }
+      }
+      return timedWords;
+    }
+
+    function normalizeWord(w) {
+      return String(w || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    // Port of Python difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks()
+    function findLongestMatch(a, b, alo, ahi, blo, bhi, b2j) {
+      let besti = alo;
+      let bestj = blo;
+      let bestsize = 0;
+      let j2len = new Map();
+
+      for (let i = alo; i < ahi; i++) {
+        const newj2len = new Map();
+        const indices = b2j.get(a[i]) || [];
+        for (const j of indices) {
+          if (j < blo) continue;
+          if (j >= bhi) break;
+          const k = (j2len.get(j - 1) || 0) + 1;
+          newj2len.set(j, k);
+          if (k > bestsize) {
+            besti = i - k + 1;
+            bestj = j - k + 1;
+            bestsize = k;
+          }
+        }
+        j2len = newj2len;
+      }
+      return { a: besti, b: bestj, size: bestsize };
+    }
+
+    function getMatchingBlocks(a, b) {
+      const b2j = new Map();
+      for (let j = 0; j < b.length; j++) {
+        const elt = b[j];
+        if (!b2j.has(elt)) b2j.set(elt, []);
+        b2j.get(elt).push(j);
+      }
+
+      const queue = [[0, a.length, 0, b.length]];
+      const matchingBlocks = [];
+      while (queue.length > 0) {
+        const [alo, ahi, blo, bhi] = queue.pop();
+        const x = findLongestMatch(a, b, alo, ahi, blo, bhi, b2j);
+        if (x.size > 0) {
+          matchingBlocks.push(x);
+          if (alo < x.a && blo < x.b) {
+            queue.push([alo, x.a, blo, x.b]);
+          }
+          if (x.a + x.size < ahi && x.b + x.size < bhi) {
+            queue.push([x.a + x.size, ahi, x.b + x.size, bhi]);
+          }
+        }
+      }
+      matchingBlocks.sort((m1, m2) => m1.a - m2.a || m1.b - m2.b);
+
+      // Collapse adjacent matching blocks
+      const nonAdjacent = [];
+      let i1 = 0, j1 = 0, k1 = 0;
+      for (const bBlock of matchingBlocks) {
+        if (i1 + k1 === bBlock.a && j1 + k1 === bBlock.b) {
+          k1 += bBlock.size;
+        } else {
+          if (k1) nonAdjacent.push({ a: i1, b: j1, size: k1 });
+          i1 = bBlock.a;
+          j1 = bBlock.b;
+          k1 = bBlock.size;
+        }
+      }
+      if (k1) nonAdjacent.push({ a: i1, b: j1, size: k1 });
+      nonAdjacent.push({ a: a.length, b: b.length, size: 0 });
+      return nonAdjacent;
+    }
+
+    function stitchTimedWords(wordsA, wordsB, boundaryStart, overlap) {
+      if (!wordsA || wordsA.length === 0) {
+        return { stitched: wordsB || [], keepA: 0, skipB: 0, preview: "" };
+      }
+      if (!wordsB || wordsB.length === 0) {
+        return { stitched: wordsA, keepA: wordsA.length, skipB: 0, preview: "" };
+      }
+
+      const windowStart = boundaryStart - 5.0;
+      const windowEnd = boundaryStart + overlap + 5.0;
+
+      let tailStartIdx = wordsA.findIndex((w) => w.start >= windowStart);
+      if (tailStartIdx === -1) {
+        tailStartIdx = Math.max(0, wordsA.length - 220);
+      }
+
+      let lastHeadIdx = -1;
+      for (let i = 0; i < wordsB.length; i++) {
+        if (wordsB[i].start <= windowEnd) lastHeadIdx = i;
+      }
+      const headEndIdx = lastHeadIdx === -1 ? Math.min(wordsB.length, 220) : lastHeadIdx + 1;
+
+      const tailA = wordsA.slice(tailStartIdx);
+      const headB = wordsB.slice(0, headEndIdx);
+
+      const normA = tailA.map((w) => normalizeWord(w.word));
+      const normB = headB.map((w) => normalizeWord(w.word));
+
+      const blocks = getMatchingBlocks(normA, normB);
+      const blocks3 = blocks.filter((b) => b.size >= 3);
+      let keepA, skipB;
+
+      if (blocks3.length > 0) {
+        const best = blocks3.reduce((acc, cur) => (cur.size > acc.size ? cur : acc), blocks3[0]);
+        const mid = Math.floor(best.size / 2);
+        keepA = tailStartIdx + best.a + mid;
+        skipB = best.b + mid;
+      } else {
+        const blocks2 = blocks.filter((b) => b.size >= 2);
+        if (blocks2.length > 0) {
+          const best = blocks2.reduce((acc, cur) => (cur.size > acc.size ? cur : acc), blocks2[0]);
+          keepA = tailStartIdx + best.a + 1;
+          skipB = best.b + 1;
+        } else {
+          const midTime = boundaryStart + overlap / 2.0;
+          keepA = wordsA.filter((w) => w.start < midTime).length;
+          skipB = wordsB.filter((w) => w.start < midTime).length;
+        }
+      }
+
+      const previewWords = wordsB
+        .slice(Math.max(0, skipB - 5), Math.min(wordsB.length, skipB + 5))
+        .map((w) => w.word);
+      const preview = previewWords.join(" ");
+      const stitched = wordsA.slice(0, keepA).concat(wordsB.slice(skipB));
+      return { stitched, keepA, skipB, preview };
+    }
+
+    function buildTranscriptOutputs({
+      fileName,
+      title,
+      totalDuration,
+      model,
+      baseUrl,
+      stitchedWords,
+      totalAudioTokens,
+      totalOutputTokens,
+      segmentInterval,
+      includeSpeakers,
+      diarization,
+    }) {
+      const segments = [];
+      let currWords = [];
+
+      const flushSegment = () => {
+        if (currWords.length === 0) return;
+        const segStart = currWords[0].start;
+        const segEnd = currWords[currWords.length - 1].end;
+        const entry = {
+          start: Math.round(segStart * 100) / 100,
+          end: Math.round(segEnd * 100) / 100,
+          timestamp: formatTs(segStart),
+          text: currWords.map((x) => x.word).join(" "),
+        };
+        if ((diarization || includeSpeakers) && currWords[0].speaker) {
+          entry.speaker = currWords[0].speaker;
+        }
+        segments.push(entry);
+        currWords = [];
+      };
+
+      for (const w of stitchedWords) {
+        if (
+          currWords.length > 0 &&
+          includeSpeakers &&
+          w.speaker !== currWords[currWords.length - 1].speaker
+        ) {
+          flushSegment();
+        }
+        currWords.push(w);
+        const segStart = currWords[0].start;
+        const elapsed = w.end - segStart;
+        const wt = String(w.word || "");
+        const isSentenceEnd =
+          wt.endsWith(".") ||
+          wt.endsWith("?") ||
+          wt.endsWith("!") ||
+          wt.endsWith('."') ||
+          wt.endsWith('?"') ||
+          wt.endsWith('!"');
+
+        if (
+          (isSentenceEnd && elapsed >= segmentInterval) ||
+          elapsed >= segmentInterval + 25.0
+        ) {
+          flushSegment();
+        }
+      }
+      flushSegment();
+
+      const fullText = stitchedWords.map((w) => w.word).join(" ");
+      const estimatedCost =
+        totalAudioTokens * AUDIO_INPUT_COST_PER_TOKEN +
+        totalOutputTokens * OUTPUT_COST_PER_TOKEN;
+
+      const mdLines = [
+        `# ${title}`,
+        "",
+        `- **Audio File:** \`${fileName}\``,
+        `- **Duration:** ${formatTs(totalDuration)} (${totalDuration.toFixed(1)}s)`,
+        `- **Model:** \`${model}\` via DREAM Lab LiteLLM (\`${baseUrl}\`)`,
+        "",
+        "---",
+        "",
+      ];
+      const txtLines = [];
+
+      for (const seg of segments) {
+        const spkPrefix = includeSpeakers && seg.speaker ? ` (${seg.speaker})` : "";
+        mdLines.push(`**[${seg.timestamp}]${spkPrefix}** ${seg.text}\n`);
+        txtLines.push(`[${seg.timestamp}]${spkPrefix} ${seg.text}`);
+      }
+
+      const mdContent = mdLines.join("\n");
+      const txtContent = txtLines.join("\n\n") + "\n";
+      const jsonContent = JSON.stringify(
+        {
+          title,
+          audio_file: fileName,
+          duration_seconds: Math.round(totalDuration * 100) / 100,
+          model,
+          usage: {
+            audio_input_tokens: totalAudioTokens,
+            output_tokens: totalOutputTokens,
+            estimated_cost_usd: Math.round(estimatedCost * 10000) / 10000,
+          },
+          segments,
+          words: stitchedWords,
+          full_text: fullText,
+        },
+        null,
+        2
+      );
+
+      return {
+        segments,
+        fullText,
+        estimatedCost,
+        mdContent,
+        txtContent,
+        jsonContent,
+      };
+    }
+
+    const state = {
+      jobs: [], // { id, file, stem, status, progress, statusText, logs, duration, stitchedWords, totalAudioTokens, totalOutputTokens, outputs, activeTab, chunkCache }
+      running: false,
+    };
+
+    const els = {
+      apiKey: document.getElementById("apiKey"),
+      toggleKeyBtn: document.getElementById("toggleKeyBtn"),
+      testKeyBtn: document.getElementById("testKeyBtn"),
+      keyStatus: document.getElementById("keyStatus"),
+      rememberKey: document.getElementById("rememberKey"),
+      includeSpeakers: document.getElementById("includeSpeakers"),
+      dropzone: document.getElementById("dropzone"),
+      fileInput: document.getElementById("fileInput"),
+      baseUrl: document.getElementById("baseUrl"),
+      modelName: document.getElementById("modelName"),
+      chunkDuration: document.getElementById("chunkDuration"),
+      overlapDuration: document.getElementById("overlapDuration"),
+      segmentInterval: document.getElementById("segmentInterval"),
+      sampleRate: document.getElementById("sampleRate"),
+      concurrency: document.getElementById("concurrency"),
+      diarization: document.getElementById("diarization"),
+      languageCodes: document.getElementById("languageCodes"),
+      customVocab: document.getElementById("customVocab"),
+      queueSummary: document.getElementById("queueSummary"),
+      clearBtn: document.getElementById("clearBtn"),
+      startBtn: document.getElementById("startBtn"),
+      downloadAllMdBtn: document.getElementById("downloadAllMdBtn"),
+      downloadAllTxtBtn: document.getElementById("downloadAllTxtBtn"),
+      downloadAllJsonBtn: document.getElementById("downloadAllJsonBtn"),
+      fileList: document.getElementById("fileList"),
+    };
+
+    // Load saved API key if present
+    try {
+      const savedKey = localStorage.getItem("dreamlab_llm_key");
+      if (savedKey) {
+        els.apiKey.value = savedKey;
+        els.rememberKey.checked = true;
+      }
+    } catch (_) {}
+
+    els.toggleKeyBtn.addEventListener("click", () => {
+      const isPwd = els.apiKey.type === "password";
+      els.apiKey.type = isPwd ? "text" : "password";
+      els.toggleKeyBtn.textContent = isPwd ? "Hide" : "Show";
+    });
+
+    els.testKeyBtn.addEventListener("click", async () => {
+      const cfg = readConfig();
+      if (!cfg.apiKey) {
+        els.keyStatus.style.display = "block";
+        els.keyStatus.style.color = "var(--warn)";
+        els.keyStatus.textContent = "Enter an API key first.";
+        return;
+      }
+      els.testKeyBtn.disabled = true;
+      els.keyStatus.style.display = "block";
+      els.keyStatus.style.color = "var(--muted)";
+      els.keyStatus.textContent = "Testing connection & API key against LiteLLM...";
+      try {
+        const silentWav = encodePcm16Wav(new Float32Array(1600), 16000);
+        const b64 = uint8ToBase64(silentWav);
+        await transcribeChunkRequest({
+          base64Wav: b64,
+          apiKey: cfg.apiKey,
+          baseUrl: cfg.baseUrl,
+          model: cfg.model,
+          diarization: false,
+        });
+        els.keyStatus.style.color = "var(--success)";
+        els.keyStatus.textContent = "✓ Connected! API key & CORS verified with gemini-3.5-transcribe.";
+      } catch (err) {
+        els.keyStatus.style.color = "var(--danger)";
+        els.keyStatus.textContent = `✗ ${err.message || String(err)}`;
+      } finally {
+        els.testKeyBtn.disabled = false;
+      }
+    });
+
+    function syncSavedKey() {
+      try {
+        if (els.rememberKey.checked && els.apiKey.value.trim()) {
+          localStorage.setItem("dreamlab_llm_key", els.apiKey.value.trim());
+        } else if (!els.rememberKey.checked) {
+          localStorage.removeItem("dreamlab_llm_key");
+        }
+      } catch (_) {}
+    }
+
+    els.apiKey.addEventListener("input", () => {
+      syncSavedKey();
+      updateControls();
+    });
+    els.rememberKey.addEventListener("change", syncSavedKey);
+
+    // Re-render outputs live if speaker labels or segment interval changes
+    function recomputeFinishedOutputs() {
+      const cfg = readConfig();
+      for (const job of state.jobs) {
+        if (job.status === "done" && job.stitchedWords) {
+          job.outputs = buildTranscriptOutputs({
+            fileName: job.file.name,
+            title: job.stem,
+            totalDuration: job.duration,
+            model: cfg.model,
+            baseUrl: cfg.baseUrl,
+            stitchedWords: job.stitchedWords,
+            totalAudioTokens: job.totalAudioTokens,
+            totalOutputTokens: job.totalOutputTokens,
+            segmentInterval: cfg.segmentInterval,
+            includeSpeakers: cfg.includeSpeakers,
+            diarization: cfg.diarization,
+          });
+        }
+      }
+      renderJobs();
+    }
+
+    els.includeSpeakers.addEventListener("change", recomputeFinishedOutputs);
+    els.segmentInterval.addEventListener("change", recomputeFinishedOutputs);
+
+    els.dropzone.addEventListener("click", () => els.fileInput.click());
+    els.dropzone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      els.dropzone.classList.add("dragover");
+    });
+    els.dropzone.addEventListener("dragleave", () => {
+      els.dropzone.classList.remove("dragover");
+    });
+    els.dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      els.dropzone.classList.remove("dragover");
+      if (e.dataTransfer && e.dataTransfer.files) {
+        addFiles(e.dataTransfer.files);
+      }
+    });
+    els.fileInput.addEventListener("change", (e) => {
+      if (e.target.files) {
+        addFiles(e.target.files);
+        els.fileInput.value = "";
+      }
+    });
+
+    function addFiles(fileListObj) {
+      for (const file of Array.from(fileListObj)) {
+        const stem = file.name.replace(/\.[^/.]+$/, "") || file.name;
+        state.jobs.push({
+          id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+          file,
+          stem,
+          status: "queued",
+          progress: 0,
+          statusText: "Queued",
+          logs: [],
+          duration: 0,
+          stitchedWords: null,
+          totalAudioTokens: 0,
+          totalOutputTokens: 0,
+          outputs: null,
+          activeTab: "md",
+          chunkCache: new Map(),
+        });
+      }
+      updateControls();
+      renderJobs();
+    }
+
+    els.clearBtn.addEventListener("click", () => {
+      if (state.running) return;
+      state.jobs = [];
+      updateControls();
+      renderJobs();
+    });
+
+    function readConfig() {
+      const langRaw = els.languageCodes.value
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const vocabRaw = els.customVocab.value
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      return {
+        apiKey: sanitizeApiKey(els.apiKey.value),
+        baseUrl: els.baseUrl.value.trim() || "https://litellm.dreamlab.ucsb.edu",
+        model: els.modelName.value.trim() || "gemini-3.5-transcribe",
+        chunkDuration: Math.min(895, Math.max(5, parseFloat(els.chunkDuration.value) || 240)),
+        overlap: Math.max(0, parseFloat(els.overlapDuration.value) || 30),
+        segmentInterval: Math.max(5, parseFloat(els.segmentInterval.value) || 30),
+        sampleRate: parseInt(els.sampleRate.value, 10) || 16000,
+        concurrency: Math.min(6, Math.max(1, parseInt(els.concurrency.value, 10) || 2)),
+        diarization: els.diarization.value === "true",
+        includeSpeakers: els.includeSpeakers.checked,
+        languageCodes: langRaw.length ? langRaw : null,
+        customVocabulary: vocabRaw.length ? vocabRaw : null,
+      };
+    }
+
+    function downloadTextFile(filename, content, mime = "text/plain;charset=utf-8") {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
+    els.downloadAllMdBtn.addEventListener("click", () => {
+      state.jobs
+        .filter((j) => j.status === "done" && j.outputs)
+        .forEach((j, idx) =>
+          setTimeout(() => downloadTextFile(`${j.stem}_transcript.md`, j.outputs.mdContent, "text/markdown;charset=utf-8"), idx * 150)
+        );
+    });
+    els.downloadAllTxtBtn.addEventListener("click", () => {
+      state.jobs
+        .filter((j) => j.status === "done" && j.outputs)
+        .forEach((j, idx) =>
+          setTimeout(() => downloadTextFile(`${j.stem}_transcript.txt`, j.outputs.txtContent, "text/plain;charset=utf-8"), idx * 150)
+        );
+    });
+    els.downloadAllJsonBtn.addEventListener("click", () => {
+      state.jobs
+        .filter((j) => j.status === "done" && j.outputs)
+        .forEach((j, idx) =>
+          setTimeout(() => downloadTextFile(`${j.stem}_transcript.json`, j.outputs.jsonContent, "application/json;charset=utf-8"), idx * 150)
+        );
+    });
+
+    async function processJob(job, cfg) {
+      job.status = "working";
+      job.progress = 5;
+      job.logs = [];
+      const log = (msg) => {
+        job.logs.push(msg);
+        renderJobs();
+      };
+
+      try {
+        job.statusText = "Decoding audio via Web Audio API...";
+        renderJobs();
+        const audioBuffer = await decodeAudioFile(job.file);
+        job.duration = audioBuffer.duration;
+        log(`Decoded "${job.file.name}": ${job.duration.toFixed(2)}s (${(job.duration / 60).toFixed(2)} mins), source ${audioBuffer.sampleRate} Hz, ${audioBuffer.numberOfChannels} ch`);
+
+        const specs = buildSpecs(job.duration, cfg.chunkDuration, cfg.overlap);
+        log(`Prepared ${specs.length} overlapping chunk(s) (${cfg.chunkDuration}s max each, ${cfg.overlap}s overlap, ${cfg.sampleRate} Hz mono WAV)...`);
+
+        const results = new Map();
+        let doneCount = 0;
+        let nextIdx = 0;
+
+        const worker = async () => {
+          while (nextIdx < specs.length) {
+            const spec = specs[nextIdx++];
+            const cacheKey = `${spec.idx}_${spec.start}_${spec.dur}_${cfg.sampleRate}_${cfg.diarization}`;
+            let data = job.chunkCache.get(cacheKey);
+            if (!data) {
+              job.statusText = `Encoding & transcribing chunk ${spec.idx + 1}/${specs.length} (${formatTs(spec.start)} - ${formatTs(spec.start + spec.dur)})...`;
+              renderJobs();
+              const base64Wav = await sliceAndEncodeWavBase64(
+                audioBuffer,
+                spec.start,
+                spec.dur,
+                cfg.sampleRate
+              );
+              const wavMb = ((base64Wav.length * 0.75) / (1024 * 1024)).toFixed(2);
+              log(`  -> Sending Chunk ${spec.idx} (${formatTs(spec.start)} - ${formatTs(spec.start + spec.dur)}, ${wavMb} MB WAV)...`);
+              const tChunk = performance.now();
+              data = await transcribeChunkRequest({
+                base64Wav,
+                apiKey: cfg.apiKey,
+                baseUrl: cfg.baseUrl,
+                model: cfg.model,
+                diarization: cfg.diarization,
+                languageCodes: cfg.languageCodes,
+                customVocabulary: cfg.customVocabulary,
+                onRetry: (retryMsg) => log(`  [Chunk ${spec.idx}] ${retryMsg}`),
+              });
+              job.chunkCache.set(cacheKey, data);
+              const chunkSec = ((performance.now() - tChunk) / 1000).toFixed(1);
+              const wCount = (data.parts || []).reduce((acc, p) => acc + ((p.words || []).length), 0);
+              doneCount += 1;
+              job.progress = Math.round(10 + (doneCount / specs.length) * 80);
+              log(`  [${doneCount}/${specs.length}] Chunk ${spec.idx} (${formatTs(spec.start)} - ${formatTs(spec.start + spec.dur)}) finished in ${chunkSec}s: ${wCount} timed words`);
+            } else {
+              doneCount += 1;
+              job.progress = Math.round(10 + (doneCount / specs.length) * 80);
+              const wCount = (data.parts || []).reduce((acc, p) => acc + ((p.words || []).length), 0);
+              log(`  [${doneCount}/${specs.length}] Chunk ${spec.idx} (${formatTs(spec.start)} - ${formatTs(spec.start + spec.dur)}) [cached]: ${wCount} timed words`);
+            }
+            results.set(spec.idx, { spec, data });
+            job.statusText = `Completed ${doneCount}/${specs.length} chunk(s)...`;
+            renderJobs();
+          }
+        };
+
+        const workers = Array.from(
+          { length: Math.min(cfg.concurrency, specs.length) },
+          () => worker()
+        );
+        await Promise.all(workers);
+
+        // Stitch chunks in order
+        let stitchedWords = [];
+        let totalAudioTokens = 0;
+        let totalOutputTokens = 0;
+        const sortedIndices = Array.from(results.keys()).sort((a, b) => a - b);
+
+        for (const idx of sortedIndices) {
+          const { spec, data } = results.get(idx);
+          totalAudioTokens += (data.usage && data.usage.audio_input_tokens) || 0;
+          totalOutputTokens += (data.usage && data.usage.output_tokens) || 0;
+          const chunkWords = extractTimedWords(data, spec.start);
+          if (stitchedWords.length === 0) {
+            stitchedWords = chunkWords;
+          } else {
+            const { stitched, keepA, skipB, preview } = stitchTimedWords(
+              stitchedWords,
+              chunkWords,
+              spec.start,
+              cfg.overlap
+            );
+            stitchedWords = stitched;
+            log(`  Boundary ${idx - 1}->${idx} (~${formatTs(spec.start)}): kept ${keepA} words, skipped ${skipB} words | splice: '...${preview}...'`);
+          }
+        }
+
+        log(`Total stitched timed words: ${stitchedWords.length}`);
+        job.stitchedWords = stitchedWords;
+        job.totalAudioTokens = totalAudioTokens;
+        job.totalOutputTokens = totalOutputTokens;
+
+        job.outputs = buildTranscriptOutputs({
+          fileName: job.file.name,
+          title: job.stem,
+          totalDuration: job.duration,
+          model: cfg.model,
+          baseUrl: cfg.baseUrl,
+          stitchedWords,
+          totalAudioTokens,
+          totalOutputTokens,
+          segmentInterval: cfg.segmentInterval,
+          includeSpeakers: cfg.includeSpeakers,
+          diarization: cfg.diarization,
+        });
+
+        job.status = "done";
+        job.progress = 100;
+        job.statusText = `Done (${job.outputs.segments.length} segments, ${stitchedWords.length} words, est. $${job.outputs.estimatedCost.toFixed(4)})`;
+      } catch (err) {
+        job.status = "error";
+        job.statusText = `Error: ${err.message || String(err)}`;
+        log(`ERROR: ${err.message || String(err)}`);
+      }
+      renderJobs();
+      updateControls();
+    }
+
+    els.startBtn.addEventListener("click", async () => {
+      if (state.running) return;
+      const cfg = readConfig();
+      if (!cfg.apiKey) {
+        alert("Please enter your DREAM Lab LiteLLM API key.");
+        els.apiKey.focus();
+        return;
+      }
+      state.running = true;
+      updateControls();
+
+      for (const job of state.jobs) {
+        if (job.status === "queued" || job.status === "error") {
+          await processJob(job, readConfig());
+        }
+      }
+
+      state.running = false;
+      updateControls();
+    });
+
+    function updateControls() {
+      const total = state.jobs.length;
+      const done = state.jobs.filter((j) => j.status === "done").length;
+      const pending = state.jobs.filter((j) => j.status === "queued" || j.status === "error").length;
+
+      els.queueSummary.textContent =
+        total === 0
+          ? "No audio files queued."
+          : `${total} file(s) queued — ${done} completed, ${pending} pending/retryable.`;
+
+      els.clearBtn.disabled = state.running || total === 0;
+      els.startBtn.disabled = state.running || pending === 0 || !els.apiKey.value.trim();
+      els.startBtn.textContent = state.running
+        ? "Transcribing..."
+        : pending > 0 && done > 0
+        ? `Transcribe Remaining (${pending})`
+        : "Transcribe All";
+
+      const showBulk = done > 0 ? "inline-flex" : "none";
+      els.downloadAllMdBtn.style.display = showBulk;
+      els.downloadAllTxtBtn.style.display = showBulk;
+      els.downloadAllJsonBtn.style.display = showBulk;
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function renderJobs() {
+      els.fileList.innerHTML = "";
+      for (const job of state.jobs) {
+        const item = document.createElement("div");
+        item.className = "file-item";
+
+        const pillClass =
+          job.status === "done"
+            ? "status-done"
+            : job.status === "working"
+            ? "status-working"
+            : job.status === "error"
+            ? "status-error"
+            : "status-queued";
+
+        const sizeMb = (job.file.size / (1024 * 1024)).toFixed(2);
+        const durStr = job.duration ? ` • ${formatTs(job.duration)} (${job.duration.toFixed(1)}s)` : "";
+        const usageStr =
+          job.totalAudioTokens || job.totalOutputTokens
+            ? ` • ${job.totalAudioTokens.toLocaleString()} audio tok / ${job.totalOutputTokens.toLocaleString()} out tok`
+            : "";
+
+        let actionsHtml = "";
+        if (job.status === "done" && job.outputs) {
+          actionsHtml = `
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-dl-md">⬇ .md</button>
+              <button type="button" class="btn btn-dl-txt">⬇ .txt</button>
+              <button type="button" class="btn btn-dl-json">⬇ .json</button>
+              <button type="button" class="btn btn-copy">Copy</button>
+            </div>
+          `;
+        } else if (!state.running) {
+          actionsHtml = `<button type="button" class="btn btn-remove">Remove</button>`;
+        }
+
+        let previewContent = "";
+        if (job.outputs) {
+          if (job.activeTab === "md") previewContent = job.outputs.mdContent;
+          else if (job.activeTab === "txt") previewContent = job.outputs.txtContent;
+          else if (job.activeTab === "json") previewContent = job.outputs.jsonContent;
+          else if (job.activeTab === "log") previewContent = job.logs.join("\n");
+        } else if (job.logs.length > 0) {
+          previewContent = job.logs.join("\n");
+        }
+
+        item.innerHTML = `
+          <div class="file-header">
+            <div>
+              <div class="file-title">${escapeHtml(job.file.name)}</div>
+              <div class="file-meta">${sizeMb} MB${durStr}${usageStr}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span class="status-pill ${pillClass}">${escapeHtml(job.statusText)}</span>
+              ${actionsHtml}
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${job.progress}%"></div>
+          </div>
+          ${
+            job.outputs
+              ? `
+            <div class="tabs">
+              <button type="button" class="tab-btn ${job.activeTab === "md" ? "active" : ""}" data-tab="md">transcript.md</button>
+              <button type="button" class="tab-btn ${job.activeTab === "txt" ? "active" : ""}" data-tab="txt">transcript.txt</button>
+              <button type="button" class="tab-btn ${job.activeTab === "json" ? "active" : ""}" data-tab="json">transcript.json</button>
+              <button type="button" class="tab-btn ${job.activeTab === "log" ? "active" : ""}" data-tab="log">Chunk &amp; Stitch Log (${job.logs.length})</button>
+            </div>
+            <div class="output-box">${escapeHtml(previewContent)}</div>
+          `
+              : previewContent
+              ? `<div class="output-box">${escapeHtml(previewContent)}</div>`
+              : ""
+          }
+        `;
+
+        const btnMd = item.querySelector(".btn-dl-md");
+        if (btnMd) {
+          btnMd.addEventListener("click", () =>
+            downloadTextFile(`${job.stem}_transcript.md`, job.outputs.mdContent, "text/markdown;charset=utf-8")
+          );
+        }
+        const btnTxt = item.querySelector(".btn-dl-txt");
+        if (btnTxt) {
+          btnTxt.addEventListener("click", () =>
+            downloadTextFile(`${job.stem}_transcript.txt`, job.outputs.txtContent, "text/plain;charset=utf-8")
+          );
+        }
+        const btnJson = item.querySelector(".btn-dl-json");
+        if (btnJson) {
+          btnJson.addEventListener("click", () =>
+            downloadTextFile(`${job.stem}_transcript.json`, job.outputs.jsonContent, "application/json;charset=utf-8")
+          );
+        }
+        const btnCopy = item.querySelector(".btn-copy");
+        if (btnCopy) {
+          btnCopy.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(previewContent);
+            btnCopy.textContent = "Copied!";
+            setTimeout(() => (btnCopy.textContent = "Copy"), 1200);
+          });
+        }
+        const btnRemove = item.querySelector(".btn-remove");
+        if (btnRemove) {
+          btnRemove.addEventListener("click", () => {
+            state.jobs = state.jobs.filter((j) => j.id !== job.id);
+            updateControls();
+            renderJobs();
+          });
+        }
+        item.querySelectorAll(".tab-btn").forEach((tb) => {
+          tb.addEventListener("click", () => {
+            job.activeTab = tb.getAttribute("data-tab");
+            renderJobs();
+          });
+        });
+
+        els.fileList.appendChild(item);
+      }
+    }
+  </script>
+</body>
+</html>
