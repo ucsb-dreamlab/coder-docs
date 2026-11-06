@@ -138,6 +138,27 @@
       font-weight: 600;
       cursor: pointer;
       text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    a.help-link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a.help-link:hover {
+      text-decoration: underline;
+    }
+    .info-banner {
+      background: rgba(56, 189, 248, 0.07);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+    .info-banner strong {
+      color: var(--text);
     }
     .btn:hover:not(:disabled) {
       border-color: var(--accent);
@@ -265,18 +286,25 @@
         DREAM Lab Audio Transcription
         <span class="badge">gemini-3.5-transcribe</span>
       </h1>
-      <p>Browser-native Web Audio API overlapping chunker + native word timestamps &amp; speaker diarization via LiteLLM.</p>
+      <p>Browser-based audio transcription with word-level timestamps and speaker diarization via the DREAM Lab AI Gateway.</p>
     </header>
+
+    <div class="info-banner">
+      <strong>How your files are processed:</strong> Audio files are decoded and split into overlapping chunks entirely in your browser, then sent directly to Google's <code>gemini-3.5-transcribe</code> model through the DREAM Lab AI Gateway. <strong>Neither your audio files nor the resulting transcripts are stored by this app or on DREAM Lab servers</strong> after each request completes—everything stays on your computer until you download or close the page. (See the <a class="help-link" href="https://dreamlab.ucsb.edu/guides/ai-gateway.html#data-privacy-security" target="_blank" rel="noopener">AI Gateway data privacy notes</a>; do not use with P3/P4 protected data.)
+    </div>
 
     <!-- Primary Controls -->
     <div class="card">
       <div class="grid-2">
         <div>
-          <label for="apiKey">LiteLLM API Key (DREAMLAB_LLM_KEY)</label>
+          <label for="apiKey">DREAM Lab AI Gateway API Key</label>
           <div class="key-row">
             <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off" />
             <button type="button" class="btn" id="toggleKeyBtn">Show</button>
             <button type="button" class="btn" id="testKeyBtn" title="Send a tiny ping to verify API key &amp; CORS">Test Key</button>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--muted); margin-top: 6px;">
+            Need a key? <a class="help-link" href="https://litellm.dreamlab.ucsb.edu/dreamlab-keys" target="_blank" rel="noopener">Go here to generate a new key</a> in the API Key Manager (see <a class="help-link" href="https://dreamlab.ucsb.edu/guides/ai-gateway.html" target="_blank" rel="noopener">AI Gateway docs</a>).
           </div>
           <div id="keyStatus" style="font-size: 0.78rem; margin-top: 4px; display: none;"></div>
           <div style="margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap;">
