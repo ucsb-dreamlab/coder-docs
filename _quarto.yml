@@ -6,6 +6,7 @@ project:
     - images/dream-lab-logo.png
     - images/dreamlab_hex.png
     - images/*.svg
+    - ucsb-webtheme.js
     - callback.html
     - transcribe.html
 
@@ -32,7 +33,9 @@ website:
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css:
+      - ucsb-webtheme.css
+      - styles.css
     toc: true
     toc-title: "On this page"
     include-before-body: _includes/header.html
