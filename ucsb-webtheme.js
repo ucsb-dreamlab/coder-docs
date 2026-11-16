@@ -112,6 +112,28 @@
   }
 
   /* 3. Dynamic topOffset calculation for fixed header (#navbar) */
+  function getStickyHeaderHeight() {
+    var navbar = document.getElementById('navbar');
+    if (!navbar) return 0;
+
+    var secondaryNav = document.querySelector('.secondary-navigation');
+    if (isDesktop()) {
+      var navHeight = navbar.offsetHeight;
+      var secHeight = secondaryNav ? secondaryNav.offsetHeight : 0;
+      return navHeight + secHeight;
+    }
+
+    var headerBar = navbar.querySelector('.navbar-header');
+    return headerBar ? headerBar.offsetHeight : 60;
+  }
+
+  function updateScrollPadding() {
+    var stickyHeight = getStickyHeaderHeight();
+    if (stickyHeight > 0) {
+      document.documentElement.style.scrollPaddingTop = stickyHeight + 24 + 'px';
+    }
+  }
+
   function topOffset() {
     var navbar = document.getElementById('navbar');
     if (!navbar) return;
@@ -148,6 +170,8 @@
         topTarget.style.marginTop = mobileHeight + 'px';
       }
     }
+
+    updateScrollPadding();
   }
 
   /* 4. Shrink logo on scroll > 150px (logoSize) */
@@ -159,19 +183,25 @@
     if (scrollTop > 150) {
       if (!document.body.classList.contains('scroll')) {
         document.body.classList.add('scroll');
-        if (secondaryNav && navbar && isDesktop()) {
+        if (navbar && isDesktop()) {
           setTimeout(function () {
-            secondaryNav.style.top = navbar.offsetHeight + 'px';
-          }, 210);
+            if (secondaryNav) {
+              secondaryNav.style.top = navbar.offsetHeight + 'px';
+            }
+            updateScrollPadding();
+          }, 260);
         }
       }
     } else {
       if (document.body.classList.contains('scroll')) {
         document.body.classList.remove('scroll');
-        if (secondaryNav && navbar && isDesktop()) {
+        if (navbar && isDesktop()) {
           setTimeout(function () {
-            secondaryNav.style.top = navbar.offsetHeight + 'px';
-          }, 210);
+            if (secondaryNav) {
+              secondaryNav.style.top = navbar.offsetHeight + 'px';
+            }
+            updateScrollPadding();
+          }, 260);
         }
       }
     }
@@ -359,21 +389,60 @@
   }
 
   /* 11. Smooth anchor jumplinks accounting for fixed #navbar height (jumplink) */
+  function findAnchorTarget(hash) {
+    if (!hash || hash.charAt(0) !== '#' || hash.length < 2) return null;
+    var id = hash.slice(1);
+    try {
+      id = decodeURIComponent(id);
+    } catch (e) {
+      // keep raw id
+    }
+    return document.getElementById(id) || document.getElementsByName(id)[0] || null;
+  }
+
+  function scrollToHash(hash, smooth) {
+    var target = findAnchorTarget(hash);
+    if (!target) return false;
+    var offset = getStickyHeaderHeight() + 24;
+    var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({
+      top: Math.max(0, y),
+      behavior: smooth ? 'smooth' : 'instant'
+    });
+    return true;
+  }
+
   function initJumpLinks() {
-    var anchors = document.querySelectorAll('a[href^="#"]:not([href="#"]):not([data-bs-toggle])');
-    anchors.forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        var hash = a.getAttribute('href');
-        if (!hash || hash.charAt(0) !== '#') return;
-        var target = document.getElementById(hash.slice(1));
-        if (!target) return;
-        e.preventDefault();
-        var navbar = document.getElementById('navbar');
-        var navHeight = navbar ? navbar.offsetHeight : 140;
-        var y = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-        window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href*="#"]') : null;
+      if (!a || a.hasAttribute('data-bs-toggle')) return;
+      var rawHref = a.getAttribute('href');
+      if (!rawHref || rawHref === '#' || rawHref.indexOf('javascript:') === 0) return;
+
+      var hash = a.hash;
+      if (!hash || hash.length < 2) return;
+
+      // Only intercept links pointing to the current page
+      if (
+        a.origin !== window.location.origin ||
+        a.pathname !== window.location.pathname ||
+        a.search !== window.location.search
+      ) {
+        return;
+      }
+
+      if (!findAnchorTarget(hash)) return;
+      e.preventDefault();
+      scrollToHash(hash, true);
+      if (window.location.hash !== hash) {
         history.pushState(null, '', hash);
-      });
+      }
+    });
+
+    window.addEventListener('hashchange', function () {
+      if (window.location.hash) {
+        scrollToHash(window.location.hash, true);
+      }
     });
   }
 
@@ -650,9 +719,20 @@
     topOffset();
     logoSize();
 
+    if (window.location.hash) {
+      scrollToHash(window.location.hash, false);
+      logoSize();
+    }
+
     window.addEventListener('scroll', logoSize, { passive: true });
     window.addEventListener('resize', topOffset);
-    window.addEventListener('load', topOffset);
+    window.addEventListener('load', function () {
+      topOffset();
+      if (window.location.hash) {
+        scrollToHash(window.location.hash, false);
+        logoSize();
+      }
+    });
   }
 
   if (document.readyState === 'loading') {

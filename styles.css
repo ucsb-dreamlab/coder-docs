@@ -39,6 +39,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 205px;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 104px;
+  }
 }
 
 body {
