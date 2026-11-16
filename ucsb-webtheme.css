@@ -344,6 +344,14 @@ footer .footer-bottom svg.offsite path {
   fill: #ffffff !important;
 }
 
+footer .footer li svg.offsite,
+footer .footer-bottom svg.offsite {
+  vertical-align: baseline !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+  margin-bottom: -2px !important;
+}
+
 /* Bootstrap 3 Container / Row / Blade Clearfix for Floated Children in Bootstrap 5 */
 .container::after,
 .container-fluid::after,
