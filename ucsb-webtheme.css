@@ -319,6 +319,15 @@ header.navbar#navbar #eyebrow .quick-links.expanded ul.menu.nav {
   display: block !important;
 }
 
+header.navbar#navbar #eyebrow .quick-links ul.menu.nav {
+  width: max-content !important;
+  min-width: 260px !important;
+}
+
+header.navbar#navbar #eyebrow .quick-links ul.menu.nav li > a {
+  white-space: nowrap !important;
+}
+
 header.navbar#navbar #eyebrow .block-search-form-block {
   z-index: 1050;
   padding-top: 28px !important;
