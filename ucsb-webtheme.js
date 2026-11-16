@@ -238,79 +238,41 @@
     if (chevron) chevron.addEventListener('click', toggleQL);
   }
 
-  /* 7. Eyebrow Search drawer + Quarto Autocomplete Search integration (searchForm) */
+  /* 7. Eyebrow Search button -> Quarto Autocomplete Search overlay */
   function triggerQuartoSearch(queryText) {
     // Open Quarto's built-in Fuse.js search overlay if available
     var quartoBtn = document.querySelector('#quarto-search button.aa-DetachedSearchButton');
     if (quartoBtn) {
       closeSearch();
       quartoBtn.click();
-      if (queryText) {
-        setTimeout(function () {
-          var input = document.querySelector('.aa-Input');
-          if (input) {
+      setTimeout(function () {
+        var input = document.querySelector('.aa-Input');
+        if (input) {
+          if (queryText) {
             input.value = queryText;
             input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.focus();
           }
-        }, 80);
-      }
+          input.focus();
+        }
+      }, 80);
       return true;
     }
     return false;
   }
 
   function initSearchForm() {
-    var eyebrow = document.getElementById('eyebrow');
-    var search = document.querySelector('#eyebrow .search');
     var btn = document.getElementById('search-toggle-container');
-    if (!search || !btn) return;
-
-    var block = search.querySelector('.block-search-form-block');
-    var input = search.querySelector('input.form-search');
-    var form = search.querySelector('form');
+    if (!btn) return;
 
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      var isExpanded = search.classList.contains('expanded');
       closeQuickLinks();
-      if (isExpanded) {
-        closeSearch();
-      } else {
-        search.classList.add('expanded');
-        if (eyebrow) eyebrow.classList.add('search-expanded');
-        if (block) block.setAttribute('aria-hidden', 'false');
-        if (input) {
-          setTimeout(function () {
-            input.focus();
-          }, 50);
-        }
+      closeSearch();
+      if (!triggerQuartoSearch('')) {
+        window.location.href = resolveHref('index.html?show-results=1');
       }
     });
-
-    if (block) {
-      block.addEventListener('click', function (e) {
-        e.stopPropagation();
-      });
-    }
-
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var q = input ? input.value.trim() : '';
-        triggerQuartoSearch(q);
-      });
-    }
-
-    var openModalBtn = document.getElementById('ucsb-open-live-search');
-    if (openModalBtn) {
-      openModalBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        var q = input ? input.value.trim() : '';
-        triggerQuartoSearch(q);
-      });
-    }
   }
 
   /* 8. Mobile Navbar Toggle (subMenuFixed) */
