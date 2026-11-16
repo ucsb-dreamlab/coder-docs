@@ -83,11 +83,11 @@
 
     if (path.indexOf('/faq') !== -1) {
       activeNav = 'faq';
-    } else if (path.indexOf('/coder') !== -1) {
+    } else if (path.indexOf('/coder') !== -1 || path.indexOf('/callback') !== -1) {
       activeNav = 'coder';
     } else if (path.indexOf('/guides/getting-started') !== -1) {
       activeNav = 'getting-started';
-    } else if (path.indexOf('/guides/ai-gateway') !== -1) {
+    } else if (path.indexOf('/guides/ai-gateway') !== -1 || path.indexOf('/transcribe') !== -1) {
       activeNav = 'ai-gateway';
     } else if (path.indexOf('/guides') !== -1) {
       activeNav = 'guides';

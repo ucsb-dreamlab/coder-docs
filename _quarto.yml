@@ -6,6 +6,7 @@ project:
     - images/dream-lab-logo.png
     - images/dreamlab_hex.png
     - images/*.svg
+    - ucsb-webtheme.css
     - ucsb-webtheme.js
     - callback.html
     - transcribe.html
