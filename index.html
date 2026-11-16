@@ -45,7 +45,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f35a81a4717690815b2013502477d714.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8d3ad9c781c51ccd60b292c95058b2c2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -58,7 +58,6 @@ ul.task-list li input[type="checkbox"] {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -75,10 +74,11 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="ucsb-webtheme.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+<body class="nav-fixed fullcontent quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -94,39 +94,30 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-coder-workspaces" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Coder Workspaces</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-coder-workspaces">    
-        <li>
-    <a class="dropdown-item" href="./coder.html">
- <span class="dropdown-text">Overview</span></a>
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="./guides/getting-started.html">
- <span class="dropdown-text">Getting Started</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./guides/getting-started.html"> 
+<span class="menu-text">Getting Started</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./guides/file-transfer.html">
- <span class="dropdown-text">Transferring Files</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./guides/index.html"> 
+<span class="menu-text">Guides</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="./guides/rstudio.html">
- <span class="dropdown-text">RStudio</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./coder.html"> 
+<span class="menu-text">Coder Workspaces</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./guides/marimo.html">
- <span class="dropdown-text">Marimo Notebooks</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./guides/ai-gateway.html"> 
+<span class="menu-text">AI Gateway</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./guides/ai-agents.html">
- <span class="dropdown-text">Using AI Coding Agents</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./faq.html"> 
+<span class="menu-text">FAQ</span></a>
   </li>  
-    </ul>
-  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -136,42 +127,481 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
 <!-- main -->
-<main class="content column-page" id="quarto-document-content" tabindex="-1"><header id="title-block-header" class="quarto-title-block"></header>
+<a class="skip-link sr-only" href="#quarto-document-content">Skip to main content</a>
+<header class="navbar navbar-default navbar-fixed-top container-fluid" id="navbar" role="banner">
+  <div id="eyebrow">
+    <div class="inner">
+      <div class="items">
+        <div class="item">
+          <a href="https://www.ucsb.edu/" class="edu-link">University of California, Santa Barbara</a>
+        </div>
+        <div class="item">
+          <div class="inner">
+            <div class="give">
+              <a href="https://www.library.ucsb.edu/">UCSB Library</a>
+            </div>
+            <div class="quick-links">
+              <a href="#" role="button" aria-expanded="false">Quick Links</a>
+              <svg width="24px" height="24px" viewbox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <polygon fill="#ffffff" points="16.59 8.59 12 13.17 7.41 8.59 6 10 12 16 18 10"></polygon>
+                </g>
+              </svg>
+              <ul class="menu nav" aria-hidden="true">
+                <li>
+                  <a href="https://coder.dreamlab.ucsb.edu/" class="offsite-quick-link" target="_blank" rel="noopener">Coder Dashboard</a>
+                </li>
+                <li>
+                  <a href="https://www.library.ucsb.edu/dreamlab" class="offsite-quick-link" target="_blank" rel="noopener">UCSB Library DREAM Lab</a>
+                </li>
+                <li>
+                  <a href="https://www.library.ucsb.edu/" class="offsite-quick-link" target="_blank" rel="noopener">UCSB Library</a>
+                </li>
+              </ul>
+            </div>
+            <div class="search">
+              <button id="search-toggle-container" type="button" aria-label="Search documentation">
+                <div class="toggle-button">
+                  <svg class="magnifier" width="24px" height="24px" viewbox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Search">
+                    <title>Search</title>
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <path d="M15.5,14 L14.71,14 L14.43,13.73 C15.41,12.59 16,11.11 16,9.5 C16,5.91 13.09,3 9.5,3 C5.91,3 3,5.91 3,9.5 C3,13.09 5.91,16 9.5,16 C11.11,16 12.59,15.41 13.73,14.43 L14,14.71 L14,15.5 L19,20.49 L20.49,19 L15.5,14 Z M9.5,14 C7.01,14 5,11.99 5,9.5 C5,7.01 7.01,5 9.5,5 C11.99,5 14,7.01 14,9.5 C14,11.99 11.99,14 9.5,14 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <div class="region region-navigation">
+        <a class="logo navbar-btn pull-left logo-size-1" href="./index.html" title="Home" rel="home">
+          <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 511.1 80.1" aria-labelledby="departmentname" role="img">
+            <title id="departmentname">UC Santa Barbara — DREAM Lab Cloud Services</title>
+            <style type="text/css">.st0{fill:#003660;}</style>
+            <g>
+			<path class="st0" d="M238.4,0.5h3.6l8.7,20h-5l-1.7-4.2h-7.8l-1.7,4.2h-4.9L238.4,0.5z M240.1,6.3l-2.4,6.2h4.9L240.1,6.3z"></path>
+			<path class="st0" d="M213.1,0.5h7.4c0.9,0,1.7,0.1,2.6,0.2c0.9,0.1,1.7,0.4,2.4,0.7c0.7,0.4,1.3,0.9,1.7,1.5     c0.4,0.7,0.6,1.5,0.6,2.6c0,1.1-0.3,2.1-0.9,2.8c-0.6,0.7-1.5,1.3-2.5,1.6V10c0.7,0.1,1.2,0.3,1.8,0.6s1,0.6,1.4,1     c0.4,0.4,0.7,0.9,0.9,1.5s0.3,1.2,0.3,1.8c0,1.1-0.2,1.9-0.7,2.6c-0.4,0.7-1,1.3-1.8,1.7s-1.5,0.7-2.4,0.9s-1.8,0.3-2.7,0.3h-8.2     L213.1,0.5L213.1,0.5z M217.5,8.5h3.2c0.3,0,0.7,0,1-0.1s0.6-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.6-0.7c0.2-0.3,0.2-0.6,0.2-1     c0-0.4-0.1-0.8-0.3-1c-0.2-0.3-0.4-0.5-0.7-0.6s-0.6-0.3-1-0.3c-0.4-0.1-0.7-0.1-1-0.1h-3V8.5z M217.5,16.8h3.9     c0.3,0,0.7,0,1-0.1s0.7-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.7-0.7c0.2-0.3,0.3-0.7,0.3-1.1c0-0.5-0.1-0.9-0.4-1.1     c-0.2-0.3-0.5-0.5-0.9-0.7s-0.7-0.2-1.2-0.3c-0.4-0.1-0.8-0.1-1.2-0.1h-3.3L217.5,16.8L217.5,16.8z"></path>
+			<path class="st0" d="M252.9,0.5h7.7c1,0,2,0.1,2.9,0.3s1.7,0.5,2.4,1s1.2,1.1,1.6,1.9c0.4,0.8,0.6,1.8,0.6,2.9     c0,1.4-0.4,2.6-1.1,3.6s-1.8,1.6-3.2,1.9l5.1,8.4h-5.3l-4.2-8h-2.2v8h-4.4L252.9,0.5L252.9,0.5z M257.3,8.8h2.6     c0.4,0,0.8,0,1.3,0c0.4,0,0.8-0.1,1.2-0.2c0.4-0.1,0.6-0.4,0.9-0.7c0.2-0.3,0.4-0.7,0.4-1.3c0-0.5-0.1-0.9-0.3-1.2     s-0.5-0.5-0.8-0.7s-0.7-0.3-1.1-0.3c-0.4-0.1-0.8-0.1-1.2-0.1h-2.9L257.3,8.8L257.3,8.8z"></path>
+			<path class="st0" d="M179,0.5h3.6l8.7,20h-5l-1.7-4.2h-7.8l-1.7,4.2h-4.9L179,0.5z M180.7,6.3l-2.4,6.2h4.9L180.7,6.3z"></path>
+			<path class="st0" d="M279.1,0.5h3.6l8.7,20h-5l-1.7-4.2H277l-1.7,4.2h-4.9L279.1,0.5z M280.8,6.3l-2.4,6.2h4.9L280.8,6.3z"></path>
+			<path class="st0" d="M153.7,0.5h7.4c0.9,0,1.7,0.1,2.6,0.2c0.9,0.1,1.7,0.4,2.4,0.7c0.7,0.4,1.3,0.9,1.7,1.5     c0.4,0.7,0.6,1.5,0.6,2.6c0,1.1-0.3,2.1-0.9,2.8c-0.6,0.7-1.5,1.3-2.5,1.6V10c0.7,0.1,1.2,0.3,1.8,0.6s1,0.6,1.4,1     c0.4,0.4,0.7,0.9,0.9,1.5s0.3,1.2,0.3,1.8c0,1.1-0.2,1.9-0.7,2.6c-0.4,0.7-1,1.3-1.8,1.7c-0.7,0.4-1.5,0.7-2.4,0.9     s-1.8,0.3-2.7,0.3h-8.2L153.7,0.5L153.7,0.5z M158.1,8.5h3.2c0.3,0,0.7,0,1-0.1s0.6-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.6-0.7     c0.2-0.3,0.2-0.6,0.2-1c0-0.4-0.1-0.8-0.3-1c-0.2-0.3-0.4-0.5-0.7-0.6s-0.6-0.3-1-0.3c-0.4-0.1-0.7-0.1-1-0.1h-3V8.5z      M158.1,16.8h3.9c0.3,0,0.7,0,1-0.1s0.7-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.7-0.7c0.2-0.3,0.3-0.7,0.3-1.1c0-0.5-0.1-0.9-0.4-1.1     c-0.2-0.3-0.5-0.5-0.9-0.7s-0.7-0.2-1.2-0.3c-0.4-0.1-0.8-0.1-1.2-0.1H158L158.1,16.8L158.1,16.8z"></path>
+			<path class="st0" d="M193.4,0.5h7.7c1,0,2,0.1,2.9,0.3s1.7,0.5,2.4,1c0.7,0.5,1.2,1.1,1.6,1.9c0.4,0.8,0.6,1.8,0.6,2.9     c0,1.4-0.4,2.6-1.1,3.6c-0.7,1-1.8,1.6-3.2,1.9l5.1,8.4h-5.3l-4.2-8h-2.2v8h-4.4L193.4,0.5L193.4,0.5z M197.8,8.8h2.6     c0.4,0,0.8,0,1.3,0c0.4,0,0.8-0.1,1.2-0.2s0.6-0.4,0.9-0.7c0.2-0.3,0.4-0.7,0.4-1.3c0-0.5-0.1-0.9-0.3-1.2     c-0.2-0.3-0.5-0.5-0.8-0.7c-0.3-0.2-0.7-0.3-1.1-0.3c-0.4-0.1-0.8-0.1-1.2-0.1h-2.9L197.8,8.8L197.8,8.8z"></path>
+			<path class="st0" d="M73.7,0.5h3.6l8.7,20h-5l-1.7-4.2h-7.8l-1.7,4.2H65L73.7,0.5z M75.3,6.3l-2.4,6.2h4.9L75.3,6.3z"></path>
+			<path class="st0" d="M132.9,0.5h3.6l8.7,20h-5l-1.7-4.2h-7.8l-1.7,4.2h-4.8L132.9,0.5z M134.6,6.3l-2.4,6.2h4.9L134.6,6.3z"></path>
+			<path class="st0" d="M88.4,0.5h6l8.5,13.9h0.1V0.5h4.4v20h-5.8L92.9,6.3h-0.1v14.2h-4.4V0.5z"></path>
+			<path class="st0" d="M115.9,4.4h-5.5V0.5h15.8v3.9h-5.9v16.1h-4.4V4.4z"></path>
+			<path class="st0" d="M9.8,20.8c-4.6,0-7.3-2.7-7.3-7.6l0-10.7H0.2V0.5h7.3v1.9H5v10.4c0,4.2,1.5,5.9,4.9,5.9     c3.2,0,5.1-1.3,5.1-6.2l0-10.1h-2.6V0.5h7.3v1.9h-2.3l0,10.4C17.4,17.8,15,20.8,9.8,20.8z"></path>
+			<path class="st0" d="M37.2,13.8c-0.5,3.3-2.8,4.9-6.1,4.9c-4.4,0-7-3.1-7-8.3v-0.2c0-5.1,2.8-8.3,7-8.3c3.1,0,5.2,1.3,6,4.7h2.1     V0.5H37v2.2C36,0.9,33.7,0,31.2,0c-5.6,0-9.6,4.3-9.6,10.3v0.2c0,6.2,3.6,10.2,9.5,10.2c4.5,0,7.6-2.2,8.4-6.7L37.2,13.8z"></path>
+			<path class="st0" d="M63.8,14.3c0,3.8-3.2,6.5-7.8,6.5c-3.7,0-6.3-1.2-7.9-3.7l3-2.6c0.5,0.7,2.2,2.7,5.2,2.7     c1.9,0,3.1-0.8,3.1-2.2c0-1.7-1.1-2.1-3.9-2.8c-3.3-0.9-6.6-2.3-6.6-6C49,2.6,52.1,0,56.5,0c1.8,0,5,0.4,6.8,3.2l-2.8,2.4     C59.5,4.2,58,3.6,56,3.6c-2,0-2.7,1.4-2.7,2.3c0,1.5,1.9,2.1,4.3,2.7C60.6,9.3,63.8,10.5,63.8,14.3z"></path>
+		</g>
+            <g>
+            <path class="st0" d="M12.09 66.89Q14.72 66.89 16.68 66.13Q18.64 65.37 19.95 63.96Q21.26 62.56 21.93 60.56Q22.59 58.56 22.59 56.05V55.75Q22.59 53.39 22.00 51.43Q21.41 49.47 20.14 48.04Q18.86 46.62 16.87 45.84Q14.87 45.06 12.05 45.06H8.36V66.89ZM1.63 67.01H5.05V44.98H1.63V42.39H12.24Q15.74 42.39 18.33 43.42Q20.92 44.45 22.63 46.24Q24.34 48.03 25.18 50.46Q26.02 52.89 26.02 55.75V56.09Q26.02 58.91 25.20 61.38Q24.38 63.85 22.67 65.68Q20.96 67.50 18.35 68.55Q15.74 69.6 12.17 69.6H1.63Z"></path>
+            <path class="st0" d="M41.50 55.14Q44.43 55.14 45.95 53.88Q47.47 52.63 47.47 50.00V49.85Q47.47 47.26 45.87 46.12Q44.28 44.98 41.50 44.98H36.40V55.14ZM29.67 69.6V67.01H33.09V44.98H29.67V42.39H41.46Q43.40 42.39 45.09 42.81Q46.79 43.23 48.04 44.14Q49.30 45.06 50.04 46.48Q50.78 47.91 50.78 49.97V50.12Q50.78 51.72 50.27 52.97Q49.75 54.23 48.86 55.16Q47.97 56.09 46.73 56.68Q45.49 57.27 44.01 57.50L50.59 67.01H53.03V69.6H48.69L40.59 57.76H36.40V67.01H40.13V69.6Z"></path>
+            <path class="st0" d="M55.73 67.01H59.15V44.98H55.73V42.39H75.93V48.75H72.85V44.98H62.46V54.34H70.79V51.91H73.53V59.48H70.79V57.04H62.46V67.01H73.61V62.63H76.69V69.6H55.73Z"></path>
+            <path class="st0" d="M88.44 59.13H97.88L93.16 45.13ZM80.04 69.6V67.01H82.66L91.14 42.39H95.48L103.81 67.01H106.47V69.6H97.57V67.01H100.54L98.75 61.76H87.57L85.78 67.01H88.78V69.6Z"></path>
+            <path class="st0" d="M119.07 69.6H109.18V67.01H112.60V44.98H109.18V42.39H117.73L125.61 63.43L133.37 42.39H141.74V44.98H138.32V67.01H141.74V69.6H131.58V67.01H135.01V45.86L125.99 69.6H124.96L115.64 45.86V67.01H119.07Z"></path>
+            <path class="st0" d="M153.57 67.01H156.99V44.98H153.57V42.39H164.03V44.98H160.30V66.89H170.58V62.14H173.66V69.6H153.57Z"></path>
+            <path class="st0" d="M183.85 67.43Q185.07 67.43 186.13 67.10Q187.20 66.78 187.98 66.17Q188.76 65.56 189.22 64.67Q189.67 63.77 189.67 62.63V60.16H187.01Q185.53 60.16 184.29 60.37Q183.05 60.58 182.16 61.04Q181.26 61.49 180.75 62.25Q180.24 63.01 180.24 64.08Q180.24 64.76 180.43 65.37Q180.62 65.98 181.04 66.44Q181.46 66.89 182.14 67.16Q182.82 67.43 183.85 67.43ZM189.67 66.86Q188.68 68.42 187.20 69.18Q185.72 69.94 183.55 69.94Q182.18 69.94 181.00 69.6Q179.82 69.25 178.94 68.53Q178.07 67.81 177.57 66.70Q177.08 65.60 177.08 64.08Q177.08 62.33 177.90 61.15Q178.72 59.97 180.09 59.25Q181.46 58.52 183.22 58.22Q184.99 57.92 186.90 57.92H189.67V56.47Q189.67 53.96 188.66 52.97Q187.66 51.98 185.49 51.98Q183.47 51.98 182.39 52.80Q181.30 53.62 181.07 55.56H177.92Q178.07 53.81 178.75 52.61Q179.44 51.41 180.50 50.69Q181.57 49.97 182.90 49.66Q184.23 49.36 185.64 49.36Q187.05 49.36 188.34 49.66Q189.63 49.97 190.62 50.76Q191.61 51.56 192.22 52.93Q192.83 54.30 192.83 56.47V67.12H195.49V69.6H189.67Z"></path>
+            <path class="st0" d="M210.44 67.31Q213.41 67.31 214.97 65.39Q216.53 63.47 216.53 59.82V59.51Q216.53 57.65 216.04 56.22Q215.54 54.80 214.72 53.86Q213.90 52.93 212.78 52.46Q211.66 51.98 210.41 51.98Q209.04 51.98 207.84 52.44Q206.64 52.89 205.76 53.83Q204.89 54.76 204.39 56.19Q203.90 57.61 203.90 59.51V59.82Q203.90 63.62 205.71 65.47Q207.51 67.31 210.44 67.31ZM210.75 69.94Q208.31 69.94 206.60 68.87Q204.89 67.81 204.01 66.25V69.6H198.08V67.12H200.86V42.78H198.00V40.19H204.01V53.20Q204.43 52.40 205.14 51.70Q205.84 50.99 206.71 50.48Q207.59 49.97 208.62 49.66Q209.64 49.36 210.75 49.36Q212.69 49.36 214.36 50.04Q216.04 50.73 217.23 52.02Q218.43 53.31 219.12 55.18Q219.80 57.04 219.80 59.36V59.67Q219.80 61.95 219.15 63.83Q218.51 65.71 217.33 67.08Q216.15 68.45 214.48 69.20Q212.80 69.94 210.75 69.94Z"></path>
+            <path class="st0" d="M256.21 60.58Q255.48 65.30 252.44 67.62Q249.40 69.94 244.83 69.94Q241.87 69.94 239.53 68.97Q237.19 68.00 235.53 66.19Q233.88 64.38 233.00 61.85Q232.13 59.32 232.13 56.17V55.86Q232.13 52.86 233.10 50.31Q234.07 47.76 235.78 45.89Q237.49 44.03 239.85 43.00Q242.21 41.98 245.02 41.98Q247.61 41.98 249.68 42.85Q251.76 43.73 252.82 45.63V42.39H255.79V50.88H253.01Q252.18 47.49 250.12 46.05Q248.07 44.60 244.95 44.60Q242.82 44.60 241.09 45.40Q239.35 46.20 238.14 47.64Q236.92 49.09 236.24 51.18Q235.55 53.27 235.55 55.82V56.13Q235.55 58.71 236.20 60.79Q236.84 62.86 238.04 64.29Q239.24 65.71 240.97 66.48Q242.70 67.24 244.91 67.24Q248.26 67.24 250.43 65.58Q252.59 63.93 253.13 60.58H256.21Z"></path>
+            <path class="st0" d="M259.63 69.6V67.12H262.41V42.78H259.56V40.19H265.60V67.12H268.38V69.6Z"></path>
+            <path class="st0" d="M281.01 69.94Q278.88 69.94 277.09 69.18Q275.30 68.42 274.01 67.07Q272.72 65.71 272.0 63.85Q271.27 61.99 271.27 59.82V59.51Q271.27 57.27 272.01 55.41Q272.76 53.54 274.05 52.19Q275.34 50.84 277.13 50.10Q278.92 49.36 281.05 49.36Q283.14 49.36 284.95 50.10Q286.76 50.84 288.05 52.17Q289.34 53.50 290.08 55.37Q290.83 57.23 290.83 59.48V59.78Q290.83 62.02 290.08 63.91Q289.34 65.79 288.03 67.12Q286.72 68.45 284.93 69.20Q283.14 69.94 281.01 69.94ZM281.05 67.31Q282.53 67.31 283.75 66.78Q284.97 66.25 285.80 65.26Q286.64 64.27 287.10 62.88Q287.55 61.49 287.55 59.82V59.55Q287.55 57.84 287.10 56.43Q286.64 55.02 285.79 54.04Q284.93 53.05 283.73 52.51Q282.53 51.98 281.05 51.98Q279.57 51.98 278.35 52.51Q277.13 53.05 276.29 54.04Q275.46 55.02 275.00 56.41Q274.54 57.80 274.54 59.51V59.82Q274.54 63.24 276.27 65.28Q278.01 67.31 281.05 67.31Z"></path>
+            <path class="st0" d="M309.50 66.25Q309.16 66.93 308.59 67.60Q308.02 68.26 307.24 68.78Q306.46 69.29 305.47 69.61Q304.48 69.94 303.34 69.94Q301.86 69.94 300.60 69.52Q299.35 69.10 298.43 68.15Q297.52 67.20 297.01 65.71Q296.49 64.23 296.49 62.06V52.29H293.72V49.70H299.65V62.18Q299.65 64.80 300.77 66.00Q301.90 67.20 304.18 67.20Q305.21 67.20 306.16 66.86Q307.11 66.51 307.85 65.83Q308.59 65.14 309.05 64.12Q309.50 63.09 309.50 61.72V52.29H306.73V49.70H312.66V67.12H315.44V69.6H309.50V66.25Z"></path>
+            <path class="st0" d="M327.65 67.43Q329.02 67.43 330.24 66.95Q331.45 66.48 332.33 65.54Q333.20 64.61 333.72 63.17Q334.23 61.72 334.23 59.78V59.48Q334.23 55.56 332.54 53.71Q330.85 51.87 327.92 51.87Q324.95 51.87 323.28 53.86Q321.60 55.86 321.60 59.59V59.89Q321.60 61.80 322.08 63.22Q322.55 64.65 323.37 65.58Q324.19 66.51 325.29 66.97Q326.4 67.43 327.65 67.43ZM334.12 66.17Q333.70 66.89 332.98 67.58Q332.25 68.26 331.36 68.78Q330.47 69.29 329.42 69.61Q328.37 69.94 327.31 69.94Q325.37 69.94 323.71 69.27Q322.06 68.61 320.86 67.33Q319.66 66.06 319.00 64.21Q318.33 62.37 318.33 60.05V59.74Q318.33 57.46 319.01 55.56Q319.70 53.66 320.92 52.27Q322.13 50.88 323.85 50.12Q325.56 49.36 327.61 49.36Q330.12 49.36 331.68 50.40Q333.24 51.45 334.12 52.89V42.78H331.15V40.19H337.28V67.12H340.05V69.6H334.12Z"></path>
+            <path class="st0" d="M362.31 69.94Q359.72 69.94 357.84 69.06Q355.95 68.19 355.08 66.51V69.6H352.26V61.26H355.08Q355.31 62.56 355.90 63.66Q356.49 64.76 357.40 65.58Q358.31 66.40 359.55 66.88Q360.78 67.35 362.34 67.35Q363.60 67.35 364.67 66.99Q365.73 66.63 366.53 65.96Q367.33 65.30 367.77 64.38Q368.20 63.47 368.20 62.37Q368.20 61.23 367.90 60.33Q367.59 59.44 366.87 58.75Q366.15 58.07 364.93 57.61Q363.71 57.16 361.89 56.85Q359.83 56.51 358.14 55.96Q356.45 55.41 355.23 54.49Q354.01 53.58 353.35 52.30Q352.68 51.03 352.68 49.24Q352.68 47.61 353.29 46.29Q353.90 44.98 354.98 44.03Q356.07 43.08 357.59 42.57Q359.11 42.05 360.98 42.05Q362.38 42.05 363.45 42.30Q364.51 42.55 365.27 42.95Q366.03 43.35 366.55 43.88Q367.06 44.41 367.40 45.02V42.39H370.18V49.58H367.48Q366.95 47.34 365.33 45.99Q363.71 44.64 361.09 44.64Q358.58 44.64 357.17 45.78Q355.76 46.92 355.76 48.90Q355.76 49.85 356.07 50.61Q356.37 51.37 357.13 52.00Q357.89 52.63 359.17 53.10Q360.44 53.58 362.42 53.92Q364.59 54.30 366.26 54.89Q367.94 55.48 369.08 56.43Q370.22 57.38 370.81 58.77Q371.40 60.16 371.40 62.10Q371.40 63.85 370.71 65.30Q370.03 66.74 368.83 67.77Q367.63 68.80 365.96 69.37Q364.28 69.94 362.31 69.94Z"></path>
+            <path class="st0" d="M384.90 69.94Q382.77 69.94 381.02 69.21Q379.27 68.49 377.98 67.18Q376.69 65.87 375.98 64.00Q375.28 62.14 375.28 59.86V59.55Q375.28 57.31 375.96 55.42Q376.65 53.54 377.88 52.19Q379.12 50.84 380.83 50.10Q382.54 49.36 384.60 49.36Q386.31 49.36 387.93 49.91Q389.54 50.46 390.80 51.64Q392.06 52.82 392.80 54.70Q393.54 56.58 393.54 59.25V60.27H378.55Q378.66 63.70 380.26 65.51Q381.86 67.31 384.94 67.31Q389.62 67.31 390.23 63.85H393.39Q392.85 66.86 390.57 68.40Q388.29 69.94 384.90 69.94ZM390.31 57.73Q390.08 54.64 388.57 53.31Q387.07 51.98 384.60 51.98Q382.16 51.98 380.62 53.52Q379.08 55.06 378.66 57.73Z"></path>
+            <path class="st0" d="M396.77 69.6V67.12H399.55V52.29H396.70V49.70H402.71V53.50Q403.05 52.70 403.64 51.96Q404.23 51.22 405.08 50.65Q405.94 50.08 407.12 49.72Q408.30 49.36 409.86 49.36V52.48Q408.22 52.48 406.91 52.74Q405.60 53.01 404.67 53.73Q403.73 54.45 403.22 55.65Q402.71 56.85 402.71 58.68V67.12H405.75V69.6Z"></path>
+            <path class="st0" d="M431.50 52.29 425.30 69.6H421.46L414.99 52.29H412.52V49.70H421.23V52.29H418.42L423.55 66.63L428.42 52.29H425.57V49.70H433.94V52.29Z"></path>
+            <path class="st0" d="M440.56 45.59Q439.68 45.59 439.04 44.96Q438.39 44.34 438.39 43.42Q438.39 42.51 439.04 41.90Q439.68 41.29 440.56 41.29Q441.43 41.29 442.08 41.90Q442.73 42.51 442.73 43.42Q442.73 44.34 442.08 44.96Q441.43 45.59 440.56 45.59ZM436.37 69.6V67.12H439.15V52.29H436.30V49.70H442.31V67.12H445.16V69.6Z"></path>
+            <path class="st0" d="M463.54 49.70H466.31V56.43H463.61Q463.08 54.42 461.67 53.20Q460.26 51.98 457.72 51.98Q456.35 51.98 455.19 52.51Q454.03 53.05 453.17 54.02Q452.31 54.99 451.82 56.39Q451.32 57.80 451.32 59.55V59.86Q451.32 63.55 453.13 65.43Q454.94 67.31 457.83 67.31Q458.90 67.31 459.87 67.01Q460.84 66.70 461.62 66.10Q462.4 65.49 462.91 64.57Q463.42 63.66 463.54 62.44H466.47Q466.31 64.04 465.61 65.43Q464.91 66.82 463.76 67.81Q462.62 68.80 461.10 69.37Q459.58 69.94 457.79 69.94Q455.70 69.94 453.93 69.23Q452.16 68.53 450.85 67.22Q449.54 65.90 448.79 64.04Q448.05 62.18 448.05 59.86V59.55Q448.05 57.27 448.81 55.39Q449.57 53.50 450.89 52.17Q452.20 50.84 453.95 50.10Q455.70 49.36 457.72 49.36Q460.23 49.36 461.58 50.21Q462.93 51.07 463.54 52.29Z"></path>
+            <path class="st0" d="M479.97 69.94Q477.84 69.94 476.09 69.21Q474.34 68.49 473.05 67.18Q471.75 65.87 471.05 64.00Q470.35 62.14 470.35 59.86V59.55Q470.35 57.31 471.03 55.42Q471.72 53.54 472.95 52.19Q474.19 50.84 475.90 50.10Q477.61 49.36 479.67 49.36Q481.38 49.36 482.99 49.91Q484.61 50.46 485.87 51.64Q487.12 52.82 487.86 54.70Q488.61 56.58 488.61 59.25V60.27H473.62Q473.73 63.70 475.33 65.51Q476.93 67.31 480.01 67.31Q484.69 67.31 485.30 63.85H488.45Q487.92 66.86 485.64 68.40Q483.36 69.94 479.97 69.94ZM485.37 57.73Q485.14 54.64 483.64 53.31Q482.14 51.98 479.67 51.98Q477.23 51.98 475.69 53.52Q474.15 55.06 473.73 57.73Z"></path>
+            <path class="st0" d="M500.06 69.94Q498.92 69.94 498.02 69.67Q497.13 69.40 496.50 69.01Q495.87 68.61 495.47 68.11Q495.07 67.62 494.88 67.16V69.6H492.22V62.98H494.81Q494.96 63.85 495.40 64.65Q495.83 65.45 496.50 66.08Q497.17 66.70 498.08 67.07Q498.99 67.43 500.13 67.43Q504.20 67.43 504.20 64.16Q504.20 62.60 503.02 61.89Q501.84 61.19 499.52 60.77Q497.58 60.43 496.25 59.89Q494.92 59.36 494.12 58.62Q493.32 57.88 492.96 56.91Q492.60 55.94 492.60 54.68Q492.60 53.43 493.09 52.44Q493.59 51.45 494.45 50.76Q495.30 50.08 496.44 49.72Q497.58 49.36 498.88 49.36Q501.05 49.36 502.19 50.04Q503.33 50.73 503.86 51.79V49.70H506.52V55.44H503.94Q503.59 53.77 502.36 52.82Q501.12 51.87 499.18 51.87Q497.47 51.87 496.50 52.53Q495.53 53.20 495.53 54.61Q495.53 55.25 495.74 55.77Q495.95 56.28 496.48 56.68Q497.01 57.08 497.91 57.38Q498.80 57.69 500.17 57.95Q501.69 58.26 502.99 58.64Q504.28 59.02 505.21 59.69Q506.14 60.35 506.68 61.38Q507.21 62.41 507.21 63.96Q507.21 66.63 505.42 68.28Q503.63 69.94 500.06 69.94Z"></path>
+          </g>
+          </svg>
+        </a>
+      </div>
+      <button type="button" class="navbar-toggle collapsed" aria-controls="navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="navbar-collapse" class="navbar-collapse collapse">
+      <div class="region region-navigation-collapsible">
+        <nav role="navigation" aria-labelledby="block-ucsbweb-main-menu-menu" id="block-ucsbweb-main-menu">
+          <h2 class="sr-only" id="block-ucsbweb-main-menu-menu">Main navigation</h2>
+          <ul class="menu nav navbar-nav">
+            <li>
+              <a href="./index.html" data-rel-href="index.html" data-nav="home">Home</a>
+            </li>
+            <li>
+              <a href="./guides/getting-started.html" data-rel-href="guides/getting-started.html" data-nav="getting-started">Getting Started</a>
+            </li>
+            <li>
+              <a href="./guides/index.html" data-rel-href="guides/index.html" data-nav="guides">Guides</a>
+            </li>
+            <li>
+              <a href="./coder.html" data-rel-href="coder.html" data-nav="coder">Coder Workspaces</a>
+            </li>
+            <li>
+              <a href="./guides/ai-gateway.html" data-rel-href="guides/ai-gateway.html" data-nav="ai-gateway">AI Gateway</a>
+            </li>
+            <li>
+              <a href="./faq.html" data-rel-href="faq.html" data-nav="faq">FAQ</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="region region-navigation-quicklinks">
+        <ul class="menu nav">
+          <li>
+            <a href="https://coder.dreamlab.ucsb.edu/" class="offsite-quick-link" target="_blank" rel="noopener">Launch Coder</a>
+          </li>
+          <li>
+            <a href="https://api.ai.college.ucsb.edu/" class="offsite-quick-link" target="_blank" rel="noopener">AI Gateway Portal</a>
+          </li>
+          <li>
+            <a href="https://www.library.ucsb.edu/dreamlab" class="offsite-quick-link" target="_blank" rel="noopener">DREAM Lab</a>
+          </li>
+          <li>
+            <a href="https://www.library.ucsb.edu/" class="offsite-quick-link" target="_blank" rel="noopener">UCSB Library</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
 
 
 
 
-<div class="hero">
-<p><img src="images/dreamlab_hex.png" class="hero-logo img-fluid" alt="DREAM Lab hex logo — UC Santa Barbara Library"></p>
-<section id="dream-lab-cloud-services" class="level1 hero-title">
-<h1 class="hero-title">DREAM Lab Cloud Services</h1>
-<p>Cloud computing services for research and teaching at UC Santa Barbara. The services here are managed by the <a href="https://www.library.ucsb.edu/dreamlab">UCSB Library DREAM Lab</a> and use computing resources provided by the <a href="https://www.lsit.ucsb.edu">College of Letters and Science IT</a>.</p>
-</section>
-</div>
-<div class="grid quick-links">
-<div class="g-col-12 g-col-md-4">
-<p><a class="link-card" href="https://coder.dreamlab.ucsb.edu" target="_blank" rel="noopener"> <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> <span class="link-card-title">Launch a Coder Workspace<span class="visually-hidden"> (opens in a new tab)</span></span> <span class="link-card-text">Log in with your UCSB NetID at coder.dreamlab.ucsb.edu</span> </a></p>
-</div>
-<div class="g-col-12 g-col-md-4">
-<p><a class="link-card" href="./coder.html"> <i class="bi bi-book" aria-hidden="true"></i> <span class="link-card-title">Coder Workspace Documentation</span> <span class="link-card-text">Hardware, software, policies, and how-to guides</span> </a></p>
-</div>
-<div class="g-col-12 g-col-md-4">
-<p><a class="link-card" href="https://www.library.ucsb.edu/dreamlab" target="_blank" rel="noopener"> <i class="bi bi-info-circle" aria-hidden="true"></i> <span class="link-card-title">About the DREAM Lab<span class="visually-hidden"> (opens in a new tab)</span></span> <span class="link-card-text">Workshops, consultations, and the lab’s other services</span> </a></p>
-</div>
-</div>
-<section id="getting-help" class="level2 portal-help-title portal-help">
-<h2 class="portal-help-title" data-anchor-id="getting-help">Getting Help</h2>
-<p>Email <a href="mailto:dreamlab@library.ucsb.edu" class="email">dreamlab@library.ucsb.edu</a> or join the <a href="https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ">UCSB Carpentry Slack</a>.</p>
-</section>
+<main id="quarto-document-content" class="home-main" tabindex="-1"><header id="title-block-header" class="quarto-title-block"></header>
+  <section class="home-intro">
+    <div class="site-grid home-intro__grid">
+      <div class="home-intro__content">
+        <p class="home-eyebrow">
+          <span aria-hidden="true"></span>
+          UCSB Library
+        </p>
+        <h1>
+          DREAM Lab<br>
+          Cloud Services
+        </h1>
+        <p class="home-intro__lede">
+          Secure, accessible cloud environments that help UCSB researchers,
+          instructors, and students move from an idea to functional and working
+          code. Managed by the <a href="https://www.library.ucsb.edu/dreamlab">UCSB Library DREAM Lab</a>
+          with computing resources provided by <a href="https://www.lsit.ucsb.edu">College of Letters and Science IT</a>.
+        </p>
+        <div class="home-actions">
+          <a class="home-button home-button--gold" href="https://coder.dreamlab.ucsb.edu" target="_blank" rel="noopener">
+            Launch a Workspace<span class="sr-only"> (opens in a new tab)</span>
+          </a>
+          <a class="home-button home-button--outline" href="guides/getting-started.html">
+            Getting Started
+          </a>
+        </div>
+      </div>
+      <div class="home-intro__visual">
+        <div class="dream-badge-frame">
+          <img src="images/dreamlab_hex.png" alt="DREAM Lab hex logo — UC Santa Barbara Library">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section" id="services">
+    <div class="site-grid">
+      <div class="home-section__heading">
+        <div>
+          <p class="home-eyebrow">
+            <span aria-hidden="true"></span>
+            Cloud services
+          </p>
+          <h2>What we offer</h2>
+        </div>
+        <p>
+          Flexible tools supported by people who understand research,
+          teaching, and creative practice.
+        </p>
+      </div>
+
+      <div class="offer-grid">
+        <article class="offer-card offer-card--workspace">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewbox="0 0 48 48" focusable="false">
+              <rect x="5" y="8" width="38" height="31" rx="2"></rect>
+              <path d="M5 16h38M12 12h1M17 12h1"></path>
+              <path d="m16 25 5 4-5 4M25 33h8"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <h3>Coder Workspaces</h3>
+            <p>
+              Launch a ready-to-use development environment in your browser
+              with pre-installed data science tools, RStudio, JupyterLab, VS Code,
+              and computing resources for the academic quarter.
+            </p>
+            <a class="home-link" href="coder.html">
+              Explore Coder Workspaces
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="offer-card offer-card--gateway">
+          <div class="offer-card__icon" aria-hidden="true">
+            <svg viewbox="0 0 48 48" focusable="false">
+              <path d="M24 12v9M13 31l8-5M35 31l-8-5"></path>
+              <path d="m24 5 6 3.5v7L24 19l-6-3.5v-7L24 5ZM13 25l6 3.5v7L13 39l-6-3.5v-7l6-3.5ZM35 25l6 3.5v7L35 39l-6-3.5v-7l6-3.5Z"></path>
+            </svg>
+          </div>
+          <div class="offer-card__content">
+            <span class="experimental-label">Experimental</span>
+            <h3>AI Gateway</h3>
+            <p>
+              Experiment with approved generative AI models through an
+              OpenAI-compatible, research-friendly API for coding agents and
+              custom workflows.
+            </p>
+            <a class="home-link" href="guides/ai-gateway.html">
+              Learn about the AI Gateway
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-section--tint" id="getting-started">
+    <div class="site-grid">
+      <div class="home-section__heading">
+        <div>
+          <p class="home-eyebrow">
+            <span aria-hidden="true"></span>
+            A simple start
+          </p>
+          <h2>Getting started in 3 steps</h2>
+        </div>
+        <a class="home-link" href="guides/getting-started.html">
+          Read the full guide
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <ol class="steps-list">
+        <li>
+          <span class="steps-list__number">01</span>
+          <div>
+            <h3>Log in with your UCSB NetID</h3>
+            <p>
+              Visit <a href="https://coder.dreamlab.ucsb.edu">coder.dreamlab.ucsb.edu</a>
+              and sign in with UCSB Single Sign-On.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="steps-list__number">02</span>
+          <div>
+            <h3>Create a workspace</h3>
+            <p>
+              Choose your workspace name and optional services like RStudio,
+              JupyterLab, or VS Code.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="steps-list__number">03</span>
+          <div>
+            <h3>Open it in your browser</h3>
+            <p>
+              Start coding in the browser or connect remotely from your desktop
+              VS Code or terminal via SSH.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="home-help" id="support">
+    <div class="site-grid home-help__inner">
+      <div>
+        <p class="home-eyebrow home-eyebrow--light">
+          <span aria-hidden="true"></span>
+          Support
+        </p>
+        <h2>Need help?</h2>
+        <p>
+          Find quick answers in our guides and FAQ, join the UCSB Carpentry
+          Slack community, or reach out to the DREAM Lab team at
+          <a href="mailto:dreamlab@library.ucsb.edu" class="home-help__inline-link">dreamlab@library.ucsb.edu</a>.
+        </p>
+      </div>
+      <div class="home-help__links">
+        <a href="faq.html">
+          <span>Browse common questions</span>
+          <strong>Visit the FAQ</strong>
+        </a>
+        <a href="https://join.slack.com/t/ucsbcarpentry/shared_invite/zt-3chxqtb2b-cVc3l~yj1ghUhZLNmOLfhQ" target="_blank" rel="noopener">
+          <span>Community support</span>
+          <strong>Join UCSB Carpentry Slack<span class="sr-only"> (opens in a new tab)</span></strong>
+        </a>
+        <a href="guides/index.html">
+          <span>Step-by-step walkthroughs</span>
+          <strong>Browse All Guides</strong>
+        </a>
+        <a href="https://www.library.ucsb.edu/dreamlab" target="_blank" rel="noopener">
+          <span>Meet with our team</span>
+          <strong>About the DREAM Lab<span class="sr-only"> (opens in a new tab)</span></strong>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
 
 
 
-</main> <!-- /main -->
+
+<footer id="ucsb-site-footer">
+  <div class="footer container-fluid">
+    <div class="region region-footer">
+      <div class="field field--name-field-blades field--type-entity-reference-revisions field--label-hidden field--items">
+        <div class="field--item">
+          <div class="paragraph paragraph--type--blade">
+            <div class="inner">
+              <div class="columns">
+                <div class="paragraph paragraph--type--column col-12 col-sm-12 col-md-6">
+                  <div class="ucsb-wordmark">
+                    <svg version="1.1" id="Template" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 294 22.5" style="enable-background:new 0 0 294 22.5;" space="preserve"><path d="M239.5,1.4h3.6l8.7,20h-5l-1.7-4.2h-7.8l-1.7,4.2h-4.9L239.5,1.4z M241.2,7.2l-2.4,6.2h4.9L241.2,7.2z
+                       M214.2,1.4h7.4c0.9,0,1.7,0.1,2.6,0.2c0.9,0.1,1.7,0.4,2.4,0.7c0.7,0.4,1.3,0.9,1.7,1.5c0.4,0.7,0.6,1.5,0.6,2.6
+                      c0,1.1-0.3,2.1-0.9,2.8c-0.6,0.7-1.5,1.3-2.5,1.6v0.1c0.7,0.1,1.3,0.3,1.8,0.5c0.5,0.3,1,0.6,1.4,1c0.4,0.4,0.7,0.9,0.9,1.5
+                      c0.2,0.6,0.3,1.2,0.3,1.8c0,1.1-0.2,1.9-0.7,2.6c-0.5,0.7-1,1.3-1.7,1.7c-0.7,0.4-1.5,0.7-2.4,0.9c-0.9,0.2-1.8,0.3-2.7,0.3h-8.2
+                      V1.4z M218.6,9.4h3.2c0.3,0,0.7,0,1-0.1c0.3-0.1,0.6-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.6-0.7c0.2-0.3,0.2-0.6,0.2-1
+                      c0-0.4-0.1-0.8-0.3-1c-0.2-0.3-0.4-0.5-0.7-0.6c-0.3-0.2-0.6-0.3-1-0.3c-0.4-0.1-0.7-0.1-1-0.1h-3V9.4z M218.6,17.6h3.9
+                      c0.3,0,0.7,0,1-0.1c0.3-0.1,0.7-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.7-0.7c0.2-0.3,0.3-0.7,0.3-1.1c0-0.5-0.1-0.9-0.4-1.1
+                      c-0.2-0.3-0.5-0.5-0.9-0.7c-0.4-0.2-0.7-0.3-1.2-0.3c-0.4-0.1-0.8-0.1-1.2-0.1h-3.3V17.6z M253.9,1.4h7.7c1,0,2,0.1,2.9,0.3
+                      c0.9,0.2,1.7,0.5,2.4,1c0.7,0.5,1.2,1.1,1.6,1.9c0.4,0.8,0.6,1.8,0.6,2.9c0,1.4-0.4,2.6-1.1,3.6c-0.7,1-1.8,1.6-3.2,1.9l5.1,8.4
+                      h-5.3l-4.2-8h-2.2v8h-4.4V1.4z M258.3,9.7h2.6c0.4,0,0.8,0,1.3,0c0.4,0,0.8-0.1,1.2-0.3c0.4-0.1,0.7-0.4,0.9-0.7
+                      c0.2-0.3,0.4-0.7,0.4-1.3c0-0.5-0.1-0.9-0.3-1.2c-0.2-0.3-0.5-0.5-0.8-0.7c-0.3-0.2-0.7-0.3-1.1-0.3c-0.4-0.1-0.8-0.1-1.2-0.1h-2.9
+                      V9.7z M180.1,1.4h3.6l8.7,20h-5l-1.7-4.2H178l-1.7,4.2h-4.9L180.1,1.4z M181.8,7.2l-2.4,6.2h4.9L181.8,7.2z M280.2,1.4h3.6l8.7,20
+                      h-5l-1.7-4.2h-7.8l-1.7,4.2h-4.9L280.2,1.4z M281.9,7.2l-2.4,6.2h4.9L281.9,7.2z M154.7,1.4h7.4c0.9,0,1.7,0.1,2.6,0.2
+                      c0.9,0.1,1.7,0.4,2.4,0.7c0.7,0.4,1.3,0.9,1.7,1.5c0.4,0.7,0.6,1.5,0.6,2.6c0,1.1-0.3,2.1-0.9,2.8c-0.6,0.7-1.5,1.3-2.5,1.6v0.1
+                      c0.7,0.1,1.3,0.3,1.8,0.5c0.5,0.3,1,0.6,1.4,1c0.4,0.4,0.7,0.9,0.9,1.5c0.2,0.6,0.3,1.2,0.3,1.8c0,1.1-0.2,1.9-0.7,2.6
+                      c-0.5,0.7-1,1.3-1.7,1.7c-0.7,0.4-1.5,0.7-2.4,0.9c-0.9,0.2-1.8,0.3-2.7,0.3h-8.2V1.4z M159.1,9.4h3.2c0.3,0,0.7,0,1-0.1
+                      c0.3-0.1,0.6-0.2,0.9-0.4c0.3-0.2,0.5-0.4,0.6-0.7c0.2-0.3,0.2-0.6,0.2-1c0-0.4-0.1-0.8-0.3-1c-0.2-0.3-0.4-0.5-0.7-0.6
+                      c-0.3-0.2-0.6-0.3-1-0.3c-0.4-0.1-0.7-0.1-1-0.1h-3V9.4z M159.1,17.6h3.9c0.3,0,0.7,0,1-0.1c0.3-0.1,0.7-0.2,0.9-0.4
+                      c0.3-0.2,0.5-0.4,0.7-0.7c0.2-0.3,0.3-0.7,0.3-1.1c0-0.5-0.1-0.9-0.4-1.1c-0.2-0.3-0.5-0.5-0.9-0.7c-0.4-0.2-0.7-0.3-1.2-0.3
+                      c-0.4-0.1-0.8-0.1-1.2-0.1h-3.3V17.6z M194.5,1.4h7.7c1,0,2,0.1,2.9,0.3c0.9,0.2,1.7,0.5,2.4,1c0.7,0.5,1.2,1.1,1.6,1.9
+                      c0.4,0.8,0.6,1.8,0.6,2.9c0,1.4-0.4,2.6-1.1,3.6c-0.7,1-1.8,1.6-3.2,1.9l5.1,8.4h-5.3l-4.2-8h-2.2v8h-4.4V1.4z M198.9,9.7h2.6
+                      c0.4,0,0.8,0,1.3,0c0.4,0,0.8-0.1,1.2-0.3c0.4-0.1,0.7-0.4,0.9-0.7c0.2-0.3,0.4-0.7,0.4-1.3c0-0.5-0.1-0.9-0.3-1.2
+                      c-0.2-0.3-0.5-0.5-0.8-0.7c-0.3-0.2-0.7-0.3-1.1-0.3c-0.4-0.1-0.8-0.1-1.2-0.1h-2.9V9.7z M74.7,1.4h3.6l8.7,20h-5l-1.7-4.2h-7.8
+                      L71,21.4h-4.9L74.7,1.4z M76.4,7.2L74,13.4h4.9L76.4,7.2z M134,1.4h3.6l8.7,20h-5l-1.7-4.2h-7.8l-1.7,4.2h-4.9L134,1.4z M135.7,7.2
+                      l-2.4,6.2h4.9L135.7,7.2z M89.5,1.4h6l8.5,13.9h0.1V1.4h4.4v20h-5.8L94,7.1h-0.1v14.2h-4.4V1.4z M117,5.3h-5.5V1.4h15.8v3.9h-5.9
+                      v16.1H117V5.3z M10.9,21.7c-4.6,0-7.3-2.7-7.3-7.6l0-10.7H1.3V1.4h7.3v1.9H6.1l0,10.4c0,4.2,1.5,5.9,4.9,5.9c3.2,0,5.1-1.3,5.1-6.2
+                      l0-10.1h-2.5V1.4h7.3v1.9h-2.3l0,10.4C18.5,18.7,16.1,21.7,10.9,21.7z M38.3,14.7c-0.5,3.3-2.8,4.9-6.1,4.9c-4.4,0-7-3.1-7-8.3v-0.2
+                      c0-5.1,2.8-8.3,7-8.3c3.1,0,5.2,1.3,6,4.7h2.1l0-6.1h-2.2l0,2.2c-1-1.9-3.3-2.7-5.8-2.7c-5.6,0-9.6,4.3-9.6,10.3v0.2
+                      c0,6.2,3.6,10.2,9.4,10.2c4.4,0,7.6-2.2,8.4-6.7L38.3,14.7z M58.7,9.4c-2.3-0.6-4.3-1.3-4.3-2.7c0-0.9,0.7-2.3,2.7-2.3
+                      c2,0,3.4,0.7,4.5,2.1l2.8-2.4c-1.8-2.8-5-3.2-6.8-3.2c-4.4,0-7.5,2.6-7.5,6.2c0,3.7,3.3,5.1,6.6,6c2.8,0.8,3.9,1.2,3.9,2.8
+                      c0,1.3-1.2,2.2-3.1,2.2c-3.1,0-4.7-2-5.2-2.7l-3,2.6c1.5,2.4,4.2,3.7,7.9,3.7c4.6,0,7.8-2.7,7.8-6.5C64.9,11.4,61.7,10.2,58.7,9.4z"></path></svg>
+                  </div>
+                  <div class="field field--name-field-column-content field--type-entity-reference-revisions field--label-hidden field--items">
+                    <div class="field--item">
+                      <div class="paragraph paragraph--type--text">
+                        <div class="contact-info">
+                          <p><strong>DREAM Lab</strong><br>
+                          UCSB Library<br>
+                          University of California, Santa Barbara<br>
+                          Santa Barbara, CA 93106-9010</p>
+                          <p>Support: <a href="mailto:dreamlab@library.ucsb.edu">dreamlab@library.ucsb.edu</a></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field--item">
+                      <nav role="navigation" aria-labelledby="footer-connect-heading">
+                        <h2 id="footer-connect-heading" class="label">Connect</h2>
+                        <ul class="menu nav">
+                          <li>
+                            <a href="https://coder.dreamlab.ucsb.edu/" class="offsite" target="_blank" rel="noopener">Launch Coder Dashboard</a>
+                          </li>
+                          <li>
+                            <a href="https://github.com/ucsb-dreamlab/coder-docs" class="offsite" target="_blank" rel="noopener">Documentation GitHub Repository</a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                <div class="paragraph paragraph--type--column col-12 col-sm-6 col-md-6 second-column">
+                  <div class="field field--name-field-column-content field--type-entity-reference-revisions field--label-hidden field--items">
+                    <div class="field--item">
+                      <nav role="navigation" aria-labelledby="footer-links-heading">
+                        <h2 id="footer-links-heading" class="label">Links and Resources</h2>
+                        <ul class="menu nav">
+                          <li>
+                            <a href="./guides/getting-started.html" data-rel-href="guides/getting-started.html">Getting Started with Coder</a>
+                          </li>
+                          <li>
+                            <a href="./guides/index.html" data-rel-href="guides/index.html">Documentation &amp; Guides</a>
+                          </li>
+                          <li>
+                            <a href="./coder.html" data-rel-href="coder.html">Coder Workspaces Overview</a>
+                          </li>
+                          <li>
+                            <a href="./guides/ai-gateway.html" data-rel-href="guides/ai-gateway.html">AI Gateway &amp; LLM Keys</a>
+                          </li>
+                          <li>
+                            <a href="./faq.html" data-rel-href="faq.html">Frequently Asked Questions</a>
+                          </li>
+                          <li>
+                            <a href="https://www.library.ucsb.edu/dreamlab" class="offsite" target="_blank" rel="noopener">UCSB Library DREAM Lab</a>
+                          </li>
+                          <li>
+                            <a href="https://www.library.ucsb.edu/" class="offsite" target="_blank" rel="noopener">UCSB Library</a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="region region-footer">
+      <div class="col-12 col-sm-8 copyright">
+        <span>Copyright © 2026 The Regents of the University of California. All Rights Reserved.</span>
+        <a href="https://www.ucsb.edu/terms-of-use" class="terms offsite" target="_blank" rel="noopener">Terms of Use</a>
+        <a href="https://www.policy.ucsb.edu/policies/policy-docs/electronic-and-information-technology-accessibility" class="terms offsite" target="_blank" rel="noopener">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+(function () {
+  var meta = document.querySelector('meta[name="quarto:offset"]');
+  var offset = meta ? (meta.getAttribute('content') || './') : './';
+  if (offset.slice(-1) !== '/') offset += '/';
+  var s = document.createElement('script');
+  s.src = offset + 'ucsb-webtheme.js';
+  document.body.appendChild(s);
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {

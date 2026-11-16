@@ -1,140 +1,1554 @@
-/* css styles */
+/* ==========================================================================
+   DREAM Lab Cloud Services — Site Layout & Page Components (styles.css)
+   Layers on top of ucsb-webtheme.css (UCSB Web Theme Bootstrap 5 Base)
+   ========================================================================== */
 
-/* --- Landing page hero --------------------------------------------------- */
-
-.hero {
-  max-width: 46rem;
-  margin-inline: auto;
-  padding: 2.5rem 1rem 1rem;
-  text-align: center;
+:root {
+  --navy: #003660;
+  --navy-dark: #002b4c;
+  --gold: #febc11;
+  --coral: #ef5645;
+  --sea-green: #09847a;
+  --text-green: #09847a;
+  --text-coral: #c43424;
+  --aqua: #047c91;
+  --link-blue: #005aa3;
+  --link-hover: #0076d6;
+  --btn-blue: #005099;
+  --btn-blue-hover: #1c64a4;
+  --white: #ffffff;
+  --gray: #dce1e5;
+  --gray-darken: #e8ecf0;
+  --gray-tint: #eef0f2;
+  --mist: #9cbebe;
+  --light-mist: #dae6e6;
+  --border-slate: #a1afba;
+  --ink: #111517;
+  --secondary: #3d4952;
+  --muted: #5e707e;
+  --font-sans: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Produkt", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* Quarto wraps images in <p> (or <figure> when captioned); center either. */
-.hero p:has(> .hero-logo),
-.hero figure:has(.hero-logo) {
-  margin-bottom: 1.5rem;
-  text-align: center;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.hero .hero-logo {
-  display: block;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 205px;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 104px;
+  }
+}
+
+body {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  background-color: var(--white);
+  color: var(--secondary);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide Quarto's default top navbar and auto-generated mobile secondary TOC sidebar */
+#quarto-header,
+.quarto-sidebar-toggle-contents {
+  display: none !important;
+}
+
+/* Accessibility: Skip to main content bypass link (WCAG 2.4.1) */
+.skip-link.sr-only:focus,
+.skip-link.sr-only:focus-visible {
+  position: fixed !important;
+  top: 8px !important;
+  left: 8px !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 18px !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: nowrap !important;
+  z-index: 2147483647 !important;
+  background: var(--navy) !important;
+  color: var(--white) !important;
+  border: 2px solid var(--gold) !important;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Global Keyboard Focus Ring */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--link-blue) !important;
+  outline-offset: 2px !important;
+}
+
+/* Align container grid with UCSB Web Theme 1230px max-width (30px side padding) */
+.site-grid {
+  box-sizing: border-box;
+  max-width: 1230px;
   width: 100%;
-  max-width: 200px;
-  height: auto;
-  margin-inline: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
-/* The class also lands on Quarto's wrapping <section>, so scope to the
-   heading itself — otherwise font-size/weight inherit into the paragraph. */
-.hero h1.hero-title {
-  margin-top: 0;
-  margin-bottom: 1rem;
+@media (max-width: 767px) {
+  .site-grid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* ==========================================================================
+   Brand Eyebrows
+   ========================================================================== */
+
+.eyebrow,
+.home-eyebrow {
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 1pt;
+  text-transform: uppercase;
+}
+
+.home-eyebrow > span {
+  width: 8px;
+  height: 8px;
+  display: block;
+  background: var(--gold);
+}
+
+/* ==========================================================================
+   Home Page & Service Blades (UCSB Web Theme Design)
+   ========================================================================== */
+
+#quarto-content:has(.home-main),
+#quarto-content:has(.guides-hub-page),
+#quarto-content:has(.faq-page) {
+  display: block !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+}
+
+main.home-main,
+main.guides-hub-page,
+main.faq-page {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+.home-intro {
+  overflow: hidden;
+  background-color: var(--light-mist);
+  border-bottom: 1px solid var(--mist);
+}
+
+.home-intro__grid {
+  min-height: 480px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.home-intro__content {
+  padding: 72px 0;
+}
+
+.home-intro h1 {
+  margin: 0 0 24px;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(2.6rem, 4.8vw, 3.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
   border-bottom: none;
-  font-size: clamp(1.9rem, 1.2rem + 2.2vw, 2.75rem);
-  font-weight: 600;
 }
 
-.hero p {
-  font-size: 1.075rem;
-  line-height: 1.6;
-  color: var(--bs-secondary-color);
-  text-wrap: pretty;
+.home-intro__lede {
+  max-width: 650px;
+  margin: 0 0 36px;
+  color: var(--secondary);
+  font-size: 1.125rem;
+  line-height: 1.75;
 }
 
-.hero h1.hero-title,
-.portal-help h2.portal-help-title {
-  text-wrap: balance;
+.home-intro__lede a {
+  color: var(--link-blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-blue);
 }
 
-/* --- Quick link cards ---------------------------------------------------- */
-
-.quick-links {
-  max-width: 60rem;
-  margin-inline: auto;
-  padding: 1.5rem 1rem 0;
+.home-intro__lede a:hover {
+  color: var(--link-hover);
+  border-bottom: none;
 }
 
-/* Pandoc wraps the bare <a> in a <p>; make that wrapper fill the grid cell so
-   the cards below stay equal height regardless of text length. */
-.quick-links [class*="g-col"] > p {
-  height: 100%;
-  margin-bottom: 0;
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.link-card {
+/* Sharp-cornered UCSB Web Theme Buttons */
+.home-button {
+  min-height: 54px;
+  padding: 16px 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.home-button--gold {
+  background-color: var(--gold);
+  border: 2px solid var(--gold);
+  color: var(--secondary) !important;
+}
+
+.home-button--gold:hover {
+  background-color: var(--navy);
+  border-color: var(--navy);
+  color: var(--white) !important;
+}
+
+.home-button--outline {
+  background-color: transparent;
+  border: 2px solid var(--btn-blue) !important;
+  color: var(--btn-blue) !important;
+}
+
+.home-button--outline:hover {
+  border-color: var(--btn-blue-hover);
+  background-color: var(--white);
+  color: var(--btn-blue-hover) !important;
+}
+
+.home-intro__visual {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dream-badge-frame {
+  width: min(100%, 380px);
+  display: grid;
+  place-items: center;
+}
+
+.dream-badge-frame img {
+  display: block;
+  width: min(100%, 310px);
+  height: auto;
+  filter: drop-shadow(0 18px 24px rgba(0, 54, 96, 0.16));
+}
+
+.home-section {
+  padding: 72px 0;
+}
+
+.home-section--tint {
+  background-color: var(--gray-tint);
+}
+
+.home-section__heading {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-slate);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.home-section__heading h2,
+.home-help h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 2.375rem;
+  line-height: 1.25;
+  letter-spacing: -0.1pt;
+  font-weight: 800;
+  border-bottom: none;
+}
+
+.home-section__heading > p {
+  max-width: 460px;
+  margin: 0;
+  color: var(--secondary);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* UCSB Web Theme Blade Cards (.offer-grid / .offer-card) */
+.offer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.offer-card {
+  min-height: 300px;
+  padding: 36px;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 24px;
+  background-color: var(--gray-darken);
+  border: none;
+  border-top: 4px solid var(--navy);
+  border-radius: 0;
+}
+
+.offer-card--workspace {
+  border-top-color: var(--sea-green);
+}
+
+.offer-card--gateway {
+  border-top-color: var(--coral);
+}
+
+.offer-card__icon {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  background-color: var(--white);
+  border-radius: 0;
+  color: var(--navy);
+}
+
+.offer-card__icon svg {
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.offer-card__content {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 1.5rem;
-  border: 1px solid var(--bs-border-color);
-  border-radius: var(--bs-border-radius-lg);
-  color: var(--bs-body-color);
+  align-items: flex-start;
+}
+
+.offer-card h2,
+.offer-card h3 {
+  margin: 4px 0 12px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.3125rem;
+  line-height: 1.35;
+  font-weight: 800;
+  border-bottom: none;
+}
+
+.card-heading-link {
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+.card-heading-link:hover {
+  color: var(--link-blue) !important;
+}
+
+.offer-card p {
+  margin: 0 0 24px;
+  color: var(--secondary);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.experimental-label,
+.guide-category-label {
+  margin-bottom: 6px;
+  padding: 2px 8px;
+  background-color: var(--white);
+  color: var(--text-coral);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+}
+
+.guide-category-label {
+  color: var(--navy);
+}
+
+.home-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--link-blue) !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--link-blue);
+  padding-bottom: 1px;
+}
+
+.home-link:hover {
+  color: var(--link-hover) !important;
+  border-bottom-color: transparent;
+}
+
+/* 3-Step Blade List */
+.steps-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  list-style: none;
+}
+
+.steps-list li {
+  position: relative;
+  min-height: 210px;
+  padding: 0 36px;
+  border-left: 1px solid var(--border-slate);
+}
+
+.steps-list li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.steps-list__number {
+  display: block;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1pt;
+}
+
+.steps-list h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 1.3125rem;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.steps-list p {
+  max-width: 300px;
+  margin: 0;
+  color: var(--secondary);
+  line-height: 1.75;
+}
+
+.steps-list p a {
+  color: var(--link-blue);
+  border-bottom: 1px solid var(--link-blue);
   text-decoration: none;
-  background-color: var(--bs-body-bg);
-  transition: transform 0.15s ease, box-shadow 0.15s ease,
-    border-color 0.15s ease;
 }
 
-.link-card:hover,
-.link-card:focus-visible {
-  transform: translateY(-2px);
-  border-color: var(--bs-primary);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  color: var(--bs-body-color);
+.steps-list p a:hover {
+  color: var(--link-hover);
+  border-bottom: none;
+}
+
+/* Support Blade (.home-help — UCSB Navy #003660 background) */
+.home-help {
+  padding: 72px 0;
+  background-color: var(--navy);
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.home-help__inner {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.home-eyebrow--light {
+  color: var(--gold);
+}
+
+.home-eyebrow--light > span {
+  background: var(--gold);
+}
+
+.home-help h2 {
+  color: var(--white);
+}
+
+.home-help__inner > div:first-child > p:last-child {
+  max-width: 480px;
+  margin: 18px 0 0;
+  color: var(--white);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.home-help__inline-link {
+  color: var(--white) !important;
+  border-bottom: 1px solid var(--white);
+  text-decoration: none !important;
+}
+
+.home-help__inline-link:hover {
+  border-bottom: none;
+}
+
+.home-help__links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.home-help__links a {
+  min-height: 108px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--navy-dark);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 0;
+  color: var(--white) !important;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.home-help__links a:hover {
+  background-color: #07528c;
+  border-color: var(--gold);
+}
+
+.home-help__links span {
+  margin-bottom: 4px;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+}
+
+.home-help__links strong {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+/* ==========================================================================
+   Documentation Pages (UCSB Banner + 3-Column Layout + Tables + Callouts)
+   ========================================================================== */
+
+.doc-hero {
+  padding: 36px 0 44px;
+  background-color: var(--light-mist);
+  border-bottom: 1px solid var(--mist);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  color: var(--secondary);
+  font-size: 0.75rem;
+}
+
+.breadcrumbs a {
+  color: var(--link-blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-blue);
+}
+
+.breadcrumbs a:hover {
+  color: var(--link-hover);
+  border-bottom: none;
+}
+
+.doc-hero__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.doc-hero__heading > div:first-child {
+  max-width: 840px;
+}
+
+.doc-hero h1 {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.1pt;
+  font-weight: 800;
+  border-bottom: none;
+}
+
+.doc-hero__subtitle {
+  max-width: 720px;
+  margin: 0;
+  color: var(--secondary);
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+/* 3-Column Documentation Grid matching UCSB 1230px container */
+body.is-doc-page #quarto-content {
+  box-sizing: border-box;
+  max-width: 1230px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 30px 108px;
+  display: grid !important;
+  grid-template-columns: 230px minmax(0, 1fr) 190px;
+  gap: 56px;
+  align-items: start;
+}
+
+body.is-doc-page #quarto-content > * {
+  grid-column: auto !important;
+}
+
+body.is-doc-page .docs-sidebar {
+  grid-column: 1 !important;
+  grid-row: 1;
+  position: sticky;
+  top: 215px !important;
+}
+
+body.is-doc-page main#quarto-document-content {
+  grid-column: 2 !important;
+  grid-row: 1;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 760px;
+}
+
+body.is-doc-page #quarto-margin-sidebar {
+  grid-column: 3 !important;
+  grid-row: 1;
+  position: sticky;
+  top: 215px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+
+/* Left Sidebar Navigation */
+.docs-sidebar nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.docs-sidebar__title,
+#TOC #toc-title {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+}
+
+.docs-sidebar nav > a {
+  min-height: 44px;
+  padding: 10px 10px 10px 0;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-tint);
+  color: var(--secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
   text-decoration: none;
 }
 
-.link-card:focus-visible {
-  outline: 2px solid var(--bs-primary);
-  outline-offset: 2px;
+.docs-sidebar nav > a > span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
 }
 
-.link-card .bi {
-  margin-bottom: 0.75rem;
-  font-size: 1.75rem;
-  line-height: 1;
-  color: var(--bs-primary);
+.docs-sidebar nav > a:hover,
+.docs-sidebar nav > a.is-current {
+  color: var(--link-blue);
 }
 
-.link-card-title {
-  margin-bottom: 0.35rem;
-  font-size: 1.15rem;
+.docs-sidebar nav > a.is-current {
+  border-right: 3px solid var(--navy);
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.sidebar-help {
+  margin-top: 28px;
+  padding: 20px;
+  background-color: var(--gray-tint);
+  border-top: 3px solid var(--gold);
+}
+
+.sidebar-help strong {
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-weight: 800;
+}
+
+.sidebar-help p {
+  margin: 6px 0 12px;
+  color: var(--secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.sidebar-help a {
+  color: var(--link-blue);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-blue);
+}
+
+.sidebar-help a:hover {
+  color: var(--link-hover);
+  border-bottom: none;
+}
+
+/* Right Sidebar "On this page" TOC */
+#TOC {
+  padding-left: 16px !important;
+  border-left: 1px solid var(--border-slate) !important;
+}
+
+#TOC ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#TOC ul ul {
+  padding-left: 12px;
+}
+
+#TOC .nav-link {
+  min-height: 30px;
+  padding: 4px 0 !important;
+  display: flex;
+  align-items: center;
+  color: var(--secondary) !important;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  border-left: none !important;
+  border-bottom: none !important;
+}
+
+#TOC .nav-link:hover,
+#TOC .nav-link.active {
+  color: var(--link-blue) !important;
+  font-weight: 800;
+}
+
+/* Main Documentation Typography (UCSB Web Theme Spec) */
+body.is-doc-page #quarto-document-content h2 {
+  margin-top: 40px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.6875rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.1pt;
+  border-bottom: 1px solid var(--gray-tint);
+}
+
+body.is-doc-page #quarto-document-content section.level2:first-of-type > h2 {
+  margin-top: 16px;
+}
+
+body.is-doc-page #quarto-document-content h3 {
+  margin-top: 28px;
+  margin-bottom: 10px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.3125rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+body.is-doc-page #quarto-document-content h4 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+body.is-doc-page #quarto-document-content p,
+body.is-doc-page #quarto-document-content li {
+  color: var(--secondary);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+body.is-doc-page #quarto-document-content a:not(.btn):not(.ucsb-button):not(.doc-pagination a):not(.anchorjs-link) {
+  color: var(--link-blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-blue);
+}
+
+body.is-doc-page #quarto-document-content a:not(.btn):not(.ucsb-button):not(.doc-pagination a):not(.anchorjs-link):hover {
+  color: var(--link-hover);
+  border-bottom: none;
+}
+
+/* Inline code */
+body.is-doc-page #quarto-document-content :not(pre) > code {
+  padding: 2px 6px;
+  background-color: var(--gray-tint);
+  border: 1px solid var(--gray);
+  border-radius: 0;
+  color: var(--navy);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+/* Tables in Documentation — Official UCSB Web Theme Table Style */
+body.is-doc-page #quarto-document-content table,
+body.is-doc-page #quarto-document-content table.table {
+  width: 100% !important;
+  margin: 24px 0 32px;
+  border-collapse: collapse;
+  border: none;
+  font-size: 1rem;
+}
+
+body.is-doc-page #quarto-document-content table thead th,
+body.is-doc-page #quarto-document-content table.table thead th {
+  padding: 8px 24px 8px 0;
+  background: transparent;
+  color: #333333;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  text-transform: uppercase;
+  border: none;
+  border-bottom: 1px solid var(--border-slate);
+}
+
+body.is-doc-page #quarto-document-content table tbody td,
+body.is-doc-page #quarto-document-content table.table tbody td {
+  padding: 10px 24px 10px 0;
+  border: none;
+  border-bottom: 1px solid var(--gray-tint);
+  color: var(--secondary);
+  background: transparent !important;
+}
+
+/* Callouts (.callout-tip, .callout-note, .callout-important, .callout-warning) */
+div.callout {
+  margin: 28px 0 !important;
+  padding: 20px 24px !important;
+  background-color: var(--gray-tint) !important;
+  border: none !important;
+  border-left: 4px solid var(--sea-green) !important;
+  border-radius: 0 !important;
+}
+
+div.callout.callout-important,
+div.callout.callout-warning,
+div.callout.callout-caution {
+  border-left-color: var(--coral) !important;
+}
+
+div.callout .callout-header {
+  background: transparent !important;
+  padding: 0 0 6px 0 !important;
+  border-bottom: none !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+div.callout .callout-icon-container {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  background: var(--sea-green);
+  border-radius: 0;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+div.callout.callout-important .callout-icon-container,
+div.callout.callout-warning .callout-icon-container,
+div.callout.callout-caution .callout-icon-container {
+  background: var(--coral);
+}
+
+div.callout .callout-icon::before {
+  content: "i" !important;
+  background-image: none !important;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--white);
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+div.callout.callout-important .callout-icon::before,
+div.callout.callout-warning .callout-icon::before,
+div.callout.callout-caution .callout-icon::before {
+  content: "!" !important;
+}
+
+div.callout .callout-title-container {
+  color: var(--ink) !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+}
+
+div.callout .callout-body-container,
+div.callout .callout-body {
+  padding: 0 0 0 36px !important;
+}
+
+div.callout .callout-body p {
+  margin: 0 !important;
+  color: var(--secondary) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.75 !important;
+}
+
+/* Code Blocks (UCSB Navy Terminal Style) */
+.ucsb-code-block {
+  overflow: hidden;
+  margin: 24px 0 !important;
+  background: var(--navy) !important;
+  border-radius: 0;
+  border: 1px solid var(--navy);
+}
+
+.ucsb-code-block .code-block__header {
+  min-height: 40px;
+  padding: 0 12px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--navy-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.ucsb-code-block .code-block__header > span {
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+}
+
+.ucsb-code-block .code-copy-button {
+  position: static !important;
+  min-width: 78px;
+  min-height: 30px;
+  padding: 4px 10px !important;
+  margin: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0;
+  color: var(--white) !important;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 1 !important;
+  cursor: pointer;
+}
+
+.ucsb-code-block .code-copy-button:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: var(--gold) !important;
+}
+
+.copy-icon {
+  position: relative;
+  width: 11px;
+  height: 12px;
+  display: inline-block;
+  border: 1.5px solid var(--gray);
+}
+
+.copy-icon::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 9px;
+  border-top: 1.5px solid var(--gray);
+  border-left: 1.5px solid var(--gray);
+}
+
+.ucsb-code-block div.sourceCode,
+.ucsb-code-block pre.sourceCode,
+.ucsb-code-block pre {
+  margin: 0 !important;
+  background: var(--navy) !important;
+  border: none !important;
+}
+
+.ucsb-code-block pre {
+  overflow-x: auto;
+  padding: 20px 22px !important;
+  color: var(--white) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.65 !important;
+}
+
+.ucsb-code-block code.sourceCode span {
+  color: var(--white) !important;
+}
+.ucsb-code-block code.sourceCode span.co {
+  color: #b8c7d4 !important;
+  font-style: italic;
+}
+.ucsb-code-block code.sourceCode span.kw,
+.ucsb-code-block code.sourceCode span.cf,
+.ucsb-code-block code.sourceCode span.im {
+  color: var(--gold) !important;
+  font-weight: 600;
+}
+.ucsb-code-block code.sourceCode span.st,
+.ucsb-code-block code.sourceCode span.ss {
+  color: #7ee2d8 !important;
+}
+.ucsb-code-block code.sourceCode span.fu,
+.ucsb-code-block code.sourceCode span.ex,
+.ucsb-code-block code.sourceCode span.bu {
+  color: #9ad8ff !important;
+}
+.ucsb-code-block code.sourceCode span.va,
+.ucsb-code-block code.sourceCode span.at {
+  color: #ffd599 !important;
+}
+
+/* Browser-Framed Screenshots */
+figure.screenshot {
+  margin: 28px 0 20px !important;
+}
+
+.screenshot__canvas {
+  overflow: hidden;
+  background: var(--gray-tint);
+  border: 1px solid var(--border-slate);
+  border-radius: 0;
+}
+
+.screenshot__browser {
+  min-height: 36px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--navy);
+}
+
+.screenshot__browser i {
+  width: 8px;
+  height: 8px;
+  background: var(--coral);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.screenshot__browser i:nth-child(2) {
+  background: var(--gold);
+}
+
+.screenshot__browser i:nth-child(3) {
+  background: var(--sea-green);
+}
+
+.screenshot__browser span {
+  margin-left: 10px;
+  color: var(--gray-tint);
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
-.link-card-text {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--bs-secondary-color);
+.screenshot__canvas p {
+  margin: 0 !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .link-card {
-    transition: none;
-  }
-
-  .link-card:hover,
-  .link-card:focus-visible {
-    transform: none;
-  }
+.screenshot__canvas img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
-/* --- Getting help -------------------------------------------------------- */
+figure.screenshot figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: left;
+}
 
-.portal-help {
-  max-width: 46rem;
-  margin-inline: auto;
-  padding: 2.5rem 1rem 1rem;
+/* Prev / Next Pagination Cards — UCSB Sharp Outlined Style */
+.doc-pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-slate);
+}
+
+.doc-pagination a {
+  min-height: 88px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid var(--btn-blue);
+  border-radius: 0;
+  color: var(--btn-blue) !important;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.doc-pagination a:hover {
+  border-color: var(--btn-blue-hover);
+  background-color: var(--gray-tint);
+}
+
+.doc-pagination a span {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+}
+
+.doc-pagination a strong {
+  color: var(--link-blue);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.doc-pagination__next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* ==========================================================================
+   FAQ Page — Official UCSB Web Theme Gold-Bordered Accordion Style
+   ========================================================================== */
+
+.faq-page {
+  min-height: 700px;
+  background: var(--white);
+}
+
+.faq-hero {
+  padding: 36px 0 56px;
+  background-color: var(--light-mist);
+  border-bottom: 1px solid var(--mist);
+}
+
+.faq-hero__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.faq-hero__heading > div:first-child {
+  max-width: 790px;
+}
+
+.faq-hero h1 {
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  font-weight: 800;
+  border-bottom: none;
+}
+
+.faq-hero__heading > div > p:last-child {
+  max-width: 670px;
+  margin: 0;
+  color: var(--secondary);
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.faq-search {
+  position: relative;
+  width: min(100%, 760px);
+  min-height: 52px;
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid rgba(94, 112, 126, 0.5);
+  border-radius: 0;
+}
+
+.faq-search:focus-within {
+  border-color: #0074d9;
+}
+
+.faq-search__icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin-left: 18px;
+  flex: 0 0 auto;
+  border: 2px solid var(--navy);
+  border-radius: 50%;
+}
+
+.faq-search__icon::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: -4px;
+  width: 6px;
+  height: 2px;
+  background: var(--navy);
+  transform: rotate(45deg);
+}
+
+.faq-search input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  font-size: 1rem;
+  font-family: var(--font-sans);
+}
+
+.faq-search input:focus-visible {
+  outline: none !important;
+}
+
+.faq-search > button {
+  min-height: 40px;
+  margin-right: 8px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 0;
+  color: var(--link-blue);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.faq-content {
+  padding-top: 56px;
+  padding-bottom: 108px;
+}
+
+.faq-results {
+  margin-bottom: 32px;
+  color: var(--secondary);
+}
+
+.faq-topic {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 60px;
+  padding: 48px 0;
+}
+
+.faq-topic:first-of-type {
+  padding-top: 0;
+}
+
+.faq-topic__heading p {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+}
+
+.faq-topic__heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.6875rem;
+  line-height: 1.3;
+  font-weight: 800;
+  border-bottom: none;
+}
+
+/* Official UCSB Web Theme 1px Gold (#febc11) Accordion Borders */
+.faq-list {
+  border-top: 1px solid var(--gold);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--gold);
+}
+
+.faq-item h3 {
+  margin: 0;
+}
+
+.faq-item h3 button {
+  width: 100%;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: transparent;
+  border: 0;
+  color: var(--link-blue);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-item h3 button:hover {
+  color: var(--link-hover);
+}
+
+.faq-item h3 button i {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--link-blue);
+}
+
+.faq-item h3 button i::before,
+.faq-item h3 button i::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 3px;
+  width: 14px;
+  height: 2px;
+  background: currentColor;
+}
+
+.faq-item h3 button i::after {
+  transform: rotate(90deg);
+  transition: transform 0.16s ease;
+}
+
+.faq-item.is-open h3 button i::after {
+  transform: rotate(0);
+}
+
+.faq-item__answer {
+  padding: 0 32px 16px 0;
+}
+
+.faq-item__answer p {
+  max-width: 720px;
+  margin: 0;
+  color: var(--secondary);
+  line-height: 1.75;
+}
+
+.faq-item__answer a {
+  color: var(--link-blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-blue);
+}
+
+.faq-item__answer a:hover {
+  color: var(--link-hover);
+  border-bottom: none;
+}
+
+.faq-empty {
+  padding: 56px 24px;
+  background: var(--gray-tint);
   text-align: center;
 }
 
-.portal-help h2.portal-help-title {
-  margin-top: 0;
-  border-bottom: none;
-  font-size: 1.25rem;
-  font-weight: 600;
+.faq-empty button {
+  min-height: 44px;
+  padding: 12px 34px;
+  background: var(--btn-blue);
+  border: 0;
+  border-radius: 0;
+  color: var(--white);
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.portal-help p {
-  color: var(--bs-secondary-color);
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  body.is-doc-page #quarto-content {
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 44px;
+  }
+
+  body.is-doc-page #quarto-margin-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-intro__grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 48px;
+  }
+
+  .home-intro__content {
+    padding-bottom: 24px;
+  }
+
+  .home-intro__visual {
+    min-height: 260px;
+  }
+
+  .offer-card {
+    grid-template-columns: 1fr;
+  }
+
+  .home-help__inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  body.is-doc-page #quarto-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 36px 15px 72px;
+  }
+
+  body.is-doc-page .docs-sidebar {
+    position: static;
+  }
+
+  body.is-doc-page .docs-sidebar nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+  }
+
+  body.is-doc-page .docs-sidebar__title {
+    grid-column: 1 / -1;
+  }
+
+  body.is-doc-page .docs-sidebar nav > a.is-current {
+    border-right: 0;
+    border-bottom: 3px solid var(--navy);
+  }
+
+  body.is-doc-page .sidebar-help {
+    display: none;
+  }
+
+  body.is-doc-page main#quarto-document-content {
+    grid-column: 1 !important;
+    grid-row: 2;
+  }
+
+  .faq-topic {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 36px 0;
+  }
+
+  .offer-grid,
+  .steps-list,
+  .home-help__links,
+  .doc-pagination {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-list {
+    gap: 28px;
+  }
+
+  .steps-list li,
+  .steps-list li:first-child {
+    min-height: 0;
+    padding: 0 0 28px 0;
+    border-bottom: 1px solid var(--border-slate);
+    border-left: 0;
+  }
+
+  .doc-pagination__next {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
