@@ -128,7 +128,6 @@ anchor-sections: false
         <li>
           <span class="steps-list__number">01</span>
           <div>
-            <span class="step-hex step-hex--coral" aria-hidden="true"></span>
             <h3>Log in with your UCSB NetID</h3>
             <p>
               Visit <a href="https://coder.dreamlab.ucsb.edu">coder.dreamlab.ucsb.edu</a>
@@ -139,7 +138,6 @@ anchor-sections: false
         <li>
           <span class="steps-list__number">02</span>
           <div>
-            <span class="step-hex step-hex--gold" aria-hidden="true"></span>
             <h3>Create a workspace</h3>
             <p>
               Choose your workspace name and optional services like RStudio,
@@ -150,7 +148,6 @@ anchor-sections: false
         <li>
           <span class="steps-list__number">03</span>
           <div>
-            <span class="step-hex step-hex--green" aria-hidden="true"></span>
             <h3>Open it in your browser</h3>
             <p>
               Start coding in the browser or connect remotely from your desktop

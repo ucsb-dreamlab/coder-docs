@@ -24,11 +24,6 @@ anchor-sections: false
             Services, Coder Workspaces, and AI tools.
           </p>
         </div>
-        <span class="hexagon-motif" aria-hidden="true">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
       </div>
     </div>
   </div>
