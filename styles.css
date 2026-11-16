@@ -110,31 +110,8 @@ input:focus-visible,
 }
 
 /* ==========================================================================
-   Hexagon & Brand Motifs
+   Brand Eyebrows
    ========================================================================== */
-
-.hexagon-motif {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.hexagon-motif i {
-  display: block;
-  width: 12px;
-  height: 14px;
-  background: var(--coral);
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-}
-
-.hexagon-motif i:nth-child(2) {
-  background: var(--gold);
-  transform: translateY(-7px);
-}
-
-.hexagon-motif i:nth-child(3) {
-  background: var(--sea-green);
-}
 
 .eyebrow,
 .home-eyebrow {
@@ -477,27 +454,6 @@ main.faq-page {
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1pt;
-}
-
-.step-hex {
-  display: block;
-  width: 16px;
-  height: 19px;
-  margin-bottom: 16px;
-  background: var(--coral);
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-}
-
-.step-hex--coral {
-  background: var(--coral);
-}
-
-.step-hex--gold {
-  background: var(--gold);
-}
-
-.step-hex--green {
-  background: var(--sea-green);
 }
 
 .steps-list h3 {
@@ -1525,11 +1481,6 @@ figure.screenshot figcaption {
 }
 
 @media (max-width: 767px) {
-  .doc-hero__heading > .hexagon-motif,
-  .faq-hero__heading > .hexagon-motif {
-    display: none;
-  }
-
   body.is-doc-page #quarto-content {
     grid-template-columns: 1fr;
     gap: 32px;

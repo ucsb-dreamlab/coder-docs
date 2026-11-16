@@ -26,11 +26,6 @@ anchor-sections: false
             Gateway, and common technical questions.
           </p>
         </div>
-        <span class="hexagon-motif" aria-hidden="true">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
       </div>
       <div class="faq-search">
         <span class="faq-search__icon" aria-hidden="true"></span>
