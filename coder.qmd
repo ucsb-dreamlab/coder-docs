@@ -69,3 +69,4 @@ Services can be enabled when the workspace is created:
 * **Inactivity:** Workspaces stop automatically after four hours of inactivity to conserve resources. They can be resumed by clicking the "start" button.
 * **Software Installation:** Users may install additional software.
 * **Access by Staff:** Workspaces may be accessed by staff in the Library or LSIT. Confidential or sensitive information should not be stored.
+* **Appropriate Use:** Workspaces are meant to support research, learning, and creative exploration. Using a workspace to operate public network services, proxies, or to send unsolicited emails is prohibited.
