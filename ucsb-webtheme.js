@@ -332,7 +332,15 @@
     // 1. Explicit .offsite links in header/footer/content
     var explicit = document.querySelectorAll('a.offsite, a.offsite-quick-link');
     explicit.forEach(function (a) {
-      if (!a.querySelector('svg.offsite') && !(a.nextElementSibling && a.nextElementSibling.classList.contains('offsite'))) {
+      if (
+        !a.querySelector('svg.offsite') &&
+        !(
+          a.nextElementSibling &&
+          a.nextElementSibling.tagName &&
+          a.nextElementSibling.tagName.toLowerCase() === 'svg' &&
+          a.nextElementSibling.classList.contains('offsite')
+        )
+      ) {
         a.insertAdjacentHTML('beforeend', OFFSITE_SVG);
       }
     });
