@@ -1000,7 +1000,7 @@ div.callout .callout-body p {
   text-transform: uppercase;
 }
 
-.ucsb-code-block .code-copy-button {
+.ucsb-code-block .ucsb-copy-button {
   position: static !important;
   min-width: 78px;
   min-height: 30px;
@@ -1021,7 +1021,7 @@ div.callout .callout-body p {
   cursor: pointer;
 }
 
-.ucsb-code-block .code-copy-button:hover {
+.ucsb-code-block .ucsb-copy-button:hover {
   background: rgba(255, 255, 255, 0.14) !important;
   border-color: var(--gold) !important;
 }

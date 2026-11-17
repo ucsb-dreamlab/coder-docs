@@ -661,7 +661,26 @@
         copyBtn.innerHTML =
           '<span class="copy-icon" aria-hidden="true"></span><span class="copy-label">Copy</span>';
         copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
-        copyBtn.addEventListener('click', function () {
+        // Quarto's clipboard.js handler expects the button to sit beside the
+        // <code>; since we move it into the header, handle copying ourselves.
+        copyBtn.classList.remove('code-copy-button');
+        copyBtn.classList.add('ucsb-copy-button');
+        copyBtn.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          var code = container.querySelector('pre code') || container.querySelector('code');
+          if (!code) return;
+          var clone = code.cloneNode(true);
+          clone.querySelectorAll('.code-annotation-anchor, button').forEach(function (n) { n.remove(); });
+          var text = clone.textContent;
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            ta.remove();
+          }
           var lbl = copyBtn.querySelector('.copy-label');
           if (lbl) {
             lbl.textContent = 'Copied';
