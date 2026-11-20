@@ -19,8 +19,8 @@ anchor-sections: false
           Cloud Services
         </h1>
         <p class="home-intro__lede">
-          Secure, accessible cloud environments that help UCSB researchers,
-          instructors, and students move from an idea to functional and working
+          On-demand cloud environments that help UCSB researchers,
+          instructors, and students move from an idea to working
           code. Managed by the <a href="https://www.library.ucsb.edu/dreamlab">UCSB Library DREAM Lab</a>
           with computing resources provided by <a href="https://www.lsit.ucsb.edu">College of Letters and Science IT</a>.
         </p>
