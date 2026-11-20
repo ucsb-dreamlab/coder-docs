@@ -1,0 +1,15 @@
+{
+  "name": "coder-docs",
+  "private": true,
+  "type": "module",
+  "description": "DREAM Lab Coder Workspaces Documentation",
+  "scripts": {
+    "a11y": "node scripts/check-a11y.mjs",
+    "a11y:render": "node scripts/check-a11y.mjs --render",
+    "test": "npm run a11y"
+  },
+  "devDependencies": {
+    "axe-core": "^4.11.0",
+    "playwright-core": "^1.58.0"
+  }
+}
