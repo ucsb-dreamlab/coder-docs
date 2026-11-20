@@ -546,8 +546,10 @@
         { title: 'UCSB AI Commons API', href: 'guides/ucsb_ai_commons.html' }
       ];
 
-      var sidebarAside = document.createElement('aside');
-      sidebarAside.className = 'docs-sidebar';
+      var sidebarEl = document.createElement('div');
+      sidebarEl.className = 'docs-sidebar';
+      sidebarEl.setAttribute('role', 'complementary');
+      sidebarEl.setAttribute('aria-label', 'Documentation sidebar');
       var navHtml =
         '<nav aria-label="Documentation pages"><p class="docs-sidebar__title">Documentation</p>';
       var currentIdx = -1;
@@ -580,9 +582,9 @@
         '<p>DREAM Lab staff can help you configure your workspace or workflow.</p>' +
         '<a href="mailto:dreamlab@library.ucsb.edu">Contact support</a>' +
         '</div>';
-      sidebarAside.innerHTML = navHtml;
+      sidebarEl.innerHTML = navHtml;
 
-      quartoContent.insertBefore(sidebarAside, quartoContent.firstChild);
+      quartoContent.insertBefore(sidebarEl, quartoContent.firstChild);
 
       var mainEl = document.getElementById('quarto-document-content');
       if (mainEl && currentIdx !== -1) {
