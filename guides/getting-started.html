@@ -558,6 +558,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   if (offset.slice(-1) !== '/') offset += '/';
   var s = document.createElement('script');
   s.src = offset + 'ucsb-webtheme.js';
+  s.async = false;
+  s.defer = true;
   document.body.appendChild(s);
 })();
 </script>
