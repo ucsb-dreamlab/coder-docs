@@ -486,7 +486,7 @@
             <div class="dropzone" id="dropzone">
               <input type="file" id="fileInput" multiple accept="audio/*,video/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.opus,.webm,.mp4" />
               <div style="font-weight: 800; color: var(--text); margin-bottom: 4px;">Click to browse or drag &amp; drop audio files</div>
-              <div style="font-size: 0.84rem; color: var(--muted);">Supports MP3, WAV, M4A, FLAC, OGG, AAC, WebM (auto-chunked in browser)</div>
+              <div style="font-size: 0.84rem; color: var(--muted);">Supports MP3, WAV, M4A (AAC &amp; ALAC), FLAC, OGG, AAC, WebM (auto-chunked in browser)</div>
             </div>
           </div>
         </div>
@@ -696,22 +696,279 @@
       return specs;
     }
 
-    async function decodeAudioFile(file) {
-      const arrayBuf = await file.arrayBuffer();
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
+    async function sniffMp4AudioCodec(file) {
+      const VIDEO_FOURCCS = new Set([
+        "avc1", "avc3", "hev1", "hvc1", "vp08", "vp09", "av01", "mp4v", "encv", "jpeg", "png ", "s263", "H263"
+      ]);
+      const scanBuf = (buf) => {
+        const bytes = new Uint8Array(buf);
+        const view = new DataView(buf);
+        const found = [];
+        for (let i = 4; i + 20 <= bytes.length; i++) {
+          // Look for 'stsd' box header
+          if (
+            bytes[i] === 0x73 &&
+            bytes[i + 1] === 0x74 &&
+            bytes[i + 2] === 0x73 &&
+            bytes[i + 3] === 0x64
+          ) {
+            const verFlags = view.getUint32(i + 4, false);
+            const entryCount = view.getUint32(i + 8, false);
+            if (verFlags === 0 && entryCount >= 1 && entryCount <= 16) {
+              let tag = "";
+              let printable = true;
+              for (let k = 0; k < 4; k++) {
+                const c = bytes[i + 16 + k];
+                if (c < 0x20 || c > 0x7e) {
+                  printable = false;
+                  break;
+                }
+                tag += String.fromCharCode(c);
+              }
+              if (printable && !VIDEO_FOURCCS.has(tag)) {
+                found.push(tag.trim());
+              }
+            }
+          }
+        }
+        return found;
+      };
+
       try {
-        return await ctx.decodeAudioData(arrayBuf);
+        const SLICE_BYTES = 2 * 1024 * 1024;
+        const headBuf = await file.slice(0, Math.min(file.size, SLICE_BYTES)).arrayBuffer();
+        const headTags = scanBuf(headBuf);
+        if (headTags.length > 0) return headTags[0];
+        if (file.size > SLICE_BYTES) {
+          const tailStart = Math.max(0, file.size - SLICE_BYTES);
+          const tailBuf = await file.slice(tailStart, file.size).arrayBuffer();
+          const tailTags = scanBuf(tailBuf);
+          if (tailTags.length > 0) return tailTags[0];
+        }
+      } catch (_) {}
+      return null;
+    }
+
+    function canBrowserPlayMp4Codec(codec) {
+      if (!codec) return true;
+      const lower = codec.toLowerCase();
+      if (lower === "alac" || lower === "samr" || lower === "sawb" || lower === "ac-3" || lower === "ec-3") {
+        try {
+          const audio = document.createElement("audio");
+          const res = audio.canPlayType(`audio/mp4; codecs="${lower}"`);
+          return Boolean(res && res !== "no");
+        } catch (_) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    async function decodeViaFfmpegWasm(file, targetSampleRate, onStatus) {
+      const extMatch = (file.name || "").match(/(\.[a-zA-Z0-9]{1,8})$/);
+      const safeExt = extMatch ? extMatch[1].toLowerCase() : ".m4a";
+      const workerCode = `
+        const CDNS = [
+          "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd",
+          "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd"
+        ];
+        let ff = null;
+        async function ensureFFmpeg() {
+          if (ff) return ff;
+          let lastErr = null;
+          for (const base of CDNS) {
+            try {
+              const coreUrl = base + "/ffmpeg-core.js";
+              const wasmUrl = base + "/ffmpeg-core.wasm";
+              importScripts(coreUrl);
+              ff = await self.createFFmpegCore({
+                mainScriptUrlOrBlob: coreUrl + "#" + btoa(JSON.stringify({ wasmURL: wasmUrl, workerURL: "" }))
+              });
+              return ff;
+            } catch (err) {
+              lastErr = err;
+            }
+          }
+          throw lastErr || new Error("Failed to load ffmpeg.wasm core from CDN");
+        }
+
+        self.onmessage = async (e) => {
+          const { cmd, file, inputName, sampleRate } = e.data;
+          if (cmd !== "decode") return;
+          try {
+            self.postMessage({ type: "status", text: "Loading ffmpeg.wasm audio decoder..." });
+            const core = await ensureFFmpeg();
+            const logs = [];
+            core.setLogger(({ message }) => {
+              if (message) logs.push(message);
+            });
+            core.setProgress(({ progress }) => {
+              const pct = Number.isFinite(progress) ? Math.max(0, Math.min(1, progress)) : 0;
+              self.postMessage({ type: "progress", progress: pct });
+            });
+
+            try { core.FS.mkdir("/input"); } catch (_) {}
+            core.FS.mount(core.FS.filesystems.WORKERFS, { blobs: [{ name: inputName, data: file }] }, "/input");
+            try {
+              self.postMessage({ type: "status", text: "Decoding audio via ffmpeg.wasm..." });
+              core.exec(
+                "-i", "/input/" + inputName,
+                "-vn",
+                "-ac", "1",
+                "-ar", String(sampleRate),
+                "-f", "s16le",
+                "-acodec", "pcm_s16le",
+                "/out.pcm"
+              );
+              const ret = core.ret;
+              core.reset();
+              if (ret !== 0) {
+                const tail = logs.slice(-8).join(" | ");
+                throw new Error("ffmpeg exited with code " + ret + (tail ? ": " + tail : ""));
+              }
+              const pcmBytes = core.FS.readFile("/out.pcm");
+              try { core.FS.unlink("/out.pcm"); } catch (_) {}
+              self.postMessage(
+                { type: "done", ok: true, pcmBuffer: pcmBytes.buffer, logs },
+                [pcmBytes.buffer]
+              );
+            } finally {
+              try { core.FS.unmount("/input"); } catch (_) {}
+            }
+          } catch (err) {
+            self.postMessage({ type: "done", ok: false, error: err.message || String(err) });
+          }
+        };
+      `;
+
+      const blobUrl = URL.createObjectURL(new Blob([workerCode], { type: "application/javascript" }));
+      const worker = new Worker(blobUrl);
+      try {
+        const res = await new Promise((resolve, reject) => {
+          worker.onmessage = (e) => {
+            const msg = e.data || {};
+            if (msg.type === "status" && onStatus) {
+              onStatus(msg.text, null);
+            } else if (msg.type === "progress" && onStatus) {
+              const pct = Math.round((msg.progress || 0) * 100);
+              onStatus(`Decoding audio via ffmpeg.wasm (${pct}%)...`, msg.progress);
+            } else if (msg.type === "done") {
+              resolve(msg);
+            }
+          };
+          worker.onerror = (err) => reject(new Error(err.message || "ffmpeg.wasm worker error"));
+          worker.postMessage({
+            cmd: "decode",
+            file,
+            inputName: "input" + safeExt,
+            sampleRate: targetSampleRate,
+          });
+        });
+
+        if (!res.ok) {
+          throw new Error(res.error || "ffmpeg.wasm failed to decode audio");
+        }
+
+        const pcm16 = new Int16Array(res.pcmBuffer);
+        const duration = pcm16.length / targetSampleRate;
+        const streamLine = (res.logs || []).find((l) => l.includes("Audio:"));
+        const sourceSummary = streamLine
+          ? streamLine.replace(/^.*Audio:\s*/, "").trim()
+          : `decoded via ffmpeg.wasm -> ${targetSampleRate} Hz mono PCM16`;
+
+        return {
+          kind: "pcm16",
+          pcm16,
+          duration,
+          sampleRate: targetSampleRate,
+          numberOfChannels: 1,
+          decoder: "ffmpeg.wasm",
+          sourceSummary,
+        };
       } finally {
-        if (ctx.close) await ctx.close().catch(() => {});
+        worker.terminate();
+        URL.revokeObjectURL(blobUrl);
       }
     }
 
-    async function sliceAndEncodeWavBase64(audioBuffer, startSec, durSec, targetSampleRate) {
+    async function decodeAudioFile(file, targetSampleRate = 16000, hooks = {}) {
+      const { log, onStatus } = hooks;
+      const codec = await sniffMp4AudioCodec(file);
+
+      if (codec && !canBrowserPlayMp4Codec(codec)) {
+        if (log) {
+          log(
+            `Detected "${codec}" codec in "${file.name}" (not natively supported by browser Web Audio API) — decoding with in-browser ffmpeg.wasm...`
+          );
+        }
+        return await decodeViaFfmpegWasm(file, targetSampleRate, onStatus);
+      }
+
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      try {
+        const arrayBuf = await file.arrayBuffer();
+        let ctx;
+        try {
+          ctx = new AudioCtx({ sampleRate: targetSampleRate });
+        } catch (_) {
+          ctx = new AudioCtx();
+        }
+        try {
+          const audioBuffer = await ctx.decodeAudioData(arrayBuf);
+          return {
+            kind: "audiobuffer",
+            audioBuffer,
+            duration: audioBuffer.duration,
+            sampleRate: audioBuffer.sampleRate,
+            numberOfChannels: audioBuffer.numberOfChannels,
+            decoder: "Web Audio API",
+            sourceSummary: `${audioBuffer.sampleRate} Hz, ${audioBuffer.numberOfChannels} ch${codec ? ` (${codec})` : ""}`,
+          };
+        } finally {
+          if (ctx && ctx.close) await ctx.close().catch(() => {});
+        }
+      } catch (webAudioErr) {
+        const reason = webAudioErr && webAudioErr.message ? webAudioErr.message : String(webAudioErr);
+        if (log) {
+          log(
+            `Web Audio API could not decode "${file.name}" (${reason}${codec ? `, codec: ${codec}` : ""}) — falling back to in-browser ffmpeg.wasm decoder...`
+          );
+        }
+        return await decodeViaFfmpegWasm(file, targetSampleRate, onStatus);
+      }
+    }
+
+    async function sliceAndEncodeWavBase64(decodedAudio, startSec, durSec, targetSampleRate) {
+      if (decodedAudio && decodedAudio.kind === "pcm16") {
+        const srcRate = decodedAudio.sampleRate;
+        const startSample = Math.max(0, Math.floor(startSec * srcRate));
+        const endSample = Math.min(decodedAudio.pcm16.length, Math.ceil((startSec + durSec) * srcRate));
+        const subPcm = decodedAudio.pcm16.subarray(startSample, Math.max(startSample + 1, endSample));
+        const wavBytes = encodeInt16PcmWav(subPcm, targetSampleRate);
+        return uint8ToBase64(wavBytes);
+      }
+
+      const audioBuffer = decodedAudio && decodedAudio.audioBuffer ? decodedAudio.audioBuffer : decodedAudio;
       const srcRate = audioBuffer.sampleRate;
       const startSample = Math.max(0, Math.floor(startSec * srcRate));
       const endSample = Math.min(audioBuffer.length, Math.ceil((startSec + durSec) * srcRate));
       const frameCount = Math.max(1, endSample - startSample);
+
+      const numChannels = audioBuffer.numberOfChannels;
+      const scale = 1 / numChannels;
+
+      if (srcRate === targetSampleRate) {
+        const monoSamples = new Float32Array(frameCount);
+        for (let ch = 0; ch < numChannels; ch++) {
+          const chData = audioBuffer.getChannelData(ch);
+          for (let i = 0; i < frameCount; i++) {
+            monoSamples[i] += chData[startSample + i] * scale;
+          }
+        }
+        const wavBytes = encodePcm16Wav(monoSamples, targetSampleRate);
+        return uint8ToBase64(wavBytes);
+      }
+
       const actualDur = frameCount / srcRate;
       const outFrames = Math.max(1, Math.ceil(actualDur * targetSampleRate));
 
@@ -720,8 +977,6 @@
       const sliceBuffer = offline.createBuffer(1, frameCount, srcRate);
       const monoOut = sliceBuffer.getChannelData(0);
 
-      const numChannels = audioBuffer.numberOfChannels;
-      const scale = 1 / numChannels;
       for (let ch = 0; ch < numChannels; ch++) {
         const chData = audioBuffer.getChannelData(ch);
         for (let i = 0; i < frameCount; i++) {
@@ -738,6 +993,39 @@
 
       const wavBytes = encodePcm16Wav(samples, targetSampleRate);
       return uint8ToBase64(wavBytes);
+    }
+
+    function encodeInt16PcmWav(int16Samples, sampleRate) {
+      const numSamples = int16Samples.length;
+      const buffer = new ArrayBuffer(44 + numSamples * 2);
+      const view = new DataView(buffer);
+
+      const writeStr = (offset, str) => {
+        for (let i = 0; i < str.length; i++) {
+          view.setUint8(offset + i, str.charCodeAt(i));
+        }
+      };
+
+      writeStr(0, "RIFF");
+      view.setUint32(4, 36 + numSamples * 2, true);
+      writeStr(8, "WAVE");
+      writeStr(12, "fmt ");
+      view.setUint32(16, 16, true); // PCM chunk size
+      view.setUint16(20, 1, true);  // PCM format
+      view.setUint16(22, 1, true);  // Mono (1 channel)
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true); // byte rate
+      view.setUint16(32, 2, true);  // block align
+      view.setUint16(34, 16, true); // 16-bit
+      writeStr(36, "data");
+      view.setUint32(40, numSamples * 2, true);
+
+      let offset = 44;
+      for (let i = 0; i < numSamples; i++) {
+        view.setInt16(offset, int16Samples[i], true);
+        offset += 2;
+      }
+      return new Uint8Array(buffer);
     }
 
     function encodePcm16Wav(samples, sampleRate) {
@@ -1488,11 +1776,22 @@
       };
 
       try {
-        job.statusText = "Decoding audio via Web Audio API...";
+        job.statusText = "Decoding audio...";
         renderJobs();
-        const audioBuffer = await decodeAudioFile(job.file);
-        job.duration = audioBuffer.duration;
-        log(`Decoded "${job.file.name}": ${job.duration.toFixed(2)}s (${(job.duration / 60).toFixed(2)} mins), source ${audioBuffer.sampleRate} Hz, ${audioBuffer.numberOfChannels} ch`);
+        const decodedAudio = await decodeAudioFile(job.file, cfg.sampleRate, {
+          log,
+          onStatus: (text, frac) => {
+            job.statusText = text;
+            if (typeof frac === "number") {
+              job.progress = Math.max(5, Math.min(10, Math.round(5 + frac * 5)));
+            }
+            renderJobs();
+          },
+        });
+        job.duration = decodedAudio.duration;
+        log(
+          `Decoded "${job.file.name}" (${decodedAudio.decoder}): ${job.duration.toFixed(2)}s (${(job.duration / 60).toFixed(2)} mins) — ${decodedAudio.sourceSummary}`
+        );
 
         const specs = buildSpecs(job.duration, cfg.chunkDuration, cfg.overlap);
         log(`Prepared ${specs.length} overlapping chunk(s) (${cfg.chunkDuration}s max each, ${cfg.overlap}s overlap, ${cfg.sampleRate} Hz mono WAV)...`);
@@ -1510,7 +1809,7 @@
               job.statusText = `Encoding & transcribing chunk ${spec.idx + 1}/${specs.length} (${formatTs(spec.start)} - ${formatTs(spec.start + spec.dur)})...`;
               renderJobs();
               const base64Wav = await sliceAndEncodeWavBase64(
-                audioBuffer,
+                decodedAudio,
                 spec.start,
                 spec.dur,
                 cfg.sampleRate
