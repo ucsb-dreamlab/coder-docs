@@ -696,56 +696,228 @@
       return specs;
     }
 
-    async function sniffMp4AudioCodec(file) {
-      const VIDEO_FOURCCS = new Set([
-        "avc1", "avc3", "hev1", "hvc1", "vp08", "vp09", "av01", "mp4v", "encv", "jpeg", "png ", "s263", "H263"
-      ]);
-      const scanBuf = (buf) => {
-        const bytes = new Uint8Array(buf);
-        const view = new DataView(buf);
-        const found = [];
-        for (let i = 4; i + 20 <= bytes.length; i++) {
-          // Look for 'stsd' box header
-          if (
-            bytes[i] === 0x73 &&
-            bytes[i + 1] === 0x74 &&
-            bytes[i + 2] === 0x73 &&
-            bytes[i + 3] === 0x64
-          ) {
-            const verFlags = view.getUint32(i + 4, false);
-            const entryCount = view.getUint32(i + 8, false);
-            if (verFlags === 0 && entryCount >= 1 && entryCount <= 16) {
-              let tag = "";
-              let printable = true;
-              for (let k = 0; k < 4; k++) {
-                const c = bytes[i + 16 + k];
-                if (c < 0x20 || c > 0x7e) {
-                  printable = false;
-                  break;
-                }
-                tag += String.fromCharCode(c);
-              }
-              if (printable && !VIDEO_FOURCCS.has(tag)) {
-                found.push(tag.trim());
-              }
+    async function parseMp4AudioTrackFromFile(file) {
+      const readAscii = (bytes, off, len) => {
+        let s = "";
+        for (let i = 0; i < len && off + i < bytes.length; i++) {
+          s += String.fromCharCode(bytes[off + i]);
+        }
+        return s;
+      };
+
+      const readBoxHeader = (bytes, view, off, end) => {
+        if (off + 8 > end) return null;
+        let size = view.getUint32(off, false);
+        const type = readAscii(bytes, off + 4, 4);
+        let headerSize = 8;
+        if (size === 1) {
+          if (off + 16 > end) return null;
+          const hi = view.getUint32(off + 8, false);
+          const lo = view.getUint32(off + 12, false);
+          size = hi * 4294967296 + lo;
+          headerSize = 16;
+        } else if (size === 0) {
+          size = end - off;
+        }
+        if (size < headerSize || off + size > end) return null;
+        return { type, size, headerSize, bodyStart: off + headerSize, boxEnd: off + size };
+      };
+
+      const findBoxes = (bytes, view, start, end, targetType) => {
+        const out = [];
+        let off = start;
+        while (off + 8 <= end) {
+          const h = readBoxHeader(bytes, view, off, end);
+          if (!h) break;
+          if (!targetType || h.type === targetType) out.push(h);
+          off = h.boxEnd;
+        }
+        return out;
+      };
+
+      // Locate top-level 'moov' box via 16-byte slices so we never load 'mdat' into RAM just to parse headers
+      let moovBuf = null;
+      let topOff = 0;
+      while (topOff + 8 <= file.size) {
+        const hdrBuf = await file.slice(topOff, Math.min(file.size, topOff + 16)).arrayBuffer();
+        const hdrBytes = new Uint8Array(hdrBuf);
+        const hdrView = new DataView(hdrBuf);
+        let size = hdrView.getUint32(0, false);
+        const type = readAscii(hdrBytes, 4, 4);
+        let headerSize = 8;
+        if (size === 1) {
+          if (hdrBuf.byteLength < 16) break;
+          size = hdrView.getUint32(8, false) * 4294967296 + hdrView.getUint32(12, false);
+          headerSize = 16;
+        } else if (size === 0) {
+          size = file.size - topOff;
+        }
+        if (size < headerSize || topOff + size > file.size) break;
+        if (type === "moov") {
+          moovBuf = await file.slice(topOff + headerSize, topOff + size).arrayBuffer();
+          break;
+        }
+        topOff += size;
+      }
+
+      if (!moovBuf) return null;
+      const bytes = new Uint8Array(moovBuf);
+      const view = new DataView(moovBuf);
+
+      const traks = findBoxes(bytes, view, 0, bytes.length, "trak");
+      for (const trak of traks) {
+        const mdia = findBoxes(bytes, view, trak.bodyStart, trak.boxEnd, "mdia")[0];
+        if (!mdia) continue;
+        const hdlr = findBoxes(bytes, view, mdia.bodyStart, mdia.boxEnd, "hdlr")[0];
+        if (!hdlr || hdlr.bodyStart + 12 > hdlr.boxEnd) continue;
+        const handlerType = readAscii(bytes, hdlr.bodyStart + 8, 4);
+        if (handlerType !== "soun") continue;
+
+        let timeScale = 44100;
+        const mdhd = findBoxes(bytes, view, mdia.bodyStart, mdia.boxEnd, "mdhd")[0];
+        if (mdhd) {
+          const ver = bytes[mdhd.bodyStart];
+          timeScale = view.getUint32(mdhd.bodyStart + (ver === 1 ? 20 : 12), false);
+        }
+
+        const minf = findBoxes(bytes, view, mdia.bodyStart, mdia.boxEnd, "minf")[0];
+        if (!minf) continue;
+        const stbl = findBoxes(bytes, view, minf.bodyStart, minf.boxEnd, "stbl")[0];
+        if (!stbl) continue;
+
+        const stsd = findBoxes(bytes, view, stbl.bodyStart, stbl.boxEnd, "stsd")[0];
+        if (!stsd || stsd.bodyStart + 16 > stsd.boxEnd) continue;
+        const entryBox = readBoxHeader(bytes, view, stsd.bodyStart + 8, stsd.boxEnd);
+        if (!entryBox) continue;
+
+        const codec = entryBox.type.trim();
+        const stsdVer = view.getUint16(entryBox.bodyStart + 8, false);
+        const channels = view.getUint16(entryBox.bodyStart + 16, false);
+        const bitDepth = view.getUint16(entryBox.bodyStart + 18, false);
+        const pktSampleRate = view.getUint16(entryBox.bodyStart + 24, false) || timeScale;
+        let subBoxesStart = entryBox.bodyStart + 28;
+        if (stsdVer === 1) subBoxesStart += 16;
+        else if (stsdVer === 2) subBoxesStart += 36;
+
+        let alacCookie = null;
+        let esdsConfig = null;
+        const subBoxes = findBoxes(bytes, view, subBoxesStart, entryBox.boxEnd, null);
+        for (const sb of subBoxes) {
+          if (sb.type === "alac" && sb.boxEnd - sb.bodyStart >= 28) {
+            alacCookie = bytes.slice(sb.bodyStart + 4, sb.boxEnd);
+          } else if (sb.type === "wave") {
+            const innerAlac = findBoxes(bytes, view, sb.bodyStart, sb.boxEnd, "alac")[0];
+            if (innerAlac && innerAlac.boxEnd - innerAlac.bodyStart >= 28) {
+              alacCookie = bytes.slice(innerAlac.bodyStart + 4, innerAlac.boxEnd);
+            }
+          } else if (sb.type === "esds") {
+            esdsConfig = bytes.slice(sb.bodyStart, sb.boxEnd);
+          }
+        }
+
+        const sttsBox = findBoxes(bytes, view, stbl.bodyStart, stbl.boxEnd, "stts")[0];
+        const stscBox = findBoxes(bytes, view, stbl.bodyStart, stbl.boxEnd, "stsc")[0];
+        const stszBox = findBoxes(bytes, view, stbl.bodyStart, stbl.boxEnd, "stsz")[0];
+        const stcoBox = findBoxes(bytes, view, stbl.bodyStart, stbl.boxEnd, "stco")[0];
+        const co64Box = findBoxes(bytes, view, stbl.bodyStart, stbl.boxEnd, "co64")[0];
+
+        const stts = [];
+        if (sttsBox) {
+          const count = view.getUint32(sttsBox.bodyStart + 4, false);
+          let p = sttsBox.bodyStart + 8;
+          for (let i = 0; i < count && p + 8 <= sttsBox.boxEnd; i++, p += 8) {
+            stts.push({ count: view.getUint32(p, false), delta: view.getUint32(p + 4, false) });
+          }
+        }
+
+        const stsc = [];
+        if (stscBox) {
+          const count = view.getUint32(stscBox.bodyStart + 4, false);
+          let p = stscBox.bodyStart + 8;
+          for (let i = 0; i < count && p + 12 <= stscBox.boxEnd; i++, p += 12) {
+            stsc.push({
+              firstChunk: view.getUint32(p, false),
+              samplesPerChunk: view.getUint32(p + 4, false),
+            });
+          }
+        }
+
+        let defaultSampleSize = 0;
+        let sampleCount = 0;
+        let sampleSizes = null;
+        if (stszBox) {
+          defaultSampleSize = view.getUint32(stszBox.bodyStart + 4, false);
+          sampleCount = view.getUint32(stszBox.bodyStart + 8, false);
+          if (defaultSampleSize === 0) {
+            sampleSizes = new Uint32Array(sampleCount);
+            let p = stszBox.bodyStart + 12;
+            for (let i = 0; i < sampleCount && p + 4 <= stszBox.boxEnd; i++, p += 4) {
+              sampleSizes[i] = view.getUint32(p, false);
             }
           }
         }
-        return found;
-      };
 
-      try {
-        const SLICE_BYTES = 2 * 1024 * 1024;
-        const headBuf = await file.slice(0, Math.min(file.size, SLICE_BYTES)).arrayBuffer();
-        const headTags = scanBuf(headBuf);
-        if (headTags.length > 0) return headTags[0];
-        if (file.size > SLICE_BYTES) {
-          const tailStart = Math.max(0, file.size - SLICE_BYTES);
-          const tailBuf = await file.slice(tailStart, file.size).arrayBuffer();
-          const tailTags = scanBuf(tailBuf);
-          if (tailTags.length > 0) return tailTags[0];
+        const chunkOffsets = [];
+        if (stcoBox) {
+          const count = view.getUint32(stcoBox.bodyStart + 4, false);
+          let p = stcoBox.bodyStart + 8;
+          for (let i = 0; i < count && p + 4 <= stcoBox.boxEnd; i++, p += 4) {
+            chunkOffsets.push(view.getUint32(p, false));
+          }
+        } else if (co64Box) {
+          const count = view.getUint32(co64Box.bodyStart + 4, false);
+          let p = co64Box.bodyStart + 8;
+          for (let i = 0; i < count && p + 8 <= co64Box.boxEnd; i++, p += 8) {
+            chunkOffsets.push(view.getUint32(p, false) * 4294967296 + view.getUint32(p + 4, false));
+          }
         }
-      } catch (_) {}
+
+        const sampleOffsets = [];
+        const sampleByteSizes = [];
+        let totalTrackDurationUnits = 0;
+        let stscIdx = 0;
+        let sttsIdx = 0;
+        let sttsRem = stts.length > 0 ? stts[0].count : 0;
+        let sampleIdx = 0;
+
+        for (let cIdx = 0; cIdx < chunkOffsets.length; cIdx++) {
+          const chunkNum = cIdx + 1;
+          while (stscIdx + 1 < stsc.length && chunkNum >= stsc[stscIdx + 1].firstChunk) {
+            stscIdx++;
+          }
+          const nSamples = stsc.length > 0 ? stsc[stscIdx].samplesPerChunk : 0;
+          let curOffset = chunkOffsets[cIdx];
+          for (let s = 0; s < nSamples; s++) {
+            if (sampleCount && sampleIdx >= sampleCount) break;
+            const sz = defaultSampleSize || (sampleSizes ? sampleSizes[sampleIdx] : 0);
+            const dur = sttsIdx < stts.length ? stts[sttsIdx].delta : 0;
+            totalTrackDurationUnits += dur;
+            if (sttsRem > 0) {
+              sttsRem--;
+              if (sttsRem === 0 && sttsIdx + 1 < stts.length) {
+                sttsIdx++;
+                sttsRem = stts[sttsIdx].count;
+              }
+            }
+            sampleOffsets.push(curOffset);
+            sampleByteSizes.push(sz);
+            curOffset += sz;
+            sampleIdx++;
+          }
+        }
+
+        return {
+          codec,
+          channels,
+          bitDepth,
+          sampleRate: timeScale || pktSampleRate,
+          totalSamples: totalTrackDurationUnits,
+          alacCookie,
+          esdsConfig,
+          sampleOffsets: new Float64Array(sampleOffsets),
+          sampleByteSizes: new Uint32Array(sampleByteSizes),
+        };
+      }
       return null;
     }
 
@@ -764,77 +936,458 @@
       return true;
     }
 
-    async function decodeViaFfmpegWasm(file, targetSampleRate, onStatus) {
-      const extMatch = (file.name || "").match(/(\.[a-zA-Z0-9]{1,8})$/);
-      const safeExt = extMatch ? extMatch[1].toLowerCase() : ".m4a";
+    // Pure-JS in-Worker ALAC (Apple Lossless) decoder with zero external dependencies or CDNs
+    async function decodeAlacViaPureJsWorker(file, track, targetSampleRate, onStatus) {
+      if (!track || !track.alacCookie) {
+        throw new Error("Missing ALAC configuration cookie in .m4a track");
+      }
+
       const workerCode = `
-        const CDNS = [
-          "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd",
-          "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd"
-        ];
-        let ff = null;
-        async function ensureFFmpeg() {
-          if (ff) return ff;
-          let lastErr = null;
-          for (const base of CDNS) {
-            try {
-              const coreUrl = base + "/ffmpeg-core.js";
-              const wasmUrl = base + "/ffmpeg-core.wasm";
-              importScripts(coreUrl);
-              ff = await self.createFFmpegCore({
-                mainScriptUrlOrBlob: coreUrl + "#" + btoa(JSON.stringify({ wasmURL: wasmUrl, workerURL: "" }))
-              });
-              return ff;
-            } catch (err) {
-              lastErr = err;
+        class AlacBitReader {
+          constructor(bytes, byteOffset = 0, bitPosition = 0) {
+            this.bytes = bytes;
+            this.pos = byteOffset;
+            this.bitPosition = bitPosition;
+          }
+          copy() {
+            return new AlacBitReader(this.bytes, this.pos, this.bitPosition);
+          }
+          advance(bits) {
+            const total = this.bitPosition + bits;
+            this.pos += total >> 3;
+            this.bitPosition = total & 7;
+          }
+          align() {
+            if (this.bitPosition !== 0) {
+              this.bitPosition = 0;
+              this.pos += 1;
             }
           }
-          throw lastErr || new Error("Failed to load ffmpeg.wasm core from CDN");
+          peek(bits) {
+            if (bits === 0) return 0;
+            const b = this.bytes;
+            const p = this.pos;
+            const b0 = p < b.length ? b[p] : 0;
+            const b1 = p + 1 < b.length ? b[p + 1] : 0;
+            const b2 = p + 2 < b.length ? b[p + 2] : 0;
+            const b3 = p + 3 < b.length ? b[p + 3] : 0;
+            const b4 = p + 4 < b.length ? b[p + 4] : 0;
+            const hi32 = ((b0 << 24) | (b1 << 16) | (b2 << 8) | b3) >>> 0;
+            const shifted = this.bitPosition === 0
+              ? hi32
+              : (((hi32 << this.bitPosition) | (b4 >>> (8 - this.bitPosition))) >>> 0);
+            return bits === 32 ? shifted : (shifted >>> (32 - bits));
+          }
+          read(bits) {
+            const v = this.peek(bits);
+            this.advance(bits);
+            return v;
+          }
         }
 
-        self.onmessage = async (e) => {
-          const { cmd, file, inputName, sampleRate } = e.data;
-          if (cmd !== "decode") return;
-          try {
-            self.postMessage({ type: "status", text: "Loading ffmpeg.wasm audio decoder..." });
-            const core = await ensureFFmpeg();
-            const logs = [];
-            core.setLogger(({ message }) => {
-              if (message) logs.push(message);
-            });
-            core.setProgress(({ progress }) => {
-              const pct = Number.isFinite(progress) ? Math.max(0, Math.min(1, progress)) : 0;
-              self.postMessage({ type: "progress", progress: pct });
-            });
+        function clz32(x) {
+          return Math.clz32(x >>> 0);
+        }
 
-            try { core.FS.mkdir("/input"); } catch (_) {}
-            core.FS.mount(core.FS.filesystems.WORKERFS, { blobs: [{ name: inputName, data: file }] }, "/input");
-            try {
-              self.postMessage({ type: "status", text: "Decoding audio via ffmpeg.wasm..." });
-              core.exec(
-                "-i", "/input/" + inputName,
-                "-vn",
-                "-ac", "1",
-                "-ar", String(sampleRate),
-                "-f", "s16le",
-                "-acodec", "pcm_s16le",
-                "/out.pcm"
-              );
-              const ret = core.ret;
-              core.reset();
-              if (ret !== 0) {
-                const tail = logs.slice(-8).join(" | ");
-                throw new Error("ffmpeg exited with code " + ret + (tail ? ": " + tail : ""));
+        function createAlacDecoder(cookieBytes) {
+          const dv = new DataView(cookieBytes.buffer, cookieBytes.byteOffset, cookieBytes.byteLength);
+          let off = 0;
+          while (off + 24 <= cookieBytes.byteLength) {
+            const tag = String.fromCharCode(
+              cookieBytes[off + 4], cookieBytes[off + 5], cookieBytes[off + 6], cookieBytes[off + 7]
+            );
+            if (tag === "frma" || tag === "alac") off += 12;
+            else break;
+          }
+          const config = {
+            frameLength: dv.getUint32(off, false),
+            compatibleVersion: dv.getUint8(off + 4),
+            bitDepth: dv.getUint8(off + 5),
+            pb: dv.getUint8(off + 6),
+            mb: dv.getUint8(off + 7),
+            kb: dv.getUint8(off + 8),
+            numChannels: dv.getUint8(off + 9),
+            maxRun: dv.getUint16(off + 10, false),
+            maxFrameBytes: dv.getUint32(off + 12, false),
+            avgBitRate: dv.getUint32(off + 16, false),
+            sampleRate: dv.getUint32(off + 20, false),
+          };
+
+          const QBSHIFT = 9;
+          const QB = 1 << QBSHIFT;
+          const MMULSHIFT = 2;
+          const MDENSHIFT = QBSHIFT - MMULSHIFT - 1;
+          const MOFF = 1 << (MDENSHIFT - 2);
+          const BITOFF = 24;
+          const MAX_PREFIX_16 = 9;
+          const MAX_PREFIX_32 = 9;
+          const MAX_DATATYPE_BITS_16 = 16;
+
+          function dynGet16(data, m, k) {
+            const offs = data.bitPosition;
+            let stream = (data.peek(32 - offs) << offs) >>> 0;
+            const bitsInPrefix = clz32(~stream);
+            if (bitsInPrefix >= MAX_PREFIX_16) {
+              data.advance(MAX_PREFIX_16 + MAX_DATATYPE_BITS_16);
+              stream = (stream << MAX_PREFIX_16) >>> 0;
+              return stream >>> (32 - MAX_DATATYPE_BITS_16);
+            } else {
+              data.advance(bitsInPrefix + k);
+              stream = (stream << (bitsInPrefix + 1)) >>> 0;
+              const v = k === 0 ? 0 : (stream >>> (32 - k));
+              let result = bitsInPrefix * m + v - 1;
+              if (v < 2) {
+                result -= v - 1;
+              } else {
+                data.advance(1);
               }
-              const pcmBytes = core.FS.readFile("/out.pcm");
-              try { core.FS.unlink("/out.pcm"); } catch (_) {}
-              self.postMessage(
-                { type: "done", ok: true, pcmBuffer: pcmBytes.buffer, logs },
-                [pcmBytes.buffer]
-              );
-            } finally {
-              try { core.FS.unmount("/input"); } catch (_) {}
+              return result;
             }
+          }
+
+          function dynGet32(data, m, k, maxbits) {
+            const offs = data.bitPosition;
+            let stream = (data.peek(32 - offs) << offs) >>> 0;
+            let result = clz32(~stream);
+            if (result >= MAX_PREFIX_32) {
+              data.advance(MAX_PREFIX_32);
+              return data.read(maxbits);
+            } else {
+              data.advance(result + 1);
+              if (k !== 1) {
+                stream = (stream << (result + 1)) >>> 0;
+                result *= m;
+                const v = k === 0 ? 0 : (stream >>> (32 - k));
+                data.advance(k - 1);
+                if (v > 1) {
+                  result += v - 1;
+                  data.advance(1);
+                }
+              }
+              return result;
+            }
+          }
+
+          function dynDecomp(params, data, pc, samples, maxSize) {
+            const { pb, kb, wb, mb0 } = params;
+            let mb = mb0;
+            let zmode = 0;
+            let c = 0;
+            while (c < samples) {
+              let m = mb >>> QBSHIFT;
+              let k = Math.min(31 - clz32(m + 3), kb);
+              m = (1 << k) - 1;
+              let n = dynGet32(data, m, k, maxSize);
+              const ndecode = n + zmode;
+              const multiplier = -(ndecode & 1) | 1;
+              pc[c++] = ((ndecode + 1) >>> 1) * multiplier;
+              mb = pb * (n + zmode) + mb - ((pb * mb) >> QBSHIFT);
+              if (n > 0xffff) mb = 0xffff;
+              zmode = 0;
+              if (((mb << MMULSHIFT) < QB) && (c < samples)) {
+                zmode = 1;
+                k = clz32(mb) - BITOFF + ((mb + MOFF) >> MDENSHIFT);
+                const mz = ((1 << k) - 1) & wb;
+                n = dynGet16(data, mz, k);
+                if (c + n > samples) return false;
+                for (let j = 0; j < n; j++) pc[c++] = 0;
+                if (n >= 65535) zmode = 0;
+                mb = 0;
+              }
+            }
+            return true;
+          }
+
+          function unpcBlock(pc1, out, num, coefs, active, chanbits, denshift) {
+            const chanshift = 32 - chanbits;
+            const denhalf = 1 << (denshift - 1);
+            out[0] = pc1[0];
+            if (active === 0) {
+              for (let i = 0; i < num; i++) out[i] = pc1[i];
+              return;
+            }
+            if (active === 31) {
+              let prev = out[0];
+              for (let i = 1; i < num; i++) {
+                const del = pc1[i] + prev;
+                prev = (del << chanshift) >> chanshift;
+                out[i] = prev;
+              }
+              return;
+            }
+            for (let i = 1; i <= active; i++) {
+              const del = pc1[i] + out[i - 1];
+              out[i] = (del << chanshift) >> chanshift;
+            }
+            const lim = active + 1;
+            for (let i = lim; i < num; i++) {
+              let sum1 = 0;
+              const top = out[i - lim];
+              const offset = i - 1;
+              for (let j = 0; j < active; j++) {
+                sum1 += coefs[j] * (out[offset - j] - top);
+              }
+              let del = pc1[i];
+              let del0 = del;
+              const sg = (-del >>> 31) | (del >> 31);
+              del += top + ((sum1 + denhalf) >> denshift);
+              out[i] = (del << chanshift) >> chanshift;
+              if (sg > 0) {
+                for (let j = active - 1; j >= 0; j--) {
+                  const dd = top - out[offset - j];
+                  const sgn = (-dd >>> 31) | (dd >> 31);
+                  coefs[j] -= sgn;
+                  del0 -= (active - j) * ((sgn * dd) >> denshift);
+                  if (del0 <= 0) break;
+                }
+              } else if (sg < 0) {
+                for (let j = active - 1; j >= 0; j--) {
+                  const dd = top - out[offset - j];
+                  const sgn = (-dd >>> 31) | (dd >> 31);
+                  coefs[j] += sgn;
+                  del0 -= (active - j) * ((-sgn * dd) >> denshift);
+                  if (del0 >= 0) break;
+                }
+              }
+            }
+          }
+
+          const mixBuffers = [new Int32Array(config.frameLength), new Int32Array(config.frameLength)];
+          const predictor = new Int32Array(config.frameLength);
+          const shiftBuffer = new Uint16Array(config.frameLength * Math.max(2, config.numChannels));
+          const frameMonoOut = new Int16Array(config.frameLength);
+
+          function decodePacketToMono16(packetBytes, byteOffset) {
+            const data = new AlacBitReader(packetBytes, byteOffset, 0);
+            let samples = config.frameLength;
+            let channelIndex = 0;
+            let end = false;
+
+            while (!end) {
+              const tag = data.read(3);
+              if (tag === 0 || tag === 3 || tag === 1) {
+                const channels = tag === 1 ? 2 : 1;
+                data.read(4);
+                const unused = data.read(12);
+                if (unused !== 0) throw new Error("Invalid ALAC frame header");
+                const partialFrame = data.read(1);
+                let bytesShifted = data.read(2);
+                const escapeFlag = data.read(1);
+                if (bytesShifted === 3) throw new Error("Invalid ALAC shift");
+                if (partialFrame) samples = data.read(32);
+
+                let mixBits = 0;
+                let mixRes = 0;
+                let shiftbits = null;
+                const shift = bytesShifted * 8;
+
+                if (escapeFlag === 0) {
+                  const chanBits = config.bitDepth - shift + channels - 1;
+                  mixBits = data.read(8);
+                  mixRes = (data.read(8) << 24) >> 24;
+                  const mode = [];
+                  const denShift = [];
+                  const pbFactor = [];
+                  const num = [];
+                  const coefs = [];
+                  for (let ch = 0; ch < channels; ch++) {
+                    mode[ch] = data.read(4);
+                    denShift[ch] = data.read(4);
+                    pbFactor[ch] = data.read(3);
+                    num[ch] = data.read(5);
+                    const table = (coefs[ch] = new Int16Array(32));
+                    for (let i = 0; i < num[ch]; i++) {
+                      table[i] = (data.read(16) << 16) >> 16;
+                    }
+                  }
+                  if (bytesShifted) {
+                    shiftbits = data.copy();
+                    data.advance(shift * channels * samples);
+                  }
+                  for (let ch = 0; ch < channels; ch++) {
+                    const pbVal = (config.pb * pbFactor[ch]) >> 2;
+                    const params = {
+                      mb: config.mb,
+                      mb0: config.mb,
+                      pb: pbVal,
+                      kb: config.kb,
+                      wb: (1 << config.kb) - 1,
+                      qb: QB - pbVal,
+                      fw: samples,
+                      sw: samples,
+                      maxrun: config.maxRun,
+                    };
+                    if (!dynDecomp(params, data, predictor, samples, chanBits)) {
+                      throw new Error("ALAC entropy decode failed");
+                    }
+                    if (mode[ch] === 0) {
+                      unpcBlock(predictor, mixBuffers[ch], samples, coefs[ch], num[ch], chanBits, denShift[ch]);
+                    } else {
+                      unpcBlock(predictor, predictor, samples, null, 31, chanBits, 0);
+                      unpcBlock(predictor, mixBuffers[ch], samples, coefs[ch], num[ch], chanBits, denShift[ch]);
+                    }
+                  }
+                } else {
+                  const chanBits = config.bitDepth;
+                  const sShift = 32 - chanBits;
+                  for (let i = 0; i < samples; i++) {
+                    for (let ch = 0; ch < channels; ch++) {
+                      mixBuffers[ch][i] = (data.read(chanBits) << sShift) >> sShift;
+                    }
+                  }
+                  bytesShifted = 0;
+                }
+
+                if (bytesShifted && shiftbits) {
+                  const count = samples * channels;
+                  for (let i = 0; i < count; i++) {
+                    shiftBuffer[i] = shiftbits.read(shift);
+                  }
+                }
+
+                const bd = config.bitDepth;
+                const downShift = bd > 16 ? bd - 16 : 0;
+                const upShift = bd < 16 ? 16 - bd : 0;
+                const u = mixBuffers[0];
+                const v = mixBuffers[1];
+
+                if (channelIndex === 0) {
+                  if (channels === 2) {
+                    for (let i = 0; i < samples; i++) {
+                      let l, r;
+                      if (mixRes !== 0) {
+                        l = u[i] + v[i] - ((mixRes * v[i]) >> mixBits);
+                        r = l - v[i];
+                      } else {
+                        l = u[i];
+                        r = v[i];
+                      }
+                      if (bytesShifted) {
+                        l = (l << shift) | shiftBuffer[i * 2];
+                        r = (r << shift) | shiftBuffer[i * 2 + 1];
+                      }
+                      const l16 = downShift ? (l >> downShift) : (l << upShift);
+                      const r16 = downShift ? (r >> downShift) : (r << upShift);
+                      frameMonoOut[i] = Math.max(-32768, Math.min(32767, (l16 + r16) >> 1));
+                    }
+                  } else {
+                    for (let i = 0; i < samples; i++) {
+                      let s = u[i];
+                      if (bytesShifted) s = (s << shift) | shiftBuffer[i];
+                      const s16 = downShift ? (s >> downShift) : (s << upShift);
+                      frameMonoOut[i] = Math.max(-32768, Math.min(32767, s16));
+                    }
+                  }
+                }
+                channelIndex += channels;
+              } else if (tag === 4) {
+                data.read(4);
+                const alignFlag = data.read(1);
+                let count = data.read(8);
+                if (count === 255) count += data.read(8);
+                if (alignFlag) data.align();
+                data.advance(count * 8);
+              } else if (tag === 6) {
+                let count = data.read(4);
+                if (count === 15) count += data.read(8) - 1;
+                data.advance(count * 8);
+              } else if (tag === 7) {
+                data.align();
+                end = true;
+              } else {
+                throw new Error("Unsupported ALAC element tag: " + tag);
+              }
+            }
+            return frameMonoOut.subarray(0, samples);
+          }
+
+          return { config, decodePacketToMono16 };
+        }
+
+        self.onmessage = (e) => {
+          const { file, alacCookie, sampleOffsets, sampleByteSizes, totalSamples, targetSampleRate } = e.data;
+          try {
+            const reader = new FileReaderSync();
+            const dec = createAlacDecoder(alacCookie);
+            const srcRate = dec.config.sampleRate || 44100;
+            const numPackets = sampleOffsets.length;
+            const estSrcSamples = totalSamples || (numPackets * dec.config.frameLength);
+            const estOutSamples = Math.ceil((estSrcSamples * targetSampleRate) / srcRate) + 4096;
+            const outPcm = new Int16Array(estOutSamples);
+
+            let outWriteIdx = 0;
+            let srcBaseSample = 0;
+            let prevSample = 0;
+            const step = srcRate / targetSampleRate;
+
+            const SLICE_WINDOW = 4 * 1024 * 1024; // Read mdat in 4 MB windows
+            let sliceStart = -1;
+            let sliceEnd = -1;
+            let sliceBytes = null;
+            let lastReportPct = -1;
+
+            for (let p = 0; p < numPackets; p++) {
+              const pktOff = sampleOffsets[p];
+              const pktSize = sampleByteSizes[p];
+              if (pktSize === 0) continue;
+
+              if (!sliceBytes || pktOff < sliceStart || pktOff + pktSize > sliceEnd) {
+                sliceStart = pktOff;
+                sliceEnd = Math.min(file.size, Math.max(pktOff + pktSize, pktOff + SLICE_WINDOW));
+                const ab = reader.readAsArrayBuffer(file.slice(sliceStart, sliceEnd));
+                sliceBytes = new Uint8Array(ab);
+              }
+
+              const monoFrame = dec.decodePacketToMono16(sliceBytes, pktOff - sliceStart);
+              const n = monoFrame.length;
+              if (n > 0) {
+                if (srcRate === targetSampleRate) {
+                  if (outWriteIdx + n <= outPcm.length) {
+                    outPcm.set(monoFrame, outWriteIdx);
+                    outWriteIdx += n;
+                  }
+                } else {
+                  const frameEndSample = srcBaseSample + n;
+                  while (true) {
+                    const srcPos = outWriteIdx * step;
+                    if (srcPos >= frameEndSample - 1) break;
+                    const localPos = srcPos - srcBaseSample;
+                    const i0 = Math.floor(localPos);
+                    const frac = localPos - i0;
+                    const sPrev = i0 <= 0 ? prevSample : monoFrame[i0 - 1];
+                    const s0 = monoFrame[Math.max(0, i0)];
+                    const s1 = monoFrame[Math.min(n - 1, i0 + 1)];
+                    // 3-tap low-pass + linear interpolation
+                    const filtered0 = (sPrev + (s0 << 1) + s1) >> 2;
+                    const val = Math.round(filtered0 + frac * (s1 - s0));
+                    if (outWriteIdx < outPcm.length) {
+                      outPcm[outWriteIdx++] = Math.max(-32768, Math.min(32767, val));
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                prevSample = monoFrame[n - 1];
+                srcBaseSample += n;
+              }
+
+              const pct = Math.floor(((p + 1) / numPackets) * 100);
+              if (pct >= lastReportPct + 5 || p + 1 === numPackets) {
+                lastReportPct = pct;
+                self.postMessage({ type: "progress", progress: (p + 1) / numPackets });
+              }
+            }
+
+            const trimmed = outPcm.slice(0, outWriteIdx);
+            self.postMessage(
+              {
+                type: "done",
+                ok: true,
+                pcmBuffer: trimmed.buffer,
+                config: dec.config,
+              },
+              [trimmed.buffer]
+            );
           } catch (err) {
             self.postMessage({ type: "done", ok: false, error: err.message || String(err) });
           }
@@ -847,43 +1400,39 @@
         const res = await new Promise((resolve, reject) => {
           worker.onmessage = (e) => {
             const msg = e.data || {};
-            if (msg.type === "status" && onStatus) {
-              onStatus(msg.text, null);
-            } else if (msg.type === "progress" && onStatus) {
+            if (msg.type === "progress" && onStatus) {
               const pct = Math.round((msg.progress || 0) * 100);
-              onStatus(`Decoding audio via ffmpeg.wasm (${pct}%)...`, msg.progress);
+              onStatus(`Decoding ALAC audio in browser (${pct}%)...`, msg.progress);
             } else if (msg.type === "done") {
               resolve(msg);
             }
           };
-          worker.onerror = (err) => reject(new Error(err.message || "ffmpeg.wasm worker error"));
+          worker.onerror = (err) => reject(new Error(err.message || "ALAC decoder worker error"));
           worker.postMessage({
-            cmd: "decode",
             file,
-            inputName: "input" + safeExt,
-            sampleRate: targetSampleRate,
+            alacCookie: track.alacCookie,
+            sampleOffsets: track.sampleOffsets,
+            sampleByteSizes: track.sampleByteSizes,
+            totalSamples: track.totalSamples,
+            targetSampleRate,
           });
         });
 
         if (!res.ok) {
-          throw new Error(res.error || "ffmpeg.wasm failed to decode audio");
+          throw new Error(res.error || "Failed to decode ALAC audio");
         }
 
         const pcm16 = new Int16Array(res.pcmBuffer);
         const duration = pcm16.length / targetSampleRate;
-        const streamLine = (res.logs || []).find((l) => l.includes("Audio:"));
-        const sourceSummary = streamLine
-          ? streamLine.replace(/^.*Audio:\s*/, "").trim()
-          : `decoded via ffmpeg.wasm -> ${targetSampleRate} Hz mono PCM16`;
-
+        const cfg = res.config || {};
         return {
           kind: "pcm16",
           pcm16,
           duration,
           sampleRate: targetSampleRate,
           numberOfChannels: 1,
-          decoder: "ffmpeg.wasm",
-          sourceSummary,
+          decoder: "built-in ALAC decoder",
+          sourceSummary: `ALAC ${cfg.bitDepth || track.bitDepth}-bit, ${cfg.sampleRate || track.sampleRate} Hz, ${cfg.numChannels || track.channels} ch`,
         };
       } finally {
         worker.terminate();
@@ -891,17 +1440,145 @@
       }
     }
 
+    // Batched ADTS AAC-LC fallback for multi-hour .m4a files that exceed single-buffer Web Audio RAM limits
+    async function decodeMp4AacInBatches(file, track, targetSampleRate, onStatus) {
+      const FREQS = [96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 7350];
+      let profile = 1; // AAC-LC
+      let freqIdx = FREQS.indexOf(track.sampleRate);
+      if (freqIdx < 0) freqIdx = 4;
+      let chanCfg = track.channels || 1;
+
+      if (track.esdsConfig) {
+        const eb = track.esdsConfig;
+        for (let i = 0; i + 4 < eb.length; i++) {
+          if (eb[i] === 0x05) {
+            let p = i + 1;
+            let len = 0;
+            for (let k = 0; k < 4 && p < eb.length; k++) {
+              const c = eb[p++];
+              len = (len << 7) | (c & 0x7f);
+              if (!(c & 0x80)) break;
+            }
+            if (len >= 2 && p + 2 <= eb.length) {
+              const b0 = eb[p];
+              const b1 = eb[p + 1];
+              const aot = (b0 >> 3) & 0x1f;
+              const fi = ((b0 & 0x07) << 1) | (b1 >> 7);
+              const cc = (b1 >> 3) & 0x0f;
+              if (aot >= 1 && aot <= 4) profile = aot - 1;
+              if (fi >= 0 && fi < 13) freqIdx = fi;
+              if (cc >= 1 && cc <= 7) chanCfg = cc;
+              break;
+            }
+          }
+        }
+      }
+
+      const numFrames = track.sampleOffsets.length;
+      const FRAMES_PER_BATCH = 12000; // ~4.5 minutes per batch
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const decodedChunks = [];
+      let totalPcmSamples = 0;
+
+      for (let startFrame = 0; startFrame < numFrames; startFrame += FRAMES_PER_BATCH) {
+        const endFrame = Math.min(numFrames, startFrame + FRAMES_PER_BATCH);
+        if (onStatus) {
+          const frac = startFrame / numFrames;
+          onStatus(`Decoding long AAC audio in segments (${Math.round(frac * 100)}%)...`, frac);
+        }
+
+        let batchAdtsBytes = 0;
+        let minByteOff = Infinity;
+        let maxByteEnd = 0;
+        for (let f = startFrame; f < endFrame; f++) {
+          const off = track.sampleOffsets[f];
+          const sz = track.sampleByteSizes[f];
+          if (sz > 0) {
+            batchAdtsBytes += sz + 7;
+            if (off < minByteOff) minByteOff = off;
+            if (off + sz > maxByteEnd) maxByteEnd = off + sz;
+          }
+        }
+        if (batchAdtsBytes === 0) continue;
+
+        const rawSliceBuf = await file.slice(minByteOff, maxByteEnd).arrayBuffer();
+        const rawSliceBytes = new Uint8Array(rawSliceBuf);
+        const adtsBuf = new Uint8Array(batchAdtsBytes);
+        let writeOff = 0;
+
+        for (let f = startFrame; f < endFrame; f++) {
+          const sz = track.sampleByteSizes[f];
+          if (sz === 0) continue;
+          const relOff = track.sampleOffsets[f] - minByteOff;
+          const fullLen = sz + 7;
+          adtsBuf[writeOff + 0] = 0xff;
+          adtsBuf[writeOff + 1] = 0xf1;
+          adtsBuf[writeOff + 2] = ((profile & 0x03) << 6) | ((freqIdx & 0x0f) << 2) | ((chanCfg >> 2) & 0x01);
+          adtsBuf[writeOff + 3] = ((chanCfg & 0x03) << 6) | ((fullLen >> 11) & 0x03);
+          adtsBuf[writeOff + 4] = (fullLen >> 3) & 0xff;
+          adtsBuf[writeOff + 5] = ((fullLen & 0x07) << 5) | 0x1f;
+          adtsBuf[writeOff + 6] = 0xfc;
+          adtsBuf.set(rawSliceBytes.subarray(relOff, relOff + sz), writeOff + 7);
+          writeOff += fullLen;
+        }
+
+        let ctx;
+        try {
+          ctx = new AudioCtx({ sampleRate: targetSampleRate });
+        } catch (_) {
+          ctx = new AudioCtx();
+        }
+        try {
+          const audioBuf = await ctx.decodeAudioData(adtsBuf.buffer);
+          const nCh = audioBuf.numberOfChannels;
+          const len = audioBuf.length;
+          const scale = 1 / nCh;
+          const pcmBatch = new Int16Array(len);
+          for (let i = 0; i < len; i++) {
+            let sum = 0;
+            for (let ch = 0; ch < nCh; ch++) {
+              sum += audioBuf.getChannelData(ch)[i] * scale;
+            }
+            const s = Math.max(-1, Math.min(1, sum));
+            pcmBatch[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+          }
+          decodedChunks.push(pcmBatch);
+          totalPcmSamples += len;
+        } finally {
+          if (ctx && ctx.close) await ctx.close().catch(() => {});
+        }
+      }
+
+      const fullPcm = new Int16Array(totalPcmSamples);
+      let pos = 0;
+      for (const chunk of decodedChunks) {
+        fullPcm.set(chunk, pos);
+        pos += chunk.length;
+      }
+
+      return {
+        kind: "pcm16",
+        pcm16: fullPcm,
+        duration: totalPcmSamples / targetSampleRate,
+        sampleRate: targetSampleRate,
+        numberOfChannels: 1,
+        decoder: "segmented Web Audio AAC decoder",
+        sourceSummary: `AAC-LC (${track.sampleRate} Hz, ${track.channels} ch)`,
+      };
+    }
+
     async function decodeAudioFile(file, targetSampleRate = 16000, hooks = {}) {
       const { log, onStatus } = hooks;
-      const codec = await sniffMp4AudioCodec(file);
+      const track = await parseMp4AudioTrackFromFile(file).catch(() => null);
+      const codec = track ? track.codec : null;
 
-      if (codec && !canBrowserPlayMp4Codec(codec)) {
+      if (track && codec && codec.toLowerCase() === "alac" && !canBrowserPlayMp4Codec("alac")) {
         if (log) {
           log(
-            `Detected "${codec}" codec in "${file.name}" (not natively supported by browser Web Audio API) — decoding with in-browser ffmpeg.wasm...`
+            `Detected ALAC (Apple Lossless) codec in "${file.name}" (${track.bitDepth}-bit, ${track.sampleRate} Hz, ${track.channels} ch) — decoding with built-in ALAC decoder...`
           );
         }
-        return await decodeViaFfmpegWasm(file, targetSampleRate, onStatus);
+        return await decodeAlacViaPureJsWorker(file, track, targetSampleRate, onStatus);
       }
 
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -929,12 +1606,23 @@
         }
       } catch (webAudioErr) {
         const reason = webAudioErr && webAudioErr.message ? webAudioErr.message : String(webAudioErr);
-        if (log) {
-          log(
-            `Web Audio API could not decode "${file.name}" (${reason}${codec ? `, codec: ${codec}` : ""}) — falling back to in-browser ffmpeg.wasm decoder...`
-          );
+        if (track && track.alacCookie) {
+          if (log) {
+            log(
+              `Web Audio API could not decode "${file.name}" (${reason}) — falling back to built-in ALAC decoder...`
+            );
+          }
+          return await decodeAlacViaPureJsWorker(file, track, targetSampleRate, onStatus);
         }
-        return await decodeViaFfmpegWasm(file, targetSampleRate, onStatus);
+        if (track && codec && codec.toLowerCase() === "mp4a") {
+          if (log) {
+            log(
+              `Full-file Web Audio decode failed for "${file.name}" (${reason}) — falling back to segmented AAC decoding...`
+            );
+          }
+          return await decodeMp4AacInBatches(file, track, targetSampleRate, onStatus);
+        }
+        throw webAudioErr;
       }
     }
 
